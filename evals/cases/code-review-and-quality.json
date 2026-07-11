@@ -17,12 +17,12 @@
     ],
     "negative": [
       {
-        "prompt": "Deploy this to production now",
-        "owner": "shipping-and-launch"
+        "prompt": "Help me refine a vague product idea",
+        "owner": "idea-refine"
       },
       {
-        "prompt": "Write a failing test for the bug before fixing it",
-        "owner": "test-driven-development"
+        "prompt": "Write a specification before implementation begins",
+        "owner": "spec-from-idea"
       }
     ]
   },

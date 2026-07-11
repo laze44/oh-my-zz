@@ -17,11 +17,12 @@
     ],
     "negative": [
       {
-        "prompt": "Add a feature flag system to the app"
+        "prompt": "Review this pull request before merge",
+        "owner": "code-review-and-quality"
       },
       {
-        "prompt": "Diagnose why the build broke overnight",
-        "owner": "debugging-and-error-recovery"
+        "prompt": "Break this specification into ordered implementation tasks",
+        "owner": "planning-and-task-breakdown"
       }
     ]
   },

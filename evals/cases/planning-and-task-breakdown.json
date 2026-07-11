@@ -17,11 +17,12 @@
     ],
     "negative": [
       {
-        "prompt": "Debug the crash on startup",
-        "owner": "debugging-and-error-recovery"
+        "prompt": "Simplify this deeply nested parser without changing behavior",
+        "owner": "code-simplification"
       },
       {
-        "prompt": "Encode the output so it is safe against XSS"
+        "prompt": "Review this endpoint implementation for security and correctness",
+        "owner": "code-review-and-quality"
       }
     ]
   },
@@ -29,12 +30,29 @@
     {
       "id": 1,
       "prompt": "Break the attached notifications spec into an executable plan.",
-      "expected_output": "Ordered tasks in tasks/plan.md, each small, verifiable, with acceptance criteria and dependencies",
+      "expected_output": "A repository-grounded candidate plan with explicit path boundaries, acceptance criteria, dependency-ordered vertical tasks, and a successful independent review before final status",
       "expectations": [
-        "Every task has acceptance criteria",
-        "Tasks are ordered by dependency",
-        "Tasks are vertical slices rather than horizontal layers",
+        "The plan states the goal, upper bound, lower bound, allowed choices, and out-of-scope work",
+        "Acceptance criteria have stable IDs, and behavioral criteria include positive and negative or boundary proof",
+        "Every task maps to acceptance criteria and includes dependencies, likely repository paths, verification, and parallel status",
+        "Tasks are ordered by actual dependencies and are vertical slices where feasible",
+        "A separate subagent reviews the complete candidate plan without receiving the author's expected findings or preferred verdict",
+        "The primary agent adjudicates and applies reviewer findings; the reviewer does not edit the plan",
+        "The plan is marked final only after a complete independent PASS verdict",
         "No implementation code is written during planning"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Create an implementation plan for this spec. Assume attempts to invoke an independent subagent reviewer fail twice.",
+      "expected_output": "A candidate plan whose review record reports INDEPENDENT_REVIEW_BLOCKED, without self-review or a final-status claim",
+      "expectations": [
+        "The reviewer invocation is retried once with a fresh subagent",
+        "The plan remains in candidate state after both reviewer attempts fail",
+        "The review record reports INDEPENDENT_REVIEW_BLOCKED",
+        "The primary agent does not substitute self-review",
+        "The primary agent does not claim that the plan is final"
       ],
       "trust_level": "provisional"
     }

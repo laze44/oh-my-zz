@@ -149,8 +149,8 @@ When a skill ships runnable helpers under `scripts/`, each script follows these 
 Reference other skills by name:
 
 ```markdown
-Follow the `test-driven-development` skill for writing tests.
-If the build breaks, use the `debugging-and-error-recovery` skill.
+Use the project's existing test strategy and commands to verify behavior.
+If validation fails, stop and diagnose the failure before continuing.
 ```
 
 Don't duplicate content between skills — reference and link instead.

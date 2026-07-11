@@ -1,16 +1,9 @@
 ---
-description: Break work into small verifiable tasks with acceptance criteria and dependency ordering
+description: Generate and independently review an executable implementation plan
 ---
 
-Invoke the agent-skills:planning-and-task-breakdown skill.
+Invoke the `agent-skills:planning-and-task-breakdown` skill and follow it as the single source of truth for planning, output location, independent review, revision, and final status.
 
-Read the existing spec (SPEC.md or equivalent) and the relevant codebase sections. Then:
+Planning request:
 
-1. Enter plan mode — read only, no code changes
-2. Identify the dependency graph between components
-3. Slice work vertically (one complete path per task, not horizontal layers)
-4. Write tasks with acceptance criteria and verification steps
-5. Add checkpoints between phases
-6. Present the plan for human review
-
-Save the plan to tasks/plan.md and task list to tasks/todo.md.
+$ARGUMENTS

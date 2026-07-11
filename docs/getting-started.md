@@ -1,155 +1,51 @@
-# Getting Started with agent-skills
+# Getting started
 
-agent-skills works with any AI coding agent that accepts Markdown instructions. This guide covers the universal approach. For tool-specific setup, see the dedicated guides.
+This plugin provides five skills shared by Claude Code and Codex.
 
-## How Skills Work
+## Choose a workflow
 
-Each skill is a Markdown file (`SKILL.md`) that describes a specific engineering workflow. When loaded into an agent's context, the agent follows the workflow — including verification steps, anti-patterns to avoid, and exit criteria.
+- Clarify and save a rough idea: `idea-refine`
+- Expand a clarified idea into requirements and boundaries: `spec-from-idea`
+- Turn requirements into an executable, independently reviewed plan: `planning-and-task-breakdown`
+- Review a change before merge: `code-review-and-quality`
+- Simplify working code without changing behavior: `code-simplification`
 
-**Skills are not reference docs.** They're step-by-step processes the agent follows.
+## Claude Code
 
-## Quick Start (Any Agent)
-
-### 1. Clone the repository
+Install:
 
 ```bash
-git clone https://github.com/addyosmani/agent-skills.git
+claude plugin marketplace add addyosmani/agent-skills
+claude plugin install agent-skills@addy-agent-skills
 ```
 
-### 2. Choose a skill
+Use the command wrappers `/spec`, `/plan`, `/review`, and `/code-simplify`, or invoke any skill by name.
 
-Browse the `skills/` directory. Each subdirectory contains a `SKILL.md` with:
-- **When to use** — triggers that indicate this skill applies
-- **Process** — step-by-step workflow
-- **Verification** — how to confirm the work is done
-- **Common rationalizations** — excuses the agent might use to skip steps
-- **Red flags** — signs the skill is being violated
+`/plan` delegates all workflow details to the shared planning skill. Claude Code uses the plugin's read-only `agent-skills:plan-reviewer` subagent after the candidate plan is complete.
 
-### 3. Load the skill into your agent
+## Codex
 
-Copy the relevant `SKILL.md` content into your agent's system prompt, rules file, or conversation. The most common approaches:
+Install:
 
-**System prompt:** Paste the skill content at the start of the session.
-
-**Rules file:** Add skill content to your project's rules file (CLAUDE.md, .cursorrules, etc.).
-
-**Conversation:** Reference the skill when giving instructions: "Follow the test-driven-development process for this change."
-
-### 4. Use the meta-skill for discovery
-
-Start with the `using-agent-skills` skill loaded. It contains a flowchart that maps task types to the appropriate skill.
-
-## Recommended Setup
-
-### Minimal (Start here)
-
-Load three essential skills into your rules file:
-
-1. **spec-driven-development** — For defining what to build
-2. **test-driven-development** — For proving it works
-3. **code-review-and-quality** — For verifying quality before merge
-
-These three cover the most critical quality gaps in AI-assisted development.
-
-### Full Lifecycle
-
-For comprehensive coverage, load skills by phase:
-
-```
-Starting a project:  spec-driven-development → planning-and-task-breakdown
-During development:  incremental-implementation + test-driven-development
-Before merge:        code-review-and-quality + security-and-hardening
-Before deploy:       shipping-and-launch
+```bash
+codex plugin marketplace add addyosmani/agent-skills
 ```
 
-### Context-Aware Loading
+Invoke a skill with `@`, such as `@idea-refine` or `@code-review-and-quality`.
 
-Don't load all skills at once — it wastes context. Load skills relevant to the current task:
+For planning, Codex uses a fresh native subagent as the independent reviewer. No hook or global custom-agent installation is required. If subagent review is unavailable, the skill keeps the plan in candidate state instead of substituting self-review.
 
-- Working on UI? Load `frontend-ui-engineering`
-- Debugging? Load `debugging-and-error-recovery`
-- Setting up CI? Load `ci-cd-and-automation`
+## Recommended sequence
 
-## Skill Anatomy
+Start only as early in the sequence as the work requires:
 
-Every skill follows the same structure:
-
-```
-YAML frontmatter (name, description)
-├── Overview — What this skill does
-├── When to Use — Triggers and conditions
-├── Core Process — Step-by-step workflow
-├── Examples — Code samples and patterns
-├── Common Rationalizations — Excuses and rebuttals
-├── Red Flags — Signs the skill is being violated
-└── Verification — Exit criteria checklist
+```text
+idea-refine
+  → spec-from-idea
+    → planning-and-task-breakdown
+      → implementation in the target project
+        → code-review-and-quality
+          → code-simplification when review identifies avoidable complexity
 ```
 
-See [skill-anatomy.md](skill-anatomy.md) for the full specification.
-
-## Using Agents
-
-The `agents/` directory contains pre-configured agent personas:
-
-| Agent | Purpose |
-|-------|---------|
-| `code-reviewer.md` | Five-axis code review |
-| `test-engineer.md` | Test strategy and writing |
-| `security-auditor.md` | Vulnerability detection |
-| `web-performance-auditor.md` | Core Web Vitals & performance audit (via `/webperf`) |
-
-Load an agent definition when you need specialized review. For example, ask your coding agent to "review this change using the code-reviewer agent persona" and provide the agent definition.
-
-## Using Commands
-
-The `.claude/commands/` directory contains slash commands for Claude Code:
-
-| Command | Skill Invoked |
-|---------|---------------|
-| `/spec` | spec-driven-development |
-| `/plan` | planning-and-task-breakdown |
-| `/build` | incremental-implementation + test-driven-development |
-| `/build auto` | planning-and-task-breakdown → incremental-implementation + test-driven-development (whole plan, one approval) |
-| `/test` | test-driven-development |
-| `/review` | code-review-and-quality |
-| `/code-simplify` | code-simplification |
-| `/ship` | shipping-and-launch |
-| `/webperf` | web-performance-auditor (specialist agent, web apps only) |
-
-> **Note:** When installed as a Claude Code plugin you may see a warning like
-> _"Default commands/ folder is ignored because the manifest sets 'commands'"_.
-> This is expected. The root `commands/` directory belongs to the Antigravity CLI
-> and is intentionally separate from `.claude/commands/`. All Claude Code slash
-> commands load correctly from `.claude/commands/`; the warning is cosmetic.
-
-## Using References
-
-The `references/` directory contains supplementary checklists:
-
-| Reference | Use With |
-|-----------|----------|
-| `testing-patterns.md` | test-driven-development |
-| `performance-checklist.md` | performance-optimization |
-| `security-checklist.md` | security-and-hardening |
-| `accessibility-checklist.md` | frontend-ui-engineering |
-| `definition-of-done.md` | all skills / every change |
-| `observability-checklist.md` | observability-and-instrumentation |
-| `orchestration-patterns.md` | context-engineering |
-
-Load a reference when you need detailed patterns beyond what the skill covers.
-
-## Spec and task artifacts
-
-The `/spec` and `/plan` commands create working artifacts (`SPEC.md`, `tasks/plan.md`, `tasks/todo.md`). Treat them as **living documents** while the work is in progress:
-
-- Keep them in version control during development so the human and the agent have a shared source of truth.
-- Update them when scope or decisions change.
-- If your repo doesn’t want these files long‑term, delete them before merge or add the folder to `.gitignore` — the workflow doesn’t require them to be permanent.
-
-## Tips
-
-1. **Start with spec-driven-development** for any non-trivial work
-2. **Always load test-driven-development** when writing code
-3. **Don't skip verification steps** — they're the whole point
-4. **Load skills selectively** — more context isn't always better
-5. **Use the agents for review** — different perspectives catch different issues
+The pack deliberately does not prescribe implementation, testing, deployment, or platform-specific engineering workflows. Use the target project's own conventions for those stages.
