@@ -1,11 +1,11 @@
 {
-  "name": "agent-skills",
+  "name": "oh-my-zz",
   "description": "A focused engineering skill pack for refining ideas, writing specs, planning and interrogating designs, reviewing code, and simplifying implementations.",
   "author": {
-    "name": "Addy Osmani"
+    "name": "laze44"
   },
-  "homepage": "https://github.com/addyosmani/agent-skills",
-  "repository": "https://github.com/addyosmani/agent-skills",
+  "homepage": "https://github.com/laze44/oh-my-zz",
+  "repository": "https://github.com/laze44/oh-my-zz",
   "license": "MIT",
   "commands": ["./.claude/commands"],
   "skills": "./skills"

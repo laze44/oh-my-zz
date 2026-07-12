@@ -32,7 +32,7 @@ for (const file of commandFiles) {
   }
 
   const references = new Set();
-  for (const match of content.matchAll(/agent-skills:([a-z0-9-]+)/g)) {
+  for (const match of content.matchAll(/oh-my-zz:([a-z0-9-]+)/g)) {
     references.add(match[1]);
   }
 

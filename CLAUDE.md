@@ -1,4 +1,4 @@
-# agent-skills
+# oh-my-zz
 
 This repository is a focused plugin pack for Claude Code and Codex.
 

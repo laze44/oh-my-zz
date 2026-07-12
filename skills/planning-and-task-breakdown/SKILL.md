@@ -144,7 +144,7 @@ Add detail below a task table row when the work cannot be stated clearly in the 
 
 After the candidate is complete, invoke one fresh, independent subagent as the reviewer.
 
-- In Claude Code, prefer the bundled `agent-skills:plan-reviewer` subagent.
+- In Claude Code, prefer the bundled `oh-my-zz:plan-reviewer` subagent.
 - In Codex, use a configured plan-reviewer agent when available; otherwise spawn a fresh native subagent and include the reviewer brief below in the request.
 - Pass the original requirements, the complete candidate plan, and the relevant repository constraints or paths.
 - Do **not** pass the planning agent's expected findings, preferred verdict, intended fixes, or self-justification. Independence requires the reviewer to reach its own conclusion.

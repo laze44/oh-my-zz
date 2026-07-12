@@ -1,4 +1,4 @@
-# agent-skills
+# oh-my-zz
 
 A focused plugin pack for Claude Code and Codex. It contains six engineering workflows that help clarify ideas, specifications, plans, and design decisions, then improve the resulting code through review and simplification.
 
@@ -27,18 +27,18 @@ idea-refine → spec-from-idea → planning-and-task-breakdown
 
 ## Claude Code
 
-Install from the marketplace:
+Install from GitHub:
 
 ```bash
-claude plugin marketplace add addyosmani/agent-skills
-claude plugin install agent-skills@addy-agent-skills
+claude plugin marketplace add laze44/oh-my-zz
+claude plugin install oh-my-zz@oh-my-zz
 ```
 
 For a local clone:
 
 ```bash
-claude plugin marketplace add /path/to/agent-skills
-claude plugin install agent-skills@addy-agent-skills
+claude plugin marketplace add /path/to/oh-my-zz
+claude plugin install oh-my-zz@oh-my-zz
 ```
 
 Claude Code exposes these convenience commands:
@@ -50,23 +50,26 @@ Claude Code exposes these convenience commands:
 
 Invoke `idea-refine` or `grill-with-docs` directly by naming the skill in your request.
 
-`/plan` is a thin entry point to the shared planning skill. The plugin also bundles a read-only `agent-skills:plan-reviewer` subagent, which independently reviews candidate plans before they can be marked final.
+`/plan` is a thin entry point to the shared planning skill. The plugin also bundles a read-only `oh-my-zz:plan-reviewer` subagent, which independently reviews candidate plans before they can be marked final.
 
 ## Codex
 
-Install from the marketplace:
+Install from GitHub once on each device:
 
 ```bash
-codex plugin marketplace add addyosmani/agent-skills
+codex plugin marketplace add https://github.com/laze44/oh-my-zz.git --ref main
+codex plugin add oh-my-zz@oh-my-zz
+codex plugin list --marketplace oh-my-zz
 ```
 
 A local clone also works:
 
 ```bash
-codex plugin marketplace add /path/to/agent-skills
+codex plugin marketplace add /path/to/oh-my-zz
+codex plugin add oh-my-zz@oh-my-zz
 ```
 
-Invoke a skill with `@`, for example `@spec-from-idea`, or describe the task and let Codex select the matching skill.
+Start a new Codex task after installation. Invoke a skill with `@`, for example `@spec-from-idea`, or describe the task and let Codex select the matching skill.
 
 The planning skill asks Codex to create a fresh native subagent for independent plan review. It does not require a hook or a separately installed Codex agent definition; if an independent review cannot run, the plan remains a candidate and reports `INDEPENDENT_REVIEW_BLOCKED`.
 

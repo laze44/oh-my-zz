@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * run-evals.js — skill eval runner for agent-skills.
+ * run-evals.js — skill eval runner for oh-my-zz.
  *
  * Tiers:
  *   Tier 2 (default, deterministic, CI-safe):
@@ -342,7 +342,7 @@ function runDeterministic() {
 function materializeWorkspace(ev) {
   // Fresh throwaway project dir per eval; fixtures (if any) copied in so the
   // agent has real code to operate on rather than describing what it would do.
-  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-skills-eval-'));
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'oh-my-zz-eval-'));
   for (const rel of ev.files || []) {
     const src = resolveFixturePath(FIXTURES_DIR, rel);
     if (!fs.existsSync(src)) {

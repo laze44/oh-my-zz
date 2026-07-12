@@ -1,20 +1,20 @@
 {
-  "name": "agent-skills",
+  "name": "oh-my-zz",
   "version": "1.1.0",
   "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, review, and simplification.",
   "author": {
-    "name": "Addy Osmani",
-    "url": "https://github.com/addyosmani"
+    "name": "laze44",
+    "url": "https://github.com/laze44"
   },
-  "homepage": "https://github.com/addyosmani/agent-skills",
-  "repository": "https://github.com/addyosmani/agent-skills",
+  "homepage": "https://github.com/laze44/oh-my-zz",
+  "repository": "https://github.com/laze44/oh-my-zz",
   "license": "MIT",
   "skills": "./skills/",
   "hooks": {
     "hooks": {}
   },
   "interface": {
-    "displayName": "Agent Skills",
+    "displayName": "Oh My ZZ",
     "shortDescription": "Focused workflows for ideas, specs, plans, design decisions, reviews, and simplification.",
     "category": "Productivity"
   }
