@@ -7,6 +7,7 @@ This repository is a focused plugin pack for Claude Code and Codex.
 - `idea-refine` — clarify intent and save a concise idea draft
 - `spec-from-idea` — expand a clarified idea into an implementation-ready specification
 - `planning-and-task-breakdown` — produce ordered, verifiable tasks
+- `grill-with-docs` — interrogate plans and record clarified decisions locally
 - `code-review-and-quality` — review correctness and engineering quality
 - `code-simplification` — reduce complexity without changing behavior
 
@@ -23,7 +24,6 @@ skills/              Shared skill content
 references/          Review and planning checklists
 evals/               Skill eval cases
 scripts/             Validation tools
-hooks/               Optional simplify-ignore helper
 ```
 
 ## Validation
@@ -33,7 +33,6 @@ node scripts/validate-skills.js
 node scripts/run-evals.js
 node scripts/validate-commands.js
 node scripts/validate-plugin-manifests.js
-bash hooks/simplify-ignore-test.sh
 ```
 
 Keep the pack deliberately small. Adding another skill or platform integration requires an explicit scope change.

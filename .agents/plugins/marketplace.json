@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "agent-skills",
-      "description": "Five focused engineering skills for shaping ideas, specifying and planning work, reviewing code, and simplifying implementations.",
+      "description": "Six focused engineering skills for shaping ideas, specifying, planning, interrogating designs, reviewing code, and simplifying implementations.",
       "source": {
         "source": "local",
         "path": "./"

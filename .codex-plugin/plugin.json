@@ -1,7 +1,7 @@
 {
   "name": "agent-skills",
-  "version": "1.0.0",
-  "description": "A focused engineering skill pack for idea refinement, specifications, planning, review, and simplification.",
+  "version": "1.1.0",
+  "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, review, and simplification.",
   "author": {
     "name": "Addy Osmani",
     "url": "https://github.com/addyosmani"
@@ -15,7 +15,7 @@
   },
   "interface": {
     "displayName": "Agent Skills",
-    "shortDescription": "Focused workflows for ideas, specs, plans, reviews, and simplification.",
+    "shortDescription": "Focused workflows for ideas, specs, plans, design decisions, reviews, and simplification.",
     "category": "Productivity"
   }
 }

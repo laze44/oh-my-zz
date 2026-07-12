@@ -2,7 +2,7 @@
 /**
  * run-evals.js — skill eval runner for agent-skills.
  *
- * Tiers (see evals/README.md):
+ * Tiers:
  *   Tier 2 (default, deterministic, CI-safe):
  *     - Trigger evals: for every case in evals/cases/<skill>.json, each positive
  *       prompt must rank the skill within top_k (default 3) when scored against
@@ -47,7 +47,7 @@ const GRADER_TIMEOUT_MS = 5 * 60 * 1000;
 // tokens; review this list if your fixtures invoke anything unusual.
 const EXECUTOR_TOOLS = 'Read,Glob,Grep,Edit,Write,Bash';
 
-// Documented minimums per case file (evals/README.md). Warning-level for now.
+// Minimums per case file. Warning-level for now.
 const MIN_POSITIVE = 3;
 const MIN_NEGATIVE = 2;
 const MIN_EVALS = 1;

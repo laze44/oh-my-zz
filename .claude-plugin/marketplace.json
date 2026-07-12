@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "addy-agent-skills",
-  "description": "A focused engineering skill pack for idea refinement, specifications, planning, review, and simplification.",
+  "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, review, and simplification.",
   "owner": {
     "name": "Addy Osmani",
     "url": "https://github.com/addyosmani"
@@ -13,10 +13,10 @@
         "source": "github",
         "repo": "addyosmani/agent-skills"
       },
-      "description": "Five focused engineering skills for shaping ideas, specifying and planning work, reviewing code, and simplifying implementations.",
+      "description": "Six focused engineering skills for shaping ideas, specifying, planning, interrogating designs, reviewing code, and simplifying implementations.",
       "homepage": "https://github.com/addyosmani/agent-skills",
       "license": "MIT",
-      "keywords": ["skills", "engineering", "ideas", "spec", "planning", "review", "simplification"]
+      "keywords": ["skills", "engineering", "ideas", "spec", "planning", "design", "interview", "review", "simplification"]
     }
   ]
 }

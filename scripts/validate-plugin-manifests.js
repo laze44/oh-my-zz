@@ -8,6 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_SKILLS = [
   'code-review-and-quality',
   'code-simplification',
+  'grill-with-docs',
   'idea-refine',
   'planning-and-task-breakdown',
   'spec-from-idea',
@@ -52,4 +53,4 @@ assert(Array.isArray(codexMarketplace.plugins) && codexMarketplace.plugins.lengt
 assert(codexMarketplace.plugins[0].source?.path === './',
   'Codex marketplace plugin source must point at the repository root');
 
-console.log('Plugin manifests and five-skill scope validated.');
+console.log('Plugin manifests and six-skill scope validated.');

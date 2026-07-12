@@ -1,0 +1,49 @@
+{
+  "skill_name": "grill-with-docs",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Grill me on this architecture plan and record the clarified terminology and major decisions as we go",
+        "top_k": 3
+      },
+      {
+        "prompt": "Stress-test this design by asking me dependency-aware questions before anyone implements it",
+        "top_k": 3
+      },
+      {
+        "prompt": "Interrogate this proposal using terminal choice prompts and keep the working CONTEXT and ADRs local",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Turn this accepted specification into ordered implementation tasks",
+        "owner": "planning-and-task-breakdown"
+      },
+      {
+        "prompt": "Review the current diff for correctness and security issues",
+        "owner": "code-review-and-quality"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Grill me on a proposed multi-tenant billing design. Some questions depend on the tenancy model, while retention and invoice-export preferences are independent. Keep any working documentation local.",
+      "expected_output": "A dependency-aware interview that uses structured question batches where safe, records only resolved glossary terms and qualifying ADRs in local working documents, and stops at confirmed shared understanding",
+      "expectations": [
+        "The agent inspects available repository evidence for facts and asks the user only for decisions",
+        "A dependent or high-risk decision is asked alone before questions whose meaning depends on it",
+        "Independent sibling decisions may be batched, with no more than three questions by default",
+        "The agent prefers one native structured-question call per batch and provides a numbered text fallback when unavailable",
+        "Every question has concrete alternatives, a recommended answer, and enough context to decide",
+        "The agent reconciles each answer batch and recomputes the decision tree before continuing",
+        "Working documents default to .agents/docs/grill-with-docs and remain local unless the user explicitly requests promotion",
+        "CONTEXT.md contains domain language rather than implementation details",
+        "An ADR is created only for a hard-to-reverse, surprising decision with a real trade-off",
+        "The agent asks for confirmation of shared understanding and does not implement or promote documents implicitly"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

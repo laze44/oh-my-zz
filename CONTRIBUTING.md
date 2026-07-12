@@ -1,12 +1,13 @@
 # Contributing
 
-This branch intentionally maintains a small skill pack for Claude Code and Codex. Changes should normally improve one of the five retained skills rather than expand the catalog.
+This branch intentionally maintains a small skill pack for Claude Code and Codex. Changes should normally improve one of the six retained skills rather than expand the catalog.
 
 ## Supported scope
 
 - `idea-refine`
 - `spec-from-idea`
 - `planning-and-task-breakdown`
+- `grill-with-docs`
 - `code-review-and-quality`
 - `code-simplification`
 
@@ -36,7 +37,6 @@ node scripts/validate-skills.js
 node scripts/run-evals.js
 node scripts/validate-commands.js
 node scripts/validate-plugin-manifests.js
-bash hooks/simplify-ignore-test.sh
 ```
 
 All checks must pass, and the final diff must not contain references to removed skills or unsupported platforms.
