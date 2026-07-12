@@ -1,178 +1,150 @@
 ---
 name: idea-refine
-description: Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. Use when an idea is still vague, when you need to stress-test assumptions before committing to a plan, or when you want to expand options before converging on one. Triggers on "ideate", "refine this idea", or "stress-test my plan".
+description: Challenges, clarifies, and refines a rough idea into a concise draft by testing its problem framing, causal logic, assumptions, and trade-offs before converging. Use when a user wants a critical thinking partner to improve, correct, clarify, or save an idea before writing a specification or implementation plan.
 ---
 
 # Idea Refine
 
-Refines raw ideas into sharp, actionable concepts worth building through structured divergent and convergent thinking.
+## Overview
 
-## How It Works
+Act as a constructive challenger, not a transcription service or automatic supporter. Try to disprove or improve the idea, reconcile substantive concerns with the user, and save the resulting shared understanding as a lightweight draft.
 
-1.  **Understand & Expand (Divergent):** Restate the idea, ask sharpening questions, and generate variations.
-2.  **Evaluate & Converge:** Cluster ideas, stress-test them, and surface hidden assumptions.
-3.  **Sharpen & Ship:** Produce a concrete markdown one-pager moving work forward.
+## When to Use
 
-## Usage
+- A user has an informal, incomplete, solution-first, or internally inconsistent idea.
+- A user wants assumptions challenged before deciding whether an idea is worth pursuing.
+- A user has a promising direction but wants a sharper, simpler, or more coherent version.
+- A user wants to capture the refined idea before specification, planning, or implementation.
 
-This skill is primarily an interactive dialogue. Invoke it with an idea, and the agent will guide you through the process.
+Use the relevant downstream workflow for specifications, architecture, implementation analysis, task breakdowns, plan review, or code.
 
-```bash
-# Optional: Initialize the ideas directory
-bash skills/idea-refine/scripts/idea-refine.sh
-```
+## Scope
 
-**Trigger Phrases:**
-- "Help me refine this idea"
-- "Ideate on [concept]"
-- "Stress-test my plan"
+Use the conversation as the source of truth. Challenge the idea at the level of motivation, problem, intended outcome, concept, assumptions, and trade-offs. Do not inspect the repository or turn the session into market research, feasibility analysis, specification, planning, or implementation.
 
-## Output
+The only project write is the user-approved draft file.
 
-The final output is a markdown one-pager saved to `docs/ideas/[idea-name].md` (after user confirmation), containing:
-- Problem Statement
-- Recommended Direction
-- Key Assumptions
-- MVP Scope
-- Not Doing list
+## Workflow
 
-## Detailed Instructions
+### 1. State the idea claim
 
-You are an ideation partner. Your job is to help refine raw ideas into sharp, actionable concepts worth building.
+Rewrite the input as a proposed `Idea Claim` of one to three sentences. Make explicit, when known:
 
-### Philosophy
+- who experiences the problem or benefits from the change;
+- what problem or opportunity motivates the idea;
+- what change the user proposes;
+- what outcome the change is expected to produce.
 
-- Simplicity is the ultimate sophistication. Push toward the simplest version that still solves the real problem.
-- Start with the user experience, work backwards to technology.
-- Say no to 1,000 things. Focus beats breadth.
-- Challenge every assumption. "How it's usually done" is not a reason.
-- Show people the future — don't just give them better horses.
-- The parts you can't see should be as beautiful as the parts you can.
+Remove filler without adding missing facts. Treat this claim as an interpretation to test, not a conclusion to defend.
 
-### Process
+### 2. Run a challenge checkpoint
 
-When the user invokes this skill with an idea (`$ARGUMENTS`), guide them through three phases. Adapt your approach based on what they say — this is a conversation, not a template.
+Perform this checkpoint on every idea, including ideas that already sound clear. Look for material weaknesses in this order:
 
-#### Phase 1: Understand & Expand (Divergent)
+1. **Problem validity:** Is the idea addressing a stated problem, or merely presenting a solution?
+2. **Causal logic:** Would the proposed change plausibly produce the desired outcome, or is a link missing or contradictory?
+3. **Hidden assumptions:** What must be true for the idea to work but has not been established?
+4. **Goal coherence:** Do the intended outcomes reinforce one another, or create tension?
+5. **Solution anchoring:** Has the idea committed to a mechanism before establishing the outcome it must serve?
+6. **Focus:** Is there a simpler or narrower formulation that preserves the motivation?
 
-**Goal:** Take the raw idea and open it up.
+A concern is material only when it could change the idea's purpose, direction, or reason for existing. Do not invent objections, implementation risks, market facts, or alternatives merely to appear critical. Do not turn a supporting signal into the idea's exclusive decision rule, or a possible future extension into a present requirement, unless the user said so. If no material concern survives scrutiny, proceed without forcing a challenge.
 
-1. **Restate the idea** as a crisp "How Might We" problem statement. This forces clarity on what's actually being solved.
+Classify each material finding before acting on it:
 
-2. **Ask 3-5 sharpening questions** — no more. Focus on:
-   - Who is this for, specifically?
-   - What does success look like?
-   - What are the real constraints (time, tech, resources)?
-   - What's been tried before?
-   - Why now?
+- **Fundamental concern:** the current framing conflicts with its stated motivation or goal;
+- **Assumption to validate:** the idea may work, but depends on something not yet known;
+- **Trade-off:** improving one desired outcome may weaken another;
+- **Non-material:** stylistic preference or downstream detail that should not block refinement.
 
-   Use the `AskUserQuestion` tool to gather this input. Do NOT proceed until you understand who this is for and what success looks like.
+### 3. Reconcile the strongest concern
 
-3. **Generate 5-8 idea variations** using these lenses:
-   - **Inversion:** "What if we did the opposite?"
-   - **Constraint removal:** "What if budget/time/tech weren't factors?"
-   - **Audience shift:** "What if this were for [different user]?"
-   - **Combination:** "What if we merged this with [adjacent idea]?"
-   - **Simplification:** "What's the version that's 10x simpler?"
-   - **10x version:** "What would this look like at massive scale?"
-   - **Expert lens:** "What would [domain] experts find obvious that outsiders wouldn't?"
+When a material concern exists:
 
-   Push beyond what the user initially asked for. Create products people don't know they need yet.
+1. State the strongest concern directly and explain why it could change the idea.
+2. Offer a concrete better framing or materially different direction when one is available.
+3. Ask the single question whose answer would resolve the concern, then wait.
 
-**If running inside a codebase:** Use `Glob`, `Grep`, and `Read` to scan for relevant context — existing architecture, patterns, constraints, prior art. Ground your variations in what actually exists. Reference specific files and patterns when relevant.
+Offer two or three directions only when multiple interpretations are genuinely plausible. Keep them at idea level and explain the meaningful distinction.
 
-Read `frameworks.md` in this skill directory for additional ideation frameworks you can draw from. Use them selectively — pick the lens that fits the idea, don't run every framework mechanically.
+Treat challenges as recommendations, not verdicts. The user owns the decision. When the user accepts a correction, revise the idea claim. When the user knowingly rejects it, preserve the chosen direction and record the unresolved assumption or accepted trade-off instead of silently overriding the user.
 
-#### Phase 2: Evaluate & Converge
+Repeat only for another concern that could still change the idea. Stop challenging when the idea is coherent enough to draft, when a new pass yields only non-material findings, or after three reconciliation rounds. After three unresolved rounds, surface the remaining tension and let the draft record it rather than continuing indefinitely.
 
-After the user reacts to Phase 1 (indicates which ideas resonate, pushes back, adds context), shift to convergent mode:
+### 4. Draft the improved idea
 
-1. **Cluster** the ideas that resonated into 2-3 distinct directions. Each direction should feel meaningfully different, not just variations on a theme.
-
-2. **Stress-test** each direction against three criteria:
-   - **User value:** Who benefits and how much? Is this a painkiller or a vitamin?
-   - **Feasibility:** What's the technical and resource cost? What's the hardest part?
-   - **Differentiation:** What makes this genuinely different? Would someone switch from their current solution?
-
-   Read `refinement-criteria.md` in this skill directory for the full evaluation rubric.
-
-3. **Surface hidden assumptions.** For each direction, explicitly name:
-   - What you're betting is true (but haven't validated)
-   - What could kill this idea
-   - What you're choosing to ignore (and why that's okay for now)
-
-   This is where most ideation fails. Don't skip it.
-
-**Be honest, not supportive.** If an idea is weak, say so with kindness. A good ideation partner is not a yes-machine. Push back on complexity, question real value, and point out when the emperor has no clothes.
-
-#### Phase 3: Sharpen & Ship
-
-Produce a concrete artifact — a markdown one-pager that moves work forward:
+Produce this structure:
 
 ```markdown
 # [Idea Name]
 
-## Problem Statement
-[One-sentence "How Might We" framing]
+## Refined Idea
+[One to three sentences that state the improved idea clearly.]
 
-## Recommended Direction
-[The chosen direction and why — 2-3 paragraphs max]
+## Motivation
+[Why the idea matters and what prompted it.]
 
-## Key Assumptions to Validate
-- [ ] [Assumption 1 — how to test it]
-- [ ] [Assumption 2 — how to test it]
-- [ ] [Assumption 3 — how to test it]
+## Primary Goals
+- [The main outcome the idea should achieve.]
+- [Another primary outcome, only if genuinely distinct.]
 
-## MVP Scope
-[The minimum version that tests the core assumption. What's in, what's out.]
+## Critical Assumptions
+- [An unverified belief that materially affects whether the idea will work.]
 
-## Not Doing (and Why)
-- [Thing 1] — [reason]
-- [Thing 2] — [reason]
-- [Thing 3] — [reason]
+## Key Trade-offs
+- [A consequential tension or consciously accepted limitation.]
+
+## Rough Steps
+1. [First outcome-level stage.]
+2. [Next outcome-level stage.]
+3. [Later validation or adoption stage, when applicable.]
 
 ## Open Questions
-- [Question that needs answering before building]
+- [An unresolved question that does not prevent the idea from being understood.]
 ```
 
-**The "Not Doing" list is arguably the most valuable part.** Focus is about saying no to good ideas. Make the trade-offs explicit.
+Omit `Critical Assumptions`, `Key Trade-offs`, or `Open Questions` when they add no value. Keep goals and rough steps outcome-oriented, and omit optional content rather than inventing it. Consult [examples.md](examples.md) when deciding whether to challenge, ask, redirect, or draft.
 
-Ask the user if they'd like to save this to `docs/ideas/[idea-name].md` (or a location of their choosing). Only save if they confirm.
+### 5. Review and save
 
-### Anti-patterns to Avoid
+Present the complete draft and ask the user to correct any misinterpretation or unwanted correction. After approval, save it to the supplied path or `docs/ideas/[idea-name].md`, report the saved path, and finish.
 
-- **Don't generate 20+ ideas.** Quality over quantity. 5-8 well-considered variations beat 20 shallow ones.
-- **Don't be a yes-machine.** Push back on weak ideas with specificity and kindness.
-- **Don't skip "who is this for."** Every good idea starts with a person and their problem.
-- **Don't produce a plan without surfacing assumptions.** Untested assumptions are the #1 killer of good ideas.
-- **Don't over-engineer the process.** Three phases, each doing one thing well. Resist adding steps.
-- **Don't just list ideas — tell a story.** Each variation should have a reason it exists, not just be a bullet point.
-- **Don't ignore the codebase.** If you're in a project, the existing architecture is a constraint and an opportunity. Use it.
+## Common Rationalizations
 
-### Tone
-
-Direct, thoughtful, slightly provocative. You're a sharp thinking partner, not a facilitator reading from a script. Channel the energy of "that's interesting, but what if..." -- always pushing one step further without being exhausting.
-
-Read `examples.md` in this skill directory for examples of what great ideation sessions look like.
+| Rationalization | Reality |
+|---|---|
+| "The idea is clear, so it does not need a challenge pass." | Clarity does not establish soundness. Run the checkpoint, but surface only material findings. |
+| "A strong challenger should always find something wrong." | Manufactured skepticism is another form of low-value agreement. Say when no material concern exists. |
+| "My correction is better, so I can rewrite the user's intent." | The agent recommends; the user decides. Preserve rejected advice as an assumption or trade-off when relevant. |
+| "Repository context will make the idea more realistic." | Repository fit belongs to specification or planning; this workflow refines intent and reasoning first. |
 
 ## Red Flags
 
-- Generating 20+ shallow variations instead of 5-8 considered ones
-- Skipping the "who is this for" question
-- No assumptions surfaced before committing to a direction
-- Yes-machining weak ideas instead of pushing back with specificity
-- Producing a plan without a "Not Doing" list
-- Ignoring existing codebase constraints when ideating inside a project
-- Jumping straight to Phase 3 output without running Phases 1 and 2
+- Drafting immediately without testing the idea's problem framing, causal logic, assumptions, and trade-offs
+- Praising the idea instead of examining it
+- Inventing objections or alternatives for an idea with no material weakness
+- Treating one stated input, benefit, or signal as the idea's exclusive rule without evidence
+- Treating an inference, convention, or unsupported external claim as fact
+- Silently changing the idea after the user rejects a recommendation
+- Asking a fixed questionnaire instead of resolving the strongest concern
+- Raising several dependent questions at once
+- Generating more than three directions or reconciliation rounds
+- Reading or citing repository files
+- Writing architecture, technical mechanisms, MVP scope, acceptance criteria, or implementation tasks
+- Saving a draft before the user reviews it
+- Invoking another workflow automatically or continuing after the draft is saved
 
 ## Verification
 
-After completing an ideation session:
+Before saving, confirm:
 
-- [ ] A clear "How Might We" problem statement exists
-- [ ] The target user and success criteria are defined
-- [ ] Multiple directions were explored, not just the first idea
-- [ ] Hidden assumptions are explicitly listed with validation strategies
-- [ ] A "Not Doing" list makes trade-offs explicit
-- [ ] The output is a concrete artifact (markdown one-pager), not just conversation
-- [ ] The user confirmed the final direction before any implementation work
+- [ ] The idea received a genuine challenge checkpoint even if no objection was surfaced.
+- [ ] Every surfaced concern could materially affect the idea's purpose, direction, or rationale.
+- [ ] Fundamental concerns, assumptions, and trade-offs were distinguished rather than blended together.
+- [ ] The strongest concern was reconciled one question at a time, with no more than three rounds.
+- [ ] Accepted corrections changed the draft; rejected corrections did not silently replace the user's decision.
+- [ ] The `Refined Idea` is concise, coherent, and faithful to the resulting shared understanding.
+- [ ] Goals and rough steps remain at the outcome level.
+- [ ] Every detail comes from the conversation rather than the codebase or agent invention.
+- [ ] The user reviewed the complete draft before it was saved.
+- [ ] The approved draft is the only project artifact created or changed.

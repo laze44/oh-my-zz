@@ -1,15 +1,9 @@
 ---
-description: Start spec-driven development — write a structured specification before writing code
+description: Expand a clarified idea into an implementation-ready specification
 ---
 
-Invoke the agent-skills:spec-driven-development skill.
+Invoke the oh-my-zz:spec-from-idea skill.
 
-Begin by understanding what the user wants to build. Ask clarifying questions about:
-1. The objective and target users
-2. Core features and acceptance criteria
-3. Tech stack preferences and constraints
-4. Known boundaries (what to always do, ask first about, and never do)
+Use the supplied idea document, or locate a clearly matching draft under `docs/ideas/`. Clarify only material gaps and establish what reproducible evidence the user accepts as proof of completion.
 
-Then generate a structured spec covering all six core areas: objective, commands, project structure, code style, testing strategy, and boundaries.
-
-Save the spec as SPEC.md in the project root and confirm with the user before proceeding.
+Generate the specification, present it for review, and save it only after approval. Stop before planning or implementation.

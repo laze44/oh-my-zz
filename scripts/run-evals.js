@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * run-evals.js — skill eval runner for agent-skills.
+ * run-evals.js — skill eval runner for oh-my-zz.
  *
- * Tiers (see evals/README.md):
+ * Tiers:
  *   Tier 2 (default, deterministic, CI-safe):
  *     - Trigger evals: for every case in evals/cases/<skill>.json, each positive
  *       prompt must rank the skill within top_k (default 3) when scored against
@@ -47,7 +47,7 @@ const GRADER_TIMEOUT_MS = 5 * 60 * 1000;
 // tokens; review this list if your fixtures invoke anything unusual.
 const EXECUTOR_TOOLS = 'Read,Glob,Grep,Edit,Write,Bash';
 
-// Documented minimums per case file (evals/README.md). Warning-level for now.
+// Minimums per case file. Warning-level for now.
 const MIN_POSITIVE = 3;
 const MIN_NEGATIVE = 2;
 const MIN_EVALS = 1;
@@ -342,7 +342,7 @@ function runDeterministic() {
 function materializeWorkspace(ev) {
   // Fresh throwaway project dir per eval; fixtures (if any) copied in so the
   // agent has real code to operate on rather than describing what it would do.
-  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-skills-eval-'));
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'oh-my-zz-eval-'));
   for (const rel of ev.files || []) {
     const src = resolveFixturePath(FIXTURES_DIR, rel);
     if (!fs.existsSync(src)) {

@@ -24,7 +24,7 @@ jobs:
         run: node scripts/run-evals.js
 
   validate-commands:
-    name: Validate command parity and description sync
+    name: Validate Claude command metadata
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,12 +34,24 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Validate commands across all tool directories
+      - name: Validate Claude commands
         run: node scripts/validate-commands.js
+
+  validate-metadata:
+    name: Validate plugin manifests and agents
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate Claude and Codex metadata
+        run: node scripts/validate-plugin-manifests.js
+
+      - name: Validate Claude reviewer agents
+        run: node scripts/validate-agents.js
 
   validate:
     name: Validate plugin structure
-    needs: [validate-skills, validate-commands]
+    needs: [validate-skills, validate-commands, validate-metadata]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -70,4 +82,4 @@ jobs:
         run: claude plugin marketplace list
 
       - name: Install plugin
-        run: claude plugin install agent-skills@addy-agent-skills --scope user
+        run: claude plugin install oh-my-zz@oh-my-zz --scope user

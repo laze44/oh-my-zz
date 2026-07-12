@@ -1,12 +1,12 @@
 {
-  "name": "agent-skills",
+  "name": "oh-my-zz",
   "interface": {
-    "displayName": "Agent Skills"
+    "displayName": "Oh My ZZ"
   },
   "plugins": [
     {
-      "name": "agent-skills",
-      "description": "Production-grade engineering skills covering every phase of software development: spec, plan, build, verify, review, and ship.",
+      "name": "oh-my-zz",
+      "description": "Six focused engineering skills for shaping ideas, specifying, planning, interrogating designs, reviewing code, and simplifying implementations.",
       "source": {
         "source": "local",
         "path": "./"

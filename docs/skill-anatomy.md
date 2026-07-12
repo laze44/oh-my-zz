@@ -1,6 +1,6 @@
 # Skill Anatomy
 
-This document describes the structure and format of agent-skills skill files. Use this as a guide when contributing new skills or understanding existing ones.
+This document describes the structure and format of oh-my-zz skill files. Use this as a guide when contributing new skills or understanding existing ones.
 
 ## File Location
 
@@ -149,8 +149,8 @@ When a skill ships runnable helpers under `scripts/`, each script follows these 
 Reference other skills by name:
 
 ```markdown
-Follow the `test-driven-development` skill for writing tests.
-If the build breaks, use the `debugging-and-error-recovery` skill.
+Use the project's existing test strategy and commands to verify behavior.
+If validation fails, stop and diagnose the failure before continuing.
 ```
 
 Don't duplicate content between skills — reference and link instead.

@@ -1,6 +1,6 @@
 # Security Checklist
 
-Quick reference for web application security. Use alongside the `security-and-hardening` skill.
+Quick reference for the security axis of `code-review-and-quality`.
 
 ## Table of Contents
 
@@ -153,7 +153,7 @@ res.status(500).json({
 | 1 | Broken Access Control | Auth checks on every endpoint, ownership verification |
 | 2 | Cryptographic Failures | HTTPS, strong hashing, no secrets in code |
 | 3 | Injection | Parameterized queries, input validation |
-| 4 | Insecure Design | Threat modeling, spec-driven development |
+| 4 | Insecure Design | Threat modeling, specification review |
 | 5 | Security Misconfiguration | Security headers, minimal permissions, audit deps |
 | 6 | Vulnerable Components | `npm audit`, keep deps updated, minimal deps |
 | 7 | Auth Failures | Strong passwords, rate limiting, session management |

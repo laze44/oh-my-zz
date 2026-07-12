@@ -1,22 +1,23 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "addy-agent-skills",
-  "description": "Production-grade engineering skills for AI coding agents — covering the full software development lifecycle from spec to ship.",
+  "name": "oh-my-zz",
   "owner": {
-    "name": "Addy Osmani",
-    "url": "https://github.com/addyosmani"
+    "name": "laze44",
+    "url": "https://github.com/laze44"
+  },
+  "metadata": {
+    "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, review, and simplification."
   },
   "plugins": [
     {
-      "name": "agent-skills",
+      "name": "oh-my-zz",
       "source": {
         "source": "github",
-        "repo": "addyosmani/agent-skills"
+        "repo": "laze44/oh-my-zz"
       },
-      "description": "Production-grade engineering skills covering every phase of software development: spec, plan, build, verify, review, and ship.",
-      "homepage": "https://github.com/addyosmani/agent-skills",
+      "description": "Six focused engineering skills for shaping ideas, specifying, planning, interrogating designs, reviewing code, and simplifying implementations.",
+      "homepage": "https://github.com/laze44/oh-my-zz",
       "license": "MIT",
-      "keywords": ["skills", "agents", "engineering", "spec", "tdd", "review", "ship"]
+      "keywords": ["oh-my-zz", "skills", "engineering", "ideas", "spec", "planning", "design", "interview", "review", "simplification"]
     }
   ]
 }

@@ -3,39 +3,107 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "I have a rough idea for a habit tracker, help me refine it",
+        "prompt": "Challenge and refine this rough product idea before saving it",
         "top_k": 3
       },
       {
-        "prompt": "Stress-test my plan for the new onboarding flow",
+        "prompt": "Turn this informal concept into a concise idea draft",
         "top_k": 3
       },
       {
-        "prompt": "Ideate on ways to improve developer retention in the product",
+        "prompt": "Refine this idea before I write a specification or implementation plan",
         "top_k": 3
       }
     ],
     "negative": [
       {
-        "prompt": "Fix the failing CI pipeline",
-        "owner": "ci-cd-and-automation"
+        "prompt": "Review this pull request for correctness and maintainability",
+        "owner": "code-review-and-quality"
       },
       {
-        "prompt": "Audit the upload endpoint for vulnerabilities",
-        "owner": "security-and-hardening"
+        "prompt": "Turn this approved specification into an ordered task list",
+        "owner": "planning-and-task-breakdown"
+      },
+      {
+        "prompt": "Write an implementation-ready specification for this new feature",
+        "owner": "spec-from-idea"
       }
     ]
   },
   "evals": [
     {
       "id": 1,
-      "prompt": "Refine this vague idea: 'some kind of tool that helps teams share knowledge better'.",
-      "expected_output": "Sharpening questions, distinct directions, surfaced assumptions, and a one-pager with MVP scope and a Not Doing list",
+      "prompt": "Refine and save this idea: Create a shared internal record of recurring customer complaints so our support team can group duplicates and see which problems are becoming more common. We want to stop relying on scattered chat messages when deciding what to fix.",
+      "expected_output": "A concise idea draft after a genuine challenge checkpoint, without manufacturing objections, asking unnecessary questions, or adding implementation details.",
       "expectations": [
-        "Sharpening questions are asked before converging",
-        "Hidden assumptions are surfaced explicitly",
-        "The output includes an explicit Not Doing list",
-        "The agent pushes back on weak aspects instead of only agreeing"
+        "The response tests the idea's problem framing and causal logic but does not manufacture a weakness",
+        "The response does not ask clarification questions or generate alternatives because no material concern exists",
+        "The draft contains Refined Idea, Motivation, Primary Goals, and outcome-level Rough Steps",
+        "The draft does not contain MVP Scope, architecture, source paths, or implementation tasks",
+        "No repository exploration or implementation action is attempted"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Refine this idea: I want something that summarizes our meetings with AI.",
+      "expected_output": "A direct challenge to the solution-first framing followed by one focused question that resolves the intended purpose before drafting.",
+      "expectations": [
+        "Exactly one clarification question is asked in the response",
+        "The response identifies that the idea commits to AI summaries before establishing the outcome they should serve",
+        "The question focuses on the outcome or purpose of the meeting summaries",
+        "The response does not ask a fixed batch of discovery questions",
+        "The response does not inspect a repository, propose architecture, or begin implementation"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "prompt": "Help me refine an idea for a tool that helps open-source maintainers deal with too many issues. I know I want to reduce their triage workload, but I am not sure what kind of help the tool should provide.",
+      "expected_output": "A small set of materially distinct interpretations used to resolve the idea's genuine directional ambiguity.",
+      "expectations": [
+        "The response offers no more than three distinct directions",
+        "Each direction represents a materially different interpretation of the user's intended help",
+        "The response asks the user to select or refine the interpretation",
+        "The response does not turn the directions into technical designs or implementation plans"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 4,
+      "prompt": "I am inside an existing repository. Refine this idea: let users export their account history so they can keep a personal record before closing an account.",
+      "expected_output": "A codebase-independent idea draft that preserves the clear direction and does not inspect or cite the repository.",
+      "expectations": [
+        "The response does not read, search, list, or cite repository files",
+        "The response does not infer architecture or existing components",
+        "The idea is normalized without adding new goals or features",
+        "Rough Steps remain outcome-level and contain no technical tasks"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 5,
+      "prompt": "Refine this idea: Require employees to publish daily activity rankings so people feel psychologically safe admitting mistakes.",
+      "expected_output": "A direct but constructive challenge to the conflict between public comparison and psychological safety, followed by one decision-focused question instead of a draft.",
+      "expectations": [
+        "The response identifies the material tension between public individual comparison and the stated psychological-safety goal",
+        "The response explains why the tension could invalidate or redirect the idea",
+        "The response offers a concrete better framing or asks whether public comparison is an intentional trade-off",
+        "Exactly one decision-focused question is asked",
+        "The response does not draft, inspect the repository, or introduce implementation details before the concern is reconciled"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 6,
+      "prompt": "Continue refining this idea with my decision: I understand that public employee rankings may discourage openness, but transparent individual comparison is non-negotiable. Rank employees by how consistently they document mistakes and lessons learned; the goal remains to make mistakes easier to discuss.",
+      "expected_output": "A refined draft that preserves the user's chosen direction while explicitly recording the unresolved causal assumption and accepted trade-off.",
+      "expectations": [
+        "The response does not silently remove or weaken the non-negotiable public-ranking mechanism",
+        "The draft records the assumption that rankings can increase accountability without preventing honest mistake reporting",
+        "The draft records the trade-off between transparent comparison and psychological safety",
+        "The response does not pretend the earlier concern has been resolved",
+        "The response remains at idea level without architecture or implementation tasks"
       ],
       "trust_level": "provisional"
     }

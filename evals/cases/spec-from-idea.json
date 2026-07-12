@@ -1,0 +1,45 @@
+{
+  "skill_name": "spec-from-idea",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Expand this approved idea document into an implementation-ready specification",
+        "top_k": 3
+      },
+      {
+        "prompt": "Turn docs/ideas/usage-billing.md into a spec and define proof of completion",
+        "top_k": 3
+      },
+      {
+        "prompt": "We have clarified the feature idea; now define requirements and success criteria before planning",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Help me clarify and save this rough product idea",
+        "owner": "idea-refine"
+      },
+      {
+        "prompt": "Turn this approved specification into an ordered task list",
+        "owner": "planning-and-task-breakdown"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use the approved idea for usage-based billing to produce the specification before any planning or implementation. The idea explains the goal but does not say how completion should be proven.",
+      "expected_output": "An implementation-ready specification workflow that proposes concrete completion evidence, obtains user confirmation, and keeps testing strategy distinct from success criteria.",
+      "expectations": [
+        "Material repository context is inspected rather than commands or conventions being invented",
+        "The agent proposes a small number of outcome-based verification candidates and asks what evidence is sufficient",
+        "Success criteria contain an observable outcome, proof method, and explicit pass condition",
+        "The testing strategy is concise and covers mandatory checks, critical observable behaviors, a task-relevant fast loop, and broader gates",
+        "Acceptance criteria, success criteria, and testing strategy remain distinct",
+        "No plan, task breakdown, or implementation code is produced"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}
