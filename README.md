@@ -1,6 +1,6 @@
 # oh-my-zz
 
-A focused plugin pack for Claude Code and Codex. It contains six engineering workflows that help clarify ideas, specifications, plans, and design decisions, then improve the resulting code through review and simplification.
+A focused plugin pack for Claude Code and Codex. It contains eight engineering workflows: six that clarify ideas, specifications, plans, and design decisions before improving code through review and simplification, plus two independent Markdown-only project-memory workflows.
 
 ## Included skills
 
@@ -12,6 +12,10 @@ A focused plugin pack for Claude Code and Codex. It contains six engineering wor
 | [grill-with-docs](skills/grill-with-docs/SKILL.md) | Stress-test a plan through dependency-aware questions while recording local context and ADRs |
 | [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Review changes for correctness, readability, architecture, security, and performance |
 | [code-simplification](skills/code-simplification/SKILL.md) | Reduce complexity while preserving behavior |
+| [project-memory-init](skills/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only project-memory schema without overwriting existing content |
+| [project-architecture-sync](skills/project-architecture-sync/SKILL.md) | Align a completed feature specification with target-project architecture and operations records |
+
+`project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the six existing skill workflows. They maintain target-project `docs/project-memory/` records, while sync may append alignment evidence to the supplied completed specification.
 
 A typical flow is:
 
@@ -23,6 +27,13 @@ idea-refine → spec-from-idea → planning-and-task-breakdown
                   implementation in target project
                                   ↓
                code-review-and-quality ↔ code-simplification
+```
+
+The independent project-memory flow is:
+
+```text
+project-memory-init → docs/project-memory/
+completed docs/specs/<feature>.md → project-architecture-sync
 ```
 
 ## Claude Code
@@ -48,7 +59,7 @@ Claude Code exposes these convenience commands:
 - `/review`
 - `/code-simplify`
 
-Invoke `idea-refine` or `grill-with-docs` directly by naming the skill in your request.
+Invoke `idea-refine`, `grill-with-docs`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. The project-memory skills intentionally have no Claude convenience commands.
 
 `/plan` is a thin entry point to the shared planning skill. The plugin also bundles a read-only `oh-my-zz:plan-reviewer` subagent, which independently reviews candidate plans before they can be marked final.
 
@@ -76,13 +87,13 @@ The planning skill asks Codex to create a fresh native subagent for independent 
 ## Repository layout
 
 ```text
-skills/                    Six shared Claude Code and Codex skills
+skills/                    Eight shared Claude Code and Codex skills
 agents/                    Claude Code read-only plan reviewer
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests
 .codex-plugin/             Codex plugin manifest
 .agents/plugins/           Codex marketplace entry
-references/                Checklists used by retained skills
+references/                Checklists and project-memory schema used by retained skills
 evals/                     Trigger and behavioral eval cases
 scripts/                   Repository validators and eval runner
 ```

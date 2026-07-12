@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "1.1.0",
-  "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, review, and simplification.",
+  "version": "1.2.0",
+  "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, project-memory initialization, architecture synchronization, review, and simplification.",
   "author": {
     "name": "laze44",
     "url": "https://github.com/laze44"
@@ -15,7 +15,7 @@
   },
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Focused workflows for ideas, specs, plans, design decisions, reviews, and simplification.",
+    "shortDescription": "Focused workflows for ideas, specs, plans, project memory, architecture records, reviews, and simplification.",
     "category": "Productivity"
   }
 }

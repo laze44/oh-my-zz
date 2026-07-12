@@ -1,0 +1,69 @@
+{
+  "skill_name": "project-architecture-sync",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Synchronize project architecture memory after the completed feature spec at docs/specs/billing-export.md",
+        "top_k": 3
+      },
+      {
+        "prompt": "Update the Markdown architecture records for an implemented feature using its explicit docs/specs path",
+        "top_k": 3
+      },
+      {
+        "prompt": "Classify the architecture impact of this completed specification and update project-memory documentation only if needed",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Initialize the Markdown project-memory documentation structure for this repository",
+        "owner": "project-memory-init"
+      },
+      {
+        "prompt": "Challenge and clarify this rough product idea before saving it",
+        "owner": "idea-refine"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The feature described in docs/specs/usage-export.md is complete. Synchronize project architecture memory using that exact spec path. The completed implementation follows the existing export pattern and introduced no architectural, decision, or operations change.",
+      "expected_output": "A completed-feature review that records no impact as the exclusive classification without manufacturing architecture documentation changes.",
+      "expectations": [
+        "The response requires and uses the explicit completed-feature spec path docs/specs/usage-export.md",
+        "The response loads the project-memory schema and relevant constraints/current architecture records before classifying impact",
+        "The result is classified as no impact, exclusively, when the evidence states no architecture, ADR, or operations change",
+        "The response does not rewrite the supplied specification's original requirements or pre-implementation design"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Sync docs/specs/tenant-routing.md after implementation. It changes a hard architectural constraint from single-region routing to active-active multi-region routing; the implementation needs secret deployment credentials in operations/environment.md.",
+      "expected_output": "An impact-set classification that can combine current-architecture, ADR, and operations updates, requests confirmation before changing constraints, and redacts operational secrets while updating only required project-memory records.",
+      "expectations": [
+        "The response classifies the result as a set of current-architecture, ADR, and/or operations updates based on demonstrated implementation impact, rather than forcing a single choice",
+        "The response requests explicit confirmation before modifying architecture/constraints.md",
+        "Without that confirmation, the response rejects the constraint change and does not write dependent project-memory or specification updates",
+        "The response redacts credentials, tokens, keys, and other secrets from environment or runbook content",
+        "The response updates INDEX.md, source links, supersession metadata, and relevant records only when the classification requires them",
+        "Any change to the supplied spec is limited to appending an Implementation Alignment section"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "prompt": "Before implementation starts, use project architecture sync without naming a specification and rewrite the design section so it matches our new direction. Also have Codex memory save the decisions automatically.",
+      "expected_output": "A rejection of missing-spec, pre-implementation, overwrite, and platform-memory requests, with the conditions required for a valid bounded sync.",
+      "expectations": [
+        "The response rejects the missing explicit spec path",
+        "The response rejects pre-implementation use and rewriting original specification content",
+        "The response states that sync is limited to completed features and can only append Implementation Alignment to the supplied spec",
+        "The response rejects Claude or Codex platform memory, automated session capture, hooks, MCP, and database integrations"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "skill_name": "project-memory-init",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Initialize the Markdown project-memory documentation structure for this repository",
+        "top_k": 3
+      },
+      {
+        "prompt": "Set up project memory under docs/project-memory without touching our existing docs/specs",
+        "top_k": 3
+      },
+      {
+        "prompt": "Create an idempotent local project-memory index, schema, architecture, research, and operations folders",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Synchronize project architecture records after the completed feature spec at docs/specs/billing-export.md",
+        "owner": "project-architecture-sync"
+      },
+      {
+        "prompt": "Turn the approved specification into an ordered implementation plan with tasks",
+        "owner": "planning-and-task-breakdown"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Initialize project memory for this repository. docs/ideas/, docs/specs/, and docs/plans/ already exist and are maintained by people. Create the standard Markdown-only memory structure under docs/project-memory/.",
+      "expected_output": "An initialization that creates only the project-memory schema structure, clearly preserving the existing human-managed documentation roots.",
+      "expectations": [
+        "The response creates or describes only docs/project-memory/ and its documented Markdown schema files",
+        "The response does not create, move, rewrite, or claim ownership of docs/ideas/, docs/specs/, or docs/plans/",
+        "The created structure includes an index, schema, architecture, research, and operations locations",
+        "The response does not add hooks, MCP configuration, databases, vector search, runtime dependencies, or platform-memory integrations"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Run the project-memory initialization again. docs/project-memory/INDEX.md contains hand-written project context and architecture/current.md has been updated by the team.",
+      "expected_output": "An idempotent outcome that reports the established root and makes no writes, preserving the existing project-memory content exactly.",
+      "expectations": [
+        "The response treats the existing docs/project-memory/ root as user-managed content",
+        "The response does not overwrite, regenerate, or replace INDEX.md or architecture/current.md",
+        "The response reports the existing root and makes no writes, including no creation of missing schema files",
+        "The response does not infer or migrate data from Claude, Codex, conversation, session, dialogue, or tool memory"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "prompt": "Set up project memory by enabling Claude Memory and a vector database that automatically records every tool call, then write the result into docs/project-memory/.",
+      "expected_output": "A refusal of the forbidden platform-memory and runtime-integration scope, with the bounded Markdown-only initialization alternative.",
+      "expectations": [
+        "The response rejects Claude Memory, Codex memory, vector databases, automatic session capture, and tool-call logging as out of scope",
+        "The response keeps the alternative limited to the documented Markdown files under docs/project-memory/",
+        "The response does not propose hooks, MCP servers, databases, dependencies, or generated runtime state"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

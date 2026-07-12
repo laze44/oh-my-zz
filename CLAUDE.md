@@ -10,8 +10,10 @@ This repository is a focused plugin pack for Claude Code and Codex.
 - `grill-with-docs` — interrogate plans and record clarified decisions locally
 - `code-review-and-quality` — review correctness and engineering quality
 - `code-simplification` — reduce complexity without changing behavior
+- `project-memory-init` — initialize the Markdown-only project-memory schema in a target project
+- `project-architecture-sync` — synchronize a completed feature specification with target-project architecture records
 
-Load the matching `skills/<name>/SKILL.md` before working on a task in that category. Do not route work to skills that are not in this list.
+The two project-memory skills are independent: they do not change or invoke the workflows of the six existing skills. Load the matching `skills/<name>/SKILL.md` before working on a task in that category. Do not route work to skills that are not in this list.
 
 ## Structure
 
@@ -21,7 +23,7 @@ skills/              Shared skill content
 .claude-plugin/      Claude Code manifests
 .codex-plugin/       Codex manifest
 .agents/plugins/     Codex marketplace entry
-references/          Review and planning checklists
+references/          Review, planning, and project-memory references
 evals/               Skill eval cases
 scripts/             Validation tools
 ```
@@ -32,6 +34,7 @@ scripts/             Validation tools
 node scripts/validate-skills.js
 node scripts/run-evals.js
 node scripts/validate-commands.js
+node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
 ```
 
