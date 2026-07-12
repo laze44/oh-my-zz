@@ -3,7 +3,7 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "Help me clarify and save this rough product idea",
+        "prompt": "Challenge and refine this rough product idea before saving it",
         "top_k": 3
       },
       {
@@ -34,10 +34,10 @@
     {
       "id": 1,
       "prompt": "Refine and save this idea: Create a shared internal record of recurring customer complaints so our support team can group duplicates and see which problems are becoming more common. We want to stop relying on scattered chat messages when deciding what to fix.",
-      "expected_output": "A concise idea draft created without clarification questions, alternative directions, codebase inspection, or implementation details.",
+      "expected_output": "A concise idea draft after a genuine challenge checkpoint, without manufacturing objections, asking unnecessary questions, or adding implementation details.",
       "expectations": [
-        "The response does not ask clarification questions because the motivation, goal, and direction are already clear",
-        "The response does not generate alternative directions",
+        "The response tests the idea's problem framing and causal logic but does not manufacture a weakness",
+        "The response does not ask clarification questions or generate alternatives because no material concern exists",
         "The draft contains Refined Idea, Motivation, Primary Goals, and outcome-level Rough Steps",
         "The draft does not contain MVP Scope, architecture, source paths, or implementation tasks",
         "No repository exploration or implementation action is attempted"
@@ -47,9 +47,10 @@
     {
       "id": 2,
       "prompt": "Refine this idea: I want something that summarizes our meetings with AI.",
-      "expected_output": "One focused clarification question that resolves the intended purpose before drafting.",
+      "expected_output": "A direct challenge to the solution-first framing followed by one focused question that resolves the intended purpose before drafting.",
       "expectations": [
         "Exactly one clarification question is asked in the response",
+        "The response identifies that the idea commits to AI summaries before establishing the outcome they should serve",
         "The question focuses on the outcome or purpose of the meeting summaries",
         "The response does not ask a fixed batch of discovery questions",
         "The response does not inspect a repository, propose architecture, or begin implementation"
@@ -77,6 +78,32 @@
         "The response does not infer architecture or existing components",
         "The idea is normalized without adding new goals or features",
         "Rough Steps remain outcome-level and contain no technical tasks"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 5,
+      "prompt": "Refine this idea: Require employees to publish daily activity rankings so people feel psychologically safe admitting mistakes.",
+      "expected_output": "A direct but constructive challenge to the conflict between public comparison and psychological safety, followed by one decision-focused question instead of a draft.",
+      "expectations": [
+        "The response identifies the material tension between public individual comparison and the stated psychological-safety goal",
+        "The response explains why the tension could invalidate or redirect the idea",
+        "The response offers a concrete better framing or asks whether public comparison is an intentional trade-off",
+        "Exactly one decision-focused question is asked",
+        "The response does not draft, inspect the repository, or introduce implementation details before the concern is reconciled"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 6,
+      "prompt": "Continue refining this idea with my decision: I understand that public employee rankings may discourage openness, but transparent individual comparison is non-negotiable. Rank employees by how consistently they document mistakes and lessons learned; the goal remains to make mistakes easier to discuss.",
+      "expected_output": "A refined draft that preserves the user's chosen direction while explicitly recording the unresolved causal assumption and accepted trade-off.",
+      "expectations": [
+        "The response does not silently remove or weaken the non-negotiable public-ranking mechanism",
+        "The draft records the assumption that rankings can increase accountability without preventing honest mistake reporting",
+        "The draft records the trade-off between transparent comparison and psychological safety",
+        "The response does not pretend the earlier concern has been resolved",
+        "The response remains at idea level without architecture or implementation tasks"
       ],
       "trust_level": "provisional"
     }

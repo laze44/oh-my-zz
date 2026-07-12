@@ -6,7 +6,7 @@ A focused plugin pack for Claude Code and Codex. It contains six engineering wor
 
 | Skill | Purpose |
 | --- | --- |
-| [idea-refine](skills/idea-refine/SKILL.md) | Clarify intent and save a concise idea draft before specification or planning |
+| [idea-refine](skills/idea-refine/SKILL.md) | Challenge assumptions, improve the idea, and save a concise draft before specification or planning |
 | [spec-from-idea](skills/spec-from-idea/SKILL.md) | Expand a clarified idea into an implementation-ready specification |
 | [planning-and-task-breakdown](skills/planning-and-task-breakdown/SKILL.md) | Convert requirements into a repository-grounded plan, then independently review it before finalization |
 | [grill-with-docs](skills/grill-with-docs/SKILL.md) | Stress-test a plan through dependency-aware questions while recording local context and ADRs |
