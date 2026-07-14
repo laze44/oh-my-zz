@@ -67,6 +67,8 @@ const bundledHooks = readJson(HOOKS_PATH);
 assert(claudePlugin.name === PLUGIN_NAME, `Claude plugin name must be ${PLUGIN_NAME}`);
 assert(/project memory/i.test(claudePlugin.description) && /architecture/i.test(claudePlugin.description),
   'Claude plugin description must cover project memory and architecture synchronization');
+assert(/discovery/i.test(claudePlugin.description) && /approved architecture synchronization/i.test(claudePlugin.description),
+  'Claude plugin description must cover opt-in discovery and explicitly approved architecture synchronization');
 assert(claudePlugin.skills === './skills', 'Claude plugin must load ./skills');
 assert(Array.isArray(claudePlugin.commands) && claudePlugin.commands.length === 1 &&
   claudePlugin.commands[0] === './.claude/commands',
@@ -78,21 +80,29 @@ assert(typeof claudeMarketplace.metadata?.description === 'string' && claudeMark
   'Claude marketplace must include a description');
 assert(/project-memory/i.test(claudeMarketplace.metadata.description) && /architecture/i.test(claudeMarketplace.metadata.description),
   'Claude marketplace description must cover project-memory initialization and architecture synchronization');
+assert(/discovery/i.test(claudeMarketplace.metadata.description) && /proposal-first/i.test(claudeMarketplace.metadata.description),
+  'Claude marketplace metadata must cover opt-in discovery and proposal-first synchronization');
 assert(codexPlugin.skills === './skills/', 'Codex plugin must load ./skills/');
 assert(codexPlugin.name === PLUGIN_NAME, `Codex plugin name must be ${PLUGIN_NAME}`);
-assert(codexPlugin.version === '1.4.0', 'Codex plugin version must be 1.4.0 for the handoff skill addition');
+assert(codexPlugin.version === '1.4.1', 'Codex plugin version must be 1.4.1 for the project-memory discovery and proposal-first sync update');
 assert(codexPlugin.hooks === undefined,
   'Codex plugin must use default hooks/hooks.json discovery rather than overriding it with an inline hooks object');
 assert(/project-memory/i.test(codexPlugin.description) && /architecture/i.test(codexPlugin.description),
   'Codex plugin description must cover project-memory initialization and architecture synchronization');
+assert(/discovery/i.test(codexPlugin.description) && /proposal/i.test(codexPlugin.description),
+  'Codex plugin description must cover opt-in discovery and proposal-first synchronization');
 assert(/project memory/i.test(codexPlugin.interface?.shortDescription) && /architecture/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover project memory and architecture records');
+assert(/discovery/i.test(codexPlugin.interface?.shortDescription) && /proposal/i.test(codexPlugin.interface?.shortDescription),
+  'Codex plugin short description must cover opt-in discovery and proposal-first synchronization');
 assert(codexPlugin.homepage === REPOSITORY && codexPlugin.repository === REPOSITORY,
   'Codex plugin homepage and repository must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
 assert(/Ten focused engineering skills/.test(claudeMarketplace.plugins[0].description),
   'Claude marketplace must describe the ten-skill scope');
+assert(/discovery/i.test(claudeMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(Array.isArray(codexMarketplace.plugins) && codexMarketplace.plugins.length === 1,
   'Codex marketplace must contain exactly one plugin');
 assert(claudeMarketplace.plugins[0].name === PLUGIN_NAME,
@@ -104,6 +114,8 @@ assert(codexMarketplace.plugins[0].name === PLUGIN_NAME,
   `Codex marketplace plugin name must be ${PLUGIN_NAME}`);
 assert(/Ten focused engineering skills/.test(codexMarketplace.plugins[0].description),
   'Codex marketplace must describe the ten-skill scope');
+assert(/discovery/i.test(codexMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(codexMarketplace.plugins[0].source?.path === './',
   'Codex marketplace plugin source must point at the repository root');
 

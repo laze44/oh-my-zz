@@ -3,21 +3,21 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "Synchronize project architecture memory after the completed feature spec at docs/specs/billing-export.md",
+        "prompt": "Review the architecture-memory impact of the current worktree relative to HEAD and show drafts before writing anything",
         "top_k": 3
       },
       {
-        "prompt": "Update the Markdown architecture records for an implemented feature using its explicit docs/specs path",
+        "prompt": "Propose project-memory and ADR changes for the completed implementation in this Git range, then wait for my approval",
         "top_k": 3
       },
       {
-        "prompt": "Classify the architecture impact of this completed specification and update project-memory documentation only if needed",
+        "prompt": "Synchronize architecture memory after I approve the proposal for docs/specs/billing-export.md",
         "top_k": 3
       }
     ],
     "negative": [
       {
-        "prompt": "Initialize the Markdown project-memory documentation structure for this repository",
+        "prompt": "Initialize project memory and show me an AGENTS.md discovery patch before writing it",
         "owner": "project-memory-init"
       },
       {
@@ -29,183 +29,170 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "The feature described in docs/specs/usage-export.md is complete. Synchronize project architecture memory using that exact spec path. The completed implementation follows the existing export pattern and introduced no current architecture, real architecture, domain language, decision, or operations change.",
-      "expected_output": "A completed-feature pre-commit review that records no impact as the exclusive classification without manufacturing architecture documentation changes.",
+      "prompt": "The implementation is complete. Review the current worktree relative to HEAD for project-memory impact. No docs/specs file exists. Current code and targeted tests show a changed cross-module export contract; generate drafts only and do not write files.",
+      "expected_output": "A no-spec, zero-write review that fingerprints the scope, selectively reads relevant memory, and presents exact proposed records and evidence.",
       "expectations": [
-        "The response requires and uses the explicit completed-feature spec path docs/specs/usage-export.md",
-        "The response loads the project-memory schema and relevant constraints/current, real-architecture, domain, and active-ADR records before classifying impact when the v1 profile applies",
-        "The result is classified as no impact, exclusively, with a separately reported no-ADR outcome when the evidence states no current architecture, real architecture, domain language, decision, or operations change",
-        "The response treats the exact completed specification as the primary validation path and rechecks the current worktree before commit",
-        "The response does not rewrite the supplied specification's original requirements or pre-implementation design"
+        "The response accepts the concrete current-worktree-versus-HEAD scope without requiring a docs/specs path",
+        "The response reads and validates the schema, index, reader protocol, and only records relevant to the export contract",
+        "The response reports a reproducible scope fingerprint with baseline, normalized paths, staged/unstaged/untracked content state, selected wiki/ADR state, impact classification, sources, excluded records, and precise itemized Markdown drafts",
+        "The response makes no project-memory or specification write during review"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 2,
-      "prompt": "Sync docs/specs/tenant-routing.md after implementation. It changes a hard-to-reverse architectural constraint from single-region routing to active-active multi-region routing; durable code, tests, and stable provider documentation establish why the trade-off was selected over the single-region alternative. The implementation needs secret deployment credentials in operations/environment.md.",
-      "expected_output": "An impact-set classification that can combine current-architecture, real-architecture, governed ADR, and operations updates, requests confirmation before changing constraints, and redacts operational secrets while updating only required project-memory records.",
+      "prompt": "Apply approved proposal items A-current and C-real-architecture from the current conversation. Reject B-operations. The implementation scope, schema, selected records, active ADRs, and tests are unchanged.",
+      "expected_output": "A partial approved apply that writes only the independent approved items after revalidation.",
       "expectations": [
-        "The response classifies the result as a set of current-architecture, real-architecture, and/or operations updates with a separate ADR outcome, rather than forcing a single choice",
-        "The response creates an ADR only if the hard-to-reverse, surprising-without-context, and real-trade-off gates plus durable Context/Decision/Why evidence are all satisfied",
-        "The response requests explicit confirmation before modifying architecture/constraints.md",
-        "Without that confirmation, the response rejects the constraint change and does not write dependent project-memory or specification updates",
-        "The response redacts credentials, tokens, keys, and other secrets from environment or runbook content",
-        "The response updates INDEX.md, source links, supersession metadata, and relevant records only when the classification requires them",
-        "Any change to the supplied spec is limited to appending an Implementation Alignment section"
+        "The response requires a current-conversation proposal with explicit approved IDs",
+        "The response recomputes the scope fingerprint, including staged/unstaged/untracked content and selected wiki/ADR state, and revalidates the schema, selected records, active ADRs, and evidence before writing",
+        "The response writes only A-current and C-real-architecture and their required indexes or cues",
+        "The response leaves rejected B-operations and every unapproved item unchanged"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 3,
-      "prompt": "Before implementation starts, use project architecture sync without naming a specification and rewrite the design section so it matches our new direction. Also have Codex memory save the decisions automatically.",
-      "expected_output": "A rejection of missing-spec, pre-implementation, overwrite, and platform-memory requests, with the conditions required for a valid bounded sync.",
+      "prompt": "Before implementation starts, infer the scope from our conversation, rewrite the design to match a new direction, and automatically save the decision in Codex memory.",
+      "expected_output": "A rejection of pre-implementation, missing-scope, rewrite, and platform-memory requests.",
       "expectations": [
-        "The response rejects the missing explicit spec path",
-        "The response rejects pre-implementation use and rewriting original specification content",
-        "The response states that sync is limited to completed features and can only append Implementation Alignment to the supplied spec",
-        "The response rejects Claude or Codex platform memory, automated session capture, hooks, MCP, and database integrations"
+        "The response rejects a missing or ambiguous concrete implementation scope rather than a missing specification alone",
+        "The response rejects pre-implementation sync and rewriting requirements or pre-implementation design",
+        "The response rejects Codex or Claude platform memory, automated session capture, hooks, MCP, and database integrations"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 4,
-      "prompt": "Before committing the completed feature at docs/specs/pipeline-recovery.md, synchronize project architecture memory. docs/plans/pipeline-recovery.md says which files to inspect and will be deleted after the commit. The current code and pipeline recovery tests verify a durable change to rollback invariants, and an ADR explains the selected recovery policy.",
-      "expected_output": "A pre-commit assessment that treats the completed specification as the primary validation path, uses the transient plan only to focus inspection, and updates real architecture from durable evidence with current-worktree and link revalidation.",
+      "prompt": "Review completed implementation range main..HEAD with optional docs/specs/pipeline-recovery.md. Durable code and pipeline recovery tests verify changed rollback invariants, and an ADR explains the selected policy. Do not apply yet.",
+      "expected_output": "A proposal that treats the optional spec as scope context, uses durable evidence for real architecture, and does not append alignment during review.",
       "expectations": [
-        "The response uses the exact completed specification as the primary validation path after implementation and before commit",
-        "The response may use docs/plans/pipeline-recovery.md to narrow inspection but does not cite it as a verified source or retain it as durable evidence",
-        "The response classifies real-architecture when the durable code, tests, and ADR demonstrate a stable functional-design change",
-        "The response does not create a new ADR merely because an existing ADR was used as durable evidence",
-        "The response adds or updates the smallest applicable architecture/real_arch record and updates architecture/real_arch/INDEX.md plus the top-level INDEX.md when required by the schema",
-        "The response cites durable code, test, ADR, or stable external-documentation evidence and revalidates source links and the current worktree immediately before commit",
-        "The response does not add a Git hook, platform-memory integration, or runtime state"
+        "The response treats docs/specs/pipeline-recovery.md as optional scope context rather than durable Sources evidence",
+        "The response classifies real-architecture when code, tests, and an ADR establish a stable functional change",
+        "The response proposes the smallest real_arch record and required index updates without writing them",
+        "The response proposes but does not append an Implementation Alignment before approved apply"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 5,
-      "prompt": "Synchronize the completed docs/specs/billing-language.md in a v1 project. Durable implementation code and tests establish that a Bill is the canonical term for a finalized charge, and the team must avoid calling it an Invoice. The plan and a Grill draft mention unrelated temporary terminology.",
-      "expected_output": "A v1 sync that creates or updates only the evidenced domain vocabulary, with per-term durable sources and no promotion of temporary terminology.",
+      "prompt": "Apply approved memory-item IDs and the separately approved Alignment ID for optional docs/specs/pipeline-recovery.md after all revalidation passes.",
+      "expected_output": "An approved apply that updates only approved memory records and appends one alignment after successful writes.",
       "expectations": [
-        "The response validates and reads the v1 reader protocol before writing",
-        "The response classifies domain-language when the durable implementation and tests support a stable shared term",
-        "The response writes or describes a CONTEXT entry with canonical term, definition, use boundary, Avoid, lifecycle, replacement, and resolving per-term Sources",
-        "The response does not cite or promote the specification, plan, chat, or Grill draft as a domain source",
-        "The response keeps the glossary separate from current implementation facts, real-architecture models, constraints, and ADRs"
+        "The response appends exactly one Implementation Alignment only because its distinct Alignment ID was explicitly approved and all approved project-memory writes succeed",
+        "The response preserves every original specification paragraph",
+        "The alignment records scope/evidence, broad impact set, ADR outcome, changed records, source links, profile outcome, and constraint status"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 6,
-      "prompt": "Synchronize the completed docs/specs/cache-index.md in a v1 project. Verified code and tests changed a current architecture fact, but the change is routine, easy to reverse, and has no non-obvious trade-off or durable rationale beyond the implementation itself.",
-      "expected_output": "An architecture update with an explicit no-ADR result, not a manufactured ADR or no-impact classification.",
+      "prompt": "Review a current-worktree scope that changes a hard-to-reverse routing constraint to active-active multi-region routing. Durable code, tests, and provider documentation establish the trade-off. It also needs a redacted operations update. Do not write yet.",
+      "expected_output": "A zero-write proposal that can combine architecture, operations, a governed ADR draft, and a separately confirmed constraint draft.",
       "expectations": [
-        "The response classifies current-architecture from durable evidence",
-        "The response reports no-ADR separately from the broad architecture impact set",
-        "The response does not create an ADR when the qualification gates or durable rationale evidence are absent"
+        "The response classifies the complete applicable impact set separately from the ADR outcome",
+        "The response drafts an ADR only after all hard-to-reverse, surprising, trade-off, and durable rationale gates pass",
+        "The response displays the exact constraints.md edit and requires separate explicit confirmation in addition to proposal approval",
+        "The response redacts credentials, tokens, keys, and other secrets from the operations draft"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 7,
-      "prompt": "Synchronize completed docs/specs/queue-transport.md in a v1 project. Durable code, tests, and stable vendor documentation prove a hard-to-reverse choice of queue transport over a real alternative; the decision would be surprising without context. An ADR named 2026-07-13-queue-transport.md already exists.",
-      "expected_output": "A qualifying active ADR with durable Context/Decision/Why evidence that allocates the first available deterministic date-slug filename without overwriting the existing record.",
+      "prompt": "After approving every non-constraint item, apply the multi-region routing proposal but do not separately confirm the exact constraints.md text.",
+      "expected_output": "A safe non-apply outcome for the dependent proposal because the required exact constraint confirmation is absent.",
       "expectations": [
-        "The response applies all three ADR qualification gates and requires durable rationale evidence",
-        "The response creates or describes an active ADR with a compact Context/Decision/Why statement and optional alternatives or consequences only when useful",
-        "The response normalizes the English slug and allocates 2026-07-13-queue-transport-2.md after detecting the occupied base filename",
-        "The response adds resolving Sources and an INDEX entry with the ADR status"
+        "The response does not treat batch approval as consent for a constraints.md change",
+        "The response makes no dependent project-memory or optional specification write",
+        "The response preserves the proposal and asks for the separate exact-text confirmation"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 8,
-      "prompt": "Synchronize completed docs/specs/session-store.md in a v1 project. Durable evidence establishes that the active ADR at architecture/decisions/2025-01-10-redis-session-store.md must be replaced by one new hard-to-reverse session-store decision; no other active ADR is relevant.",
-      "expected_output": "A one-to-one ADR supersession that preserves the old decision text and records reciprocal lifecycle links.",
+      "prompt": "A completed scoped implementation contradicts an active ADR, but the team has only a temporary discussion and two plausible predecessor ADRs. Review it without writing.",
+      "expected_output": "A conflict-safe proposal stop with no ordinary architecture draft that would normalize the conflict.",
       "expectations": [
-        "The response creates a new active ADR with a resolving Supersedes link to exactly the named active predecessor",
-        "The response changes the old ADR only through permitted status and reciprocal Superseded by metadata, preserving its title and substantive body",
-        "The response indexes both records with their current statuses and validates every reciprocal link",
-        "The response does not support a supersession when several predecessors are plausible or the relationship is ambiguous"
+        "The response identifies the relevant active ADR conflict during review",
+        "The response rejects temporary discussion as durable ADR rationale evidence and rejects ambiguous supersession",
+        "The response makes no project-memory or optional specification write and does not draft a workaround through current.md or real_arch"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 9,
-      "prompt": "Synchronize completed docs/specs/blob-store.md in a v1 project. Verified implementation now contradicts the active ADR at architecture/decisions/2025-02-01-s3-only.md, but the team only has a temporary design discussion and cannot establish why the new option was chosen. Two older ADRs might be predecessors.",
-      "expected_output": "A conflict-safe stop with no project-memory write and no Implementation Alignment append.",
+      "prompt": "Review a completed scope that changes only a routine local cache implementation detail. It is easy to reverse, has no public contract or stable vocabulary impact, and all relevant tests pass.",
+      "expected_output": "A targeted no-impact proposal that avoids unrelated wiki reads and does not manufacture an ADR.",
       "expectations": [
-        "The response identifies the conflict with the relevant active ADR",
-        "The response rejects temporary discussion as ADR rationale evidence and does not infer a replacement decision",
-        "The response makes no current-architecture, real-architecture, domain, ADR, operations, or specification-alignment write",
-        "The response reports that ambiguous multiple predecessors also prevent supersession"
+        "The response uses the scope cues to skip unrelated domain, operations, and ADR records",
+        "The response reports broad no-impact with a separate no-ADR outcome",
+        "The response produces no architecture-memory draft or automatic write"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 10,
-      "prompt": "Synchronize completed docs/specs/shipping-zone.md in a target whose SCHEMA.md says project-memory-llm-wiki-v1, but docs/agents/project-memory.md is missing its ADR Conflict Rule heading.",
-      "expected_output": "A safe v1 precondition failure that does not repair the reader protocol or write project memory or the specification.",
+      "prompt": "Review a completed scope where code and tests establish that Bill is the canonical term for a finalized charge and Invoice must be avoided. A plan and a chat mention unrelated terms.",
+      "expected_output": "A selective v1 domain-language proposal with durable per-term evidence and no promotion of temporary wording.",
       "expectations": [
-        "The response validates the protocol marker and all required headings in order",
-        "The response stops without recreating, normalizing, or otherwise repairing docs/agents/project-memory.md",
-        "The response makes no project-memory or Implementation Alignment write"
+        "The response targets domain/CONTEXT.md only when the stable term has durable code and test evidence",
+        "The response drafts canonical term, definition, use boundary, Avoid, lifecycle, replacement, and resolving per-term Sources",
+        "The response does not cite the plan or chat and keeps vocabulary separate from implementation facts and ADRs"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 11,
-      "prompt": "Synchronize completed docs/specs/metrics-rollup.md in a valid existing self-contained project-memory schema that has no project-memory-llm-wiki-v1 marker and does not define architecture/real_arch/. Durable implementation evidence changes current architecture and operations, and the feature also suggests a new glossary term and ADR.",
-      "expected_output": "A legacy-compatible non-governed sync that follows the existing schema but neither migrates it nor writes v1 domain or ADR records.",
+      "prompt": "Review current worktree relative to HEAD, then the user changes a staged scoped file, an unstaged scoped file, an in-scope untracked file, and an active ADR before approving the proposal.",
+      "expected_output": "A stale-proposal rejection that returns to review without applying any old draft.",
       "expectations": [
-        "The response detects the legacy schema from the absent v1 marker and reports a user-managed upgrade requirement",
-        "The response may update only legacy-permitted current architecture, real architecture, and operations records from durable evidence",
-        "The response does not create docs/agents/project-memory.md, domain/, a domain INDEX entry, or a governed ADR",
-        "The response records the legacy limitation in the permitted Implementation Alignment outcome"
+        "The response detects changed staged, unstaged, and untracked scope content plus changed relevant ADR state before apply",
+        "The response discards the old proposal and requires a new review",
+        "The response makes no project-memory or specification write from the stale proposal"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 12,
-      "prompt": "Synchronize completed docs/specs/ingress-policy.md in a v1 project. Existing current architecture, real architecture, domain language, and operations records remain accurate, but durable code, tests, and stable external documentation establish a hard-to-reverse ingress policy choice over a real alternative that would surprise a future reader without context.",
-      "expected_output": "A separately governed ADR creation with broad no-impact, rather than an internally contradictory classification.",
+      "prompt": "Review a completed implementation scope in a valid existing self-contained legacy schema without the v1 marker. Durable evidence changes current architecture and operations, and the scope suggests a glossary term and new ADR.",
+      "expected_output": "A legacy-compatible review that proposes only legacy-permitted records and reports the upgrade limitation.",
       "expectations": [
-        "The response reports broad no-impact only for current-architecture, real-architecture, domain-language, and operations records",
-        "The response separately selects a qualifying new ADR outcome and creates the governed ADR from durable rationale evidence",
-        "The response does not claim that broad no-impact prohibits the separate ADR record or its INDEX update"
+        "The response detects the legacy profile and follows only its own permitted current architecture, real architecture, and operations records",
+        "The response does not create a v1 protocol, domain context, retrieval cue requirement, or governed ADR",
+        "The response treats an optional supplied spec alignment as apply-only and reports the user-managed upgrade requirement"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 13,
-      "prompt": "Synchronize completed docs/specs/worker-pool.md in a target whose SCHEMA.md contains the exact project-memory-llm-wiki-v1 marker and reader protocol, but whose project-memory root is missing the domain directory and architecture/decisions directory.",
-      "expected_output": "A structural-v1 safe stop that does not repair the incomplete user-managed wiki or append alignment.",
+      "prompt": "Review current worktree relative to HEAD in a target whose SCHEMA.md has the v1 marker but whose docs/agents/project-memory.md has an extra team-specific note.",
+      "expected_output": "A safe v1 precondition failure with no proposal that could later be applied.",
       "expectations": [
-        "The response validates all required v1 schema sections, canonical paths, INDEX sections, and the reader protocol before classifying impact",
-        "The response stops when required v1 directories are absent even if the marker and protocol exist",
-        "The response does not create missing directories, normalize INDEX.md, write project-memory records, or append Implementation Alignment"
+        "The response validates the exact reader protocol before classification",
+        "The response stops without repairing, normalizing, or bypassing the malformed protocol",
+        "The response makes no project-memory or optional specification write"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 14,
-      "prompt": "Synchronize completed docs/specs/checkout-label.md in a valid v1 project. A temporary specification and a local Grill draft disagree about whether the canonical term should be Purchase or Order, but durable code and tests do not establish either as stable shared vocabulary.",
-      "expected_output": "A v1 sync that skips the ambiguous glossary term rather than creating or changing domain context from temporary material.",
+      "prompt": "The current proposal for optional docs/specs/export.md has A-current and B-implementation-alignment. I explicitly approve A-current and reject B-implementation-alignment. The fingerprint and all evidence still match.",
+      "expected_output": "A partial apply that updates only A-current and leaves the specification byte-for-byte unchanged.",
       "expectations": [
-        "The response treats the specification and Grill draft as inspection aids rather than durable domain Sources",
-        "The response does not create or amend a CONTEXT term when durable evidence is absent or conflicting",
-        "The response reports the unresolved vocabulary inconsistency without using domain context to override verified implementation or an active ADR"
+        "The response treats Implementation Alignment as a separate approval item rather than an automatic side effect of memory approval",
+        "The response applies only the explicitly approved current-architecture item after revalidation",
+        "The response does not append, create, or otherwise modify docs/specs/export.md"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 15,
-      "prompt": "Synchronize completed docs/specs/audit-retention.md in a target whose SCHEMA.md has the project-memory-llm-wiki-v1 marker and all directories, but omits its Metadata and statuses and Redaction policy sections. Its reader protocol has the required headings plus a team-specific project note.",
-      "expected_output": "A self-contained-v1 validation failure that preserves the user-managed schema and protocol without writes.",
+      "prompt": "The current proposal concludes no-impact for optional docs/specs/local-cache.md and includes an Alignment item. I explicitly approve the no-impact conclusion and that Alignment item after the fingerprint revalidation passes.",
+      "expected_output": "A no-impact apply that writes no project-memory record and appends exactly one approved Implementation Alignment.",
       "expectations": [
-        "The response validates every required self-contained v1 schema section and canonical INDEX section, not only the profile marker and paths",
-        "The response rejects a locally extended reader protocol because v1 requires the exact project-fact-free template",
-        "The response makes no repair, project-memory update, or Implementation Alignment append"
+        "The response keeps no-impact separate from the independently approved Alignment item",
+        "The response writes no current-architecture, real-architecture, domain-language, operations, or ADR record",
+        "The response appends exactly one alignment only after the approved no-impact outcome completes"
       ],
       "trust_level": "provisional"
     }

@@ -1,30 +1,75 @@
 ---
 name: project-memory-init
-description: Initializes a target project's Markdown-only LLM-wiki project-memory schema and reader protocol without overwriting user-managed content. Use when a project needs its first docs/project-memory structure. Do not use to sync a completed feature or to migrate platform, session, or tool memory.
+description: Initializes a target project's Markdown-only LLM-wiki project-memory schema and, only after explicit confirmation, can append a managed discovery block to selected root agent instructions. Use when a project needs its first docs/project-memory structure or an existing valid v1 wiki needs its ordinary agents to discover it selectively.
 ---
 
 # Project Memory Initialization
 
 ## Overview
 
-Create the fixed `project-memory-llm-wiki-v1` layout in a target project exactly once. The result is a small set of Markdown records plus one reader protocol that humans and explicitly directed agents can inspect; it is not an automatic memory system or global agent configuration.
+Create the fixed `project-memory-llm-wiki-v1` layout in a target project exactly once. A fresh setup can also enable ordinary Codex and Claude agents to discover that wiki selectively, but discovery configuration is an explicit, previewed, marker-bounded append to user-owned root instruction files; it is never a hidden side effect.
+
+The result remains inspectable Markdown. It creates project facts only under `docs/project-memory/`, creates the reader protocol at `docs/agents/project-memory.md` only during a fresh initialization, and may append one owned discovery block at the end of a user-selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md`. It does not add hooks, runtime state, platform memory, databases, vector search, nested instruction files, or automatic memory writes.
 
 Read [the shared project-memory schema](../../references/project-memory-schema.md) before taking action.
 
 ## When to Use
 
-- A target project needs a first `docs/project-memory/` structure.
-- The user wants a Markdown-only index, reader protocol, domain-vocabulary location, architecture record locations, durable functional/logic design index, research location, and operations record locations.
-- The target project's `docs/project-memory/` root does not exist.
+- A target project needs its first `docs/project-memory/` structure.
+- A user wants that fresh setup to also enable selective wiki consultation for ordinary Codex and/or Claude tasks.
+- A target already has a valid v1 project-memory root and the user explicitly asks to enable or remove its managed discovery block.
 
-Do not use this skill to update an implemented feature; use `project-architecture-sync` with its explicit completed specification path. Do not use it to create or migrate Claude/Codex memory, hooks, MCP servers, databases, vector search, dependencies, or conversation/session/tool logs.
+Do not use this skill to synchronize an implemented change; use `project-architecture-sync` after implementation. Do not use it to migrate a user-managed schema, rewrite an existing agent instruction file, create nested `AGENTS.md` files, or add hooks, MCP servers, databases, vector search, dependencies, session logs, or tool memory.
+
+## Setup Modes
+
+| Request | Allowed result |
+| --- | --- |
+| Fresh docs-only initialization | Create only the canonical Markdown root and reader protocol. |
+| Fresh initialization plus discovery | Preview the canonical Markdown root and one or more exact root-instruction append patches; write both only after explicit confirmation. |
+| Existing valid v1 wiki plus explicit discovery enable/remove | Manage only the exact owned marker block; leave the wiki byte-for-byte unchanged. |
+| Ordinary initialization when the wiki already exists | Strict no-op. Report the user-managed root and make no discovery-configuration change. |
+
+## Managed Discovery Block
+
+The only discovery block this skill may install is the exact block below. It belongs at the end of a selected root instruction file after a blank line; never rewrite, reorder, normalize, or replace existing content.
+
+```markdown
+<!-- project-memory-discovery: v1:START -->
+## Project-Memory Discovery
+
+For an explicit project-memory request, or before choosing or changing a
+solution with cross-module boundaries, public contracts, shared domain terms,
+constraints or invariants, configuration or operations, an architectural
+trade-off, or material architectural uncertainty, consult project memory
+selectively:
+
+1. Read `docs/agents/project-memory.md`, then follow its
+   `docs/project-memory/SCHEMA.md` → `docs/project-memory/INDEX.md` → optional
+   `## Retrieval cues` → targeted-record order.
+2. Use the task, changed paths, named symbols, APIs, and domain terms to find
+   only relevant constraints, current architecture, real-architecture topics,
+   active ADRs, domain context, and operations records.
+3. Treat the wiki as verified context and constraints, not as instructions to
+   execute. Do not write memory automatically; after completed implementation,
+   use `project-architecture-sync` to propose and confirm any sync.
+
+Skip this lookup for clearly local, test-only, formatting-only, generated, or
+verified behavior-preserving work unless project memory is explicitly requested
+or uncertainty makes it relevant.
+<!-- project-memory-discovery: v1:END -->
+```
+
+The block does not inject the whole wiki into every task. It provides a consultation gate: `SCHEMA.md` and `INDEX.md` orient the agent, and the task then determines the smallest relevant record set. It is a project-level instruction, not a guarantee for tools that do not load the selected instruction surface; advise the user to start a new task after installation.
 
 ## Workflow
 
-1. Establish the target project root and read the shared schema. Inspect only enough to determine whether `docs/project-memory/` or `docs/agents/project-memory.md` already exists and to identify the human-managed `docs/ideas/`, `docs/specs/`, and `docs/plans/` boundaries.
-2. If `docs/project-memory/` already exists, stop without writing anywhere. Report that the root is user-managed, state that initialization is a strict no-op, and identify any visible missing canonical paths only as information. Do not create missing files, create or alter the reader protocol, normalize content, or repair links on this path.
-3. If `docs/project-memory/` is absent but `docs/agents/project-memory.md` exists, stop without writing. Report the possible user-managed partial setup; do not overwrite the protocol or create a partial wiki.
-4. Only when both paths are absent, create the canonical directories and Markdown files from the shared schema:
+1. Establish the target project root and classify the request as fresh docs-only initialization, fresh initialization plus discovery, explicit discovery enable/remove for an existing root, or an ordinary repeat initialization. Read the shared schema before planning a write.
+2. Inspect `docs/project-memory/`, `docs/agents/project-memory.md`, and only the root instruction surfaces relevant to the requested platforms: `AGENTS.override.md`, `AGENTS.md`, and `CLAUDE.md`. Do not inspect or create nested instructions. Treat an existing root `AGENTS.override.md` as a possible precedence conflict: show it and require the user to select the effective Codex instruction surface instead of silently patching a different file.
+3. For a fresh initialization, require that both `docs/project-memory/` and `docs/agents/project-memory.md` are absent. If the root already exists and the user did not explicitly request discovery enable/remove, stop with the existing strict no-op. If the protocol exists without the root, stop with the existing partial-setup no-op. For explicit discovery enable, require a **fully valid v1 root** under the shared schema's structural validation: self-contained schema, every canonical path and required index section, and the exact reader protocol. Do not point ordinary agents at malformed or legacy user-managed memory. For explicit removal, require exactly one complete byte-for-byte matching owned block at the selected file's end.
+4. For discovery enable, inspect the selected root instruction file before proposing a patch. Report an idempotent no-op only when exactly one complete byte-for-byte matching owned block is at the file's end after its required blank line. If it has duplicate, partial, nested, moved, or modified discovery markers, or a hand-written project-memory directive outside the owned block, stop without merging or overwriting it. If a selected file does not exist, require separate explicit authorization to create that minimal root instruction file; do not create it merely because the wiki is being initialized.
+5. Before any discovery configuration, present one complete preview: the canonical docs paths to be created, the selected instruction files, their exact append or removal diffs, the platform coverage, and the discovery gate's new-task limitation. A generic initialization request is not consent to modify `AGENTS.md` or `CLAUDE.md`; wait for explicit confirmation of that preview. A docs-only fresh initialization has no instruction-file diff and proceeds under the user's ordinary initialization request without a discovery confirmation.
+6. After discovery confirmation, or immediately before a docs-only creation, re-read the protected paths and selected instruction files. If any previewed file, marker state, schema precondition, or target selection changed, discard the preview and start again. For a fresh root, create only the canonical layout and exact self-contained schema templates:
 
    ```text
    docs/agents/project-memory.md
@@ -35,43 +80,43 @@ Do not use this skill to update an implemented feature; use `project-architectur
    docs/project-memory/operations/{environment.md,runbooks.md}
    ```
 
-   Use the v1 templates exactly: make the target `SCHEMA.md` a self-contained copy of the layout and rules in the shared schema rather than a link to this skill pack, and create the protocol only from the reader-protocol template. `docs/agents/project-memory.md` is the sole authorized write outside `docs/project-memory/`; do not edit target `AGENTS.md`, `CLAUDE.md`, or any other agent configuration. Create no placeholder files in `domain/`, `decisions/`, `research/`, or `architecture/real_arch/`; initialize `architecture/real_arch/INDEX.md` only. `real_arch` is for accepted, durable functional/logic design models, not raw source material, current implementation facts, or temporary task plans. Do not create, move, edit, or claim ownership of `docs/ideas/`, `docs/specs/`, or `docs/plans/`.
-5. Keep the initialization Markdown-only. Do not infer content from conversations, session history, tool calls, Claude/Codex built-in memory, or external runtime state. Do not add hooks, MCP configuration, databases, vector search, dependencies, generated logs, automation, or a reader-protocol reference in another instruction file.
-6. Run the shared link and index checks. Report the created paths, the untouched human-managed roots, and that future architecture changes require durable evidence and `project-architecture-sync`. Ideas, specifications, plans, chats, and local design drafts may scope a future impact check, but they are temporary documents and never persistent `Sources` evidence.
+   Do not create `domain/CONTEXT.md`, decisions, research records, or real-architecture topic placeholders. The target `SCHEMA.md` must be a self-contained copy of the shared schema; the reader protocol must match its exact template. Do not alter `docs/ideas/`, `docs/specs/`, or `docs/plans/`.
+7. Append or remove only the exact owned marker block that was previewed. Existing instruction content remains untouched; removal deletes only one complete matching block and no adjacent user text. If an instruction-file write cannot complete after a successful fresh docs initialization, report that discovery was not enabled and do not delete the valid new wiki as a rollback shortcut.
+8. Run the shared link, index, metadata, and optional-discovery checks. Report created or untouched paths, selected instruction files, whether a new task is needed, the discovery status, and that future verified architecture changes require an explicitly invoked `project-architecture-sync` review.
 
 ## Common Rationalizations
 
 | Rationalization | Reality |
 | --- | --- |
-| “The root exists but a file is missing, so I can harmlessly fill it in.” | The existing root is user-managed. A strict no-op prevents accidental assumptions and preserves byte-for-byte content. |
-| “I can capture the current conversation to seed useful memory.” | Project memory is deliberate Markdown evidence, not session or dialogue logging. |
-| “A vector store would make the memory more useful.” | Runtime integrations are explicitly out of scope; the required result is inspectable Markdown. |
-| “The nearby docs/specs directory should be reorganized at the same time.” | Specifications, ideas, and plans remain human-managed and outside this skill's write scope. |
-| “A finished plan is the best source for real architecture.” | A plan can identify what to review, but it may be deleted after the commit. Durable records cite code, tests, ADRs, or stable external documentation. |
-| “A sample real-architecture topic will make the new directory clearer.” | The initialized wiki has no accepted topic evidence yet. Create only `architecture/real_arch/INDEX.md`; do not invent placeholders. |
-| “The memory root is missing, so I can replace the existing reader protocol.” | That protocol may be user-managed partial setup. Stop without writing rather than merge two ownership models. |
-| “The reader protocol should edit AGENTS.md so every agent discovers it.” | The protocol is an explicit Markdown contract, not global configuration. Do not alter target agent instructions or add integrations. |
+| “An existing `AGENTS.md` is easier to replace than to understand.” | It is user-owned. Append only the exact reviewed marker block; never rewrite it. |
+| “A fresh initialization request automatically authorizes changing agent instructions.” | Discovery configuration has a broader effect than creating docs. Show the exact diff and wait for confirmation. |
+| “The wiki already exists, so re-running initialization can quietly enable discovery.” | Ordinary repeat initialization is still a strict no-op. Enable/remove is a separate explicit request branch. |
+| “Every task should load every wiki page so discovery cannot be missed.” | Read selectively; full-wiki loading wastes context and obscures the relevant constraints. |
+| “A new nested `AGENTS.md` would make routing more precise.” | The project-level gate is sufficient here. Nested instructions are user-managed and outside this workflow. |
+| “The discovery block can automatically synchronize memory after code changes.” | It may suggest `project-architecture-sync`; it must never write project memory on its own. |
+| “A hand-written marker can be repaired in place.” | A modified or ambiguous marker is user-managed. Stop and let the user resolve it. |
 
 ## Red Flags
 
-- Writing anything when `docs/project-memory/` already exists.
-- Writing when `docs/project-memory/` is absent but `docs/agents/project-memory.md` already exists.
-- Adding files outside `docs/project-memory/` other than the one first-initialization reader protocol.
-- Creating placeholders in `architecture/decisions/` or `research/`.
-- Creating `domain/CONTEXT.md` without durable shared-vocabulary evidence.
-- Creating placeholder topic files in `architecture/real_arch/`.
-- Recording a plan, idea, or specification as persistent `Sources` evidence.
-- Copying requirements, chats, secrets, or platform-memory data into the new records.
-- Adding hooks, MCP, dependencies, databases, or generated state.
+- Rewriting an existing `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` instead of appending the exact owned block.
+- Creating an instruction file without the separate authorization shown in the preview.
+- Changing discovery configuration during an ordinary repeat initialization of an existing wiki.
+- Installing discovery against a missing, malformed, or legacy wiki that lacks the required v1 reader protocol.
+- Ignoring an override/preference conflict and claiming ordinary Codex agents will discover the wiki.
+- Adding project-specific content to `docs/agents/project-memory.md` or changing its exact v1 template.
+- Loading the whole wiki for clearly local work, or treating a specification, plan, chat, or draft as a durable `Sources` record.
+- Adding hooks, MCP configuration, platform memory, dependencies, databases, vector search, generated state, or automatic memory writes.
 
 ## Verification
 
 Before declaring success, confirm:
 
-- [ ] Both the memory root and reader protocol were absent before initialization, or either protected path made no writes.
-- [ ] All and only the canonical project-memory directories, Markdown files, and the one authorized reader protocol were created.
-- [ ] `docs/ideas/`, `docs/specs/`, and `docs/plans/` were not changed.
-- [ ] No target `AGENTS.md`, `CLAUDE.md`, or other `docs/agents/` file was created or changed.
-- [ ] `INDEX.md` links the canonical records and reader protocol, `architecture/real_arch/INDEX.md` exists without topic placeholders, `domain/CONTEXT.md` is absent, and all initialized relative links resolve.
-- [ ] The initialized real-architecture index describes accepted functional/logic design only; any future topic records must cite durable evidence rather than task documents.
-- [ ] The result has no secrets, platform-memory integration, runtime dependency, hook, MCP configuration, database, vector search, or generated log.
+- [ ] The request path was correctly classified; an existing wiki received no write unless discovery enable/remove was explicitly requested.
+- [ ] Fresh initialization created all and only the canonical Markdown paths, and preserved `docs/ideas/`, `docs/specs/`, and `docs/plans/`.
+- [ ] The target `SCHEMA.md` is self-contained, `INDEX.md` links the reader protocol, `architecture/real_arch/INDEX.md` has no topic placeholders, and every initialized link resolves.
+- [ ] A discovery preview showed exact selected root-file diffs, platform coverage, and the need for a new task before the user confirmed it.
+- [ ] Existing root instruction content was preserved byte-for-byte outside the owned marker; unselected files were not changed.
+- [ ] Every installed marker is complete, exact, unique, and at the selected file's end; every removed marker was complete and exact.
+- [ ] Modified, duplicate, partial, hand-written, overridden-without-selection, malformed-wiki, and unauthorized-file-creation cases stopped without writes.
+- [ ] The reader protocol remains the exact v1 template with no project facts, and discovery directs selective `SCHEMA.md`/`INDEX.md` routing rather than full-wiki loading.
+- [ ] No secrets, hooks, MCP configuration, platform/session memory, runtime dependency, database, vector search, nested instruction file, or automatic project-memory write was introduced.

@@ -14,10 +14,12 @@ A focused plugin pack for Claude Code and Codex. It contains ten focused workflo
 | [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
 | [code-review-and-fix](skills/code-review-and-fix/SKILL.md) | Independently review implemented work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
 | [code-simplification](skills/code-simplification/SKILL.md) | Reduce complexity while preserving behavior |
-| [project-memory-init](skills/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki project-memory schema and reader protocol without overwriting existing content |
-| [project-architecture-sync](skills/project-architecture-sync/SKILL.md) | Align a completed feature specification with verified architecture, domain vocabulary, governed ADR, and operations records |
+| [project-memory-init](skills/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
+| [project-architecture-sync](skills/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
 
-`project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other eight skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`; it never migrates an existing root. Sync may append alignment evidence to the supplied completed specification. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents.
+`project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other eight skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`. When the user explicitly selects ordinary-agent discovery, initialization first previews and then appends only its managed block to selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` files; existing content is never rewritten. A normal repeat initialization of an existing root remains a no-op. Sync audits a completed implementation scope with code and test evidence; `docs/specs/` is optional context, not a prerequisite or durable source. Its review phase produces a zero-write proposal, and its apply phase revalidates the scope before changing only approved records; a supplied spec's `Implementation Alignment` is a separately approved item. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents.
+
+Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. The gate never writes memory; after implementation, ask `project-architecture-sync` to review the scope and approve any proposed sync.
 
 ## Claude Code
 
@@ -43,7 +45,7 @@ Claude Code exposes these convenience commands:
 - `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `grill-with-docs`, `handoff`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. `handoff` is intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
+Invoke `idea-refine`, `grill-with-docs`, `handoff`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. For example, request fresh project memory plus Codex/Claude discovery, or ask sync to review the current worktree relative to `HEAD` before approving individual drafts. `handoff` is intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
 
 `/plan` is a thin entry point to the shared planning skill. The plugin also bundles read-only `oh-my-zz:plan-reviewer` and `oh-my-zz:code-reviewer` subagents. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` requires an approved specification and implementation plan; it does not invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
@@ -95,6 +97,7 @@ node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
 node scripts/test-grill-with-docs-runtime.js
 node scripts/test-code-review-and-fix-runtime.js
+node scripts/test-project-memory-contracts.js
 ```
 
 The skills are Markdown-first and have no runtime package dependencies.
