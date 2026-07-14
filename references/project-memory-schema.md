@@ -1,6 +1,6 @@
 # Project-Memory Schema
 
-This reference defines the Markdown-only project-memory records that the two project-memory skills maintain in a **target project**. It is not a source of runtime state, a replacement for a project's specifications, or an integration with Claude, Codex, hooks, MCP, databases, vector search, or session logs.
+This reference defines the Markdown-only project-memory records that the two project-memory skills maintain in a **target project**. It is not a source of runtime state, a replacement for a project's specifications, or an integration with hooks, MCP, databases, vector search, or session logs. A user may explicitly ask `project-memory-init` to append its bounded discovery marker to selected root Claude/Codex instruction files; that static routing aid is not runtime memory, a hook, or a record of a session.
 
 ## Schema profile
 
@@ -10,7 +10,7 @@ Newly initialized target projects use the self-contained `project-memory-llm-wik
 project-memory-llm-wiki-v1
 ```
 
-The profile adds a reader protocol, durable shared-domain vocabulary, and governed ADR lifecycle rules. `SCHEMA.md` is the source of truth if it conflicts with the reader protocol. The protocol describes how a reader consumes this wiki; it does not automatically alter a target project's `AGENTS.md`, `CLAUDE.md`, or other agent configuration.
+The profile adds a reader protocol, durable shared-domain vocabulary, and governed ADR lifecycle rules. `SCHEMA.md` is the source of truth if it conflicts with the reader protocol. The protocol describes how a reader consumes this wiki; it never automatically alters a target project's `AGENTS.md`, `CLAUDE.md`, or other agent configuration. Only an explicitly confirmed `project-memory-init` discovery setup may append its exact managed marker to a user-selected root instruction file.
 
 ## Canonical layout
 
@@ -43,6 +43,7 @@ docs/
 | --- | --- | --- |
 | `SCHEMA.md` | The layout, metadata, statuses, and maintenance rules for these records | Project requirements or implementation history |
 | `../agents/project-memory.md` | Reader order and evidence/conflict protocol for agents explicitly using project memory | Project facts, a second schema, or automatic global agent configuration |
+| A selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` discovery marker | Conditional entry point that tells ordinary agents when to consult this wiki selectively | Project facts, a second schema, a full-wiki import, or authority to write memory automatically |
 | `INDEX.md` | Discovery map of project-memory records and their statuses | An authoritative architecture statement |
 | `domain/CONTEXT.md` | Canonical shared vocabulary, term meanings, use boundaries, and discouraged synonyms | Invariants, behavior models, interfaces, or current implementation facts |
 | `architecture/constraints.md` | Confirmed, durable constraints that limit design choices | Proposals or unconfirmed assumptions |
@@ -54,7 +55,7 @@ docs/
 | `operations/environment.md` | Non-secret environment facts and references to secret storage | Credentials, tokens, keys, or literal secret values |
 | `operations/runbooks.md` | Safe operational procedures | Secrets or unreviewed production instructions |
 
-`docs/ideas/`, `docs/specs/`, and `docs/plans/` remain human-managed, potentially temporary task documents. They may scope an impact analysis, and a feature specification remains the source for that feature's requirements and pre-implementation design while it exists. They are not durable project-memory evidence and must not be required to preserve or support a project-memory record. Local design drafts, including Grill output, have the same temporary status: they can focus inspection but cannot be promoted automatically into a domain record or ADR. Architecture sync may only append an `Implementation Alignment` section to a supplied completed specification; it must never rewrite that specification's original content.
+`docs/ideas/`, `docs/specs/`, and `docs/plans/` remain human-managed, potentially temporary task documents. They may scope an impact analysis, and a feature specification remains the source for that feature's requirements and pre-implementation design while it exists. They are not durable project-memory evidence and must not be required to preserve or support a project-memory record. Local design drafts, including Grill output, have the same temporary status: they can focus inspection but cannot be promoted automatically into a domain record or ADR. Architecture sync requires a completed implementation scope and durable evidence, not a specification; it may append an `Implementation Alignment` only to an optional supplied completed specification after that alignment draft receives its own explicit approval, and it must never rewrite that specification's original content or create one when none was supplied.
 
 ## Metadata and statuses
 
@@ -115,13 +116,19 @@ No decision records yet.
 ## Research records
 
 No research records yet.
+
+## Retrieval cues
+
+No retrieval cues yet.
 ```
 
 When `domain/CONTEXT.md` is first created, replace `No domain context yet.` with its relative link and status. When a decision or research record is created, replace its corresponding `No ... yet.` line with a relative Markdown link and status. Update an index entry only when adding a new record, changing a record's status, or changing its supersession relationship; do not churn the index for ordinary edits to an already-indexed canonical page.
 
+`## Retrieval cues` is optional navigation metadata, not a source-tree inventory or an architecture statement. A cue may map a stable subsystem, public contract, canonical term, configuration surface, path class, or symbol to one or more existing project-memory records, for example `- billing export API — [Export contract](architecture/real_arch/export-contract.md)`. Add or amend a cue only when an approved sync creates or materially changes its linked record and the cue helps selective retrieval. Every cue link must resolve; do not invent a cue from a plan, chat, or temporary draft. Existing v1 roots may lack this section and remain valid; agents fall back to the canonical indexes and scoped Markdown search.
+
 ### `SCHEMA.md`
 
-`SCHEMA.md` is the target project's self-contained copy of this policy. Initialize it with the title and metadata above, then include the exact `project-memory-llm-wiki-v1` profile marker, canonical layout, document authority, metadata/status rules, reader-protocol and domain-context rules, real-architecture index/topic rules, ADR/research naming and lifecycle rules, legacy compatibility, redaction policy, and required consistency checks from this reference. Do not leave only a link back to this skill pack: later syncs must be able to read the target project's schema without this repository installed.
+`SCHEMA.md` is the target project's self-contained copy of this policy. Initialize it with the title and metadata above, then include the exact `project-memory-llm-wiki-v1` profile marker, canonical layout, document authority, metadata/status rules, reader-protocol, optional discovery, domain-context, real-architecture index/topic, ADR/research naming and lifecycle, compatibility, redaction, and consistency-check rules from this reference. Do not leave only a link back to this skill pack: later syncs must be able to read the target project's schema without this repository installed.
 
 ### V1 structural validation
 
@@ -160,6 +167,14 @@ Do not silently update a record to contradict a relevant active ADR. Report the 
 ```
 
 For a v1 sync, the protocol must contain the exact marker and the four headings above in this order, and contain no project-specific text beyond this template. A missing, malformed, or locally extended protocol is a safe stop: sync does not repair, recreate, or normalize it.
+
+### Optional agent discovery setup
+
+The reader protocol itself is deliberately generic and must not be extended with project-specific routing. When a user explicitly requests ordinary-agent discovery, `project-memory-init` may append its exact marker-bounded discovery block to one or more user-selected **root** instruction files after showing the exact diff and receiving confirmation. It may never rewrite existing instruction content, create nested instruction files, silently select around an override, or install the block against a malformed or legacy root.
+
+The marker tells ordinary agents to decide whether a task is architecture-relevant or uncertain before consulting memory. Explicit project-memory requests, cross-module boundaries, public contracts, stable shared terms, constraints/invariants, configuration/operations, ADRs/trade-offs, and material uncertainty require selective consultation. Clearly local, test-only, formatting-only, generated, or verified behavior-preserving work may skip it. Consultation begins with this reader protocol and then follows `SCHEMA.md`, `INDEX.md`, optional retrieval cues, and only the matching records; it must not load the whole wiki by default or write memory automatically.
+
+The marker is external to the canonical docs layout and is optional for both new and existing valid v1 roots. Its presence or absence does not affect v1 structural validity. A new task may be required for the host agent to load a newly appended root instruction. A tool that does not load the selected instruction surface is outside this contract.
 
 ### Domain context
 
@@ -268,7 +283,7 @@ Every ADR source, index, and supersession link must resolve from its containing 
 
 ## Compatibility
 
-An existing, self-contained target `SCHEMA.md` without the exact `project-memory-llm-wiki-v1` marker is a legacy user-managed schema. `project-memory-init` never migrates it. `project-architecture-sync` validates only the paths the legacy schema itself requires, then may perform the legacy `current-architecture`, `real-architecture`, and `operations` updates that its existing schema permits; it must not require a v1-only path or create `docs/agents/project-memory.md`, `domain/`, a domain index entry, or governed ADRs. It reports the user-managed schema-upgrade requirement in its outcome and any permitted Implementation Alignment.
+An existing, self-contained target `SCHEMA.md` without the exact `project-memory-llm-wiki-v1` marker is a legacy user-managed schema. `project-memory-init` never migrates it or installs the v1 discovery marker against it. `project-architecture-sync` validates only the paths the legacy schema itself requires, then may perform the legacy `current-architecture`, `real-architecture`, and `operations` updates that its existing schema permits; it must not require a v1-only path or create `docs/agents/project-memory.md`, `domain/`, a domain index entry, or governed ADRs. It reports the user-managed schema-upgrade requirement in its outcome and appends an Implementation Alignment only when an optional valid supplied spec exists and its distinct alignment item was explicitly approved.
 
 ## Redaction policy
 
@@ -285,3 +300,4 @@ Before declaring an initialization or sync complete:
 5. Confirm every domain term and real-architecture topic has durable resolving sources, never temporary ideas, specifications, plans, chats, or local design drafts; confirm domain entries contain vocabulary only and real-architecture implementation status is `verified`, `partial`, or `not-started`.
 6. Confirm every `superseded` ADR and its replacement link to one another, the old ADR's substantive body is unchanged, and each new ADR meets the qualification and rationale-evidence rules.
 7. Confirm environment and runbook text contains no secrets, no placeholder domain/real-architecture topic records exist, and no prohibited platform-memory or runtime integration was introduced.
+8. When discovery setup was explicitly selected, confirm each selected root instruction file contains exactly one complete, unmodified owned marker at its end, every unselected instruction file is unchanged, and the marker points only to existing valid v1 paths. Its absence remains valid when discovery was not selected.

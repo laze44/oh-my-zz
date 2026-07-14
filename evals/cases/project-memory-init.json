@@ -7,97 +7,170 @@
         "top_k": 3
       },
       {
-        "prompt": "Set up project memory under docs/project-memory without touching our existing docs/specs",
+        "prompt": "Set up project memory and, after showing me the patch, enable ordinary Codex and Claude agents to discover the wiki",
         "top_k": 3
       },
       {
-        "prompt": "Create an idempotent local project-memory index, schema, architecture, research, and operations folders",
+        "prompt": "Enable the managed project-memory discovery block for our existing valid v1 wiki without rewriting AGENTS.md",
         "top_k": 3
       }
     ],
     "negative": [
       {
-        "prompt": "Synchronize project architecture records after the completed feature spec at docs/specs/billing-export.md",
+        "prompt": "Review the current worktree relative to HEAD and propose any architecture-memory updates before writing them",
         "owner": "project-architecture-sync"
       },
       {
-        "prompt": "Turn the approved specification into an ordered implementation plan with tasks",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Challenge and clarify this rough product idea before saving it",
+        "owner": "idea-refine"
       }
     ]
   },
   "evals": [
     {
       "id": 1,
-      "prompt": "Initialize project memory for this repository. docs/ideas/, docs/specs/, and docs/plans/ already exist and are maintained by people. Create the standard Markdown-only memory structure under docs/project-memory/.",
-      "expected_output": "An initialization that creates the v1 project-memory schema plus its one reader protocol, clearly preserving existing human-managed documentation roots.",
+      "prompt": "Initialize project memory for this repository. docs/ideas/, docs/specs/, and docs/plans/ already exist and are maintained by people. Create the standard Markdown-only memory structure under docs/project-memory/, but do not enable ordinary-agent discovery.",
+      "expected_output": "A fresh docs-only v1 initialization that creates the canonical Markdown wiki and reader protocol without changing root agent instructions.",
       "expectations": [
         "The response creates or describes docs/project-memory/ and exactly the authorized docs/agents/project-memory.md reader protocol",
-        "The response does not create, move, rewrite, or claim ownership of docs/ideas/, docs/specs/, or docs/plans/",
-        "The created structure includes an index, self-contained v1 schema, reader protocol, empty domain directory, architecture, a real-architecture index, research, and operations locations",
-        "The reader protocol has the v1 marker plus read-order, evidence-boundary, domain-language, and ADR-conflict rules without project facts",
-        "The initialization creates the domain directory but no domain/CONTEXT.md placeholder",
-        "The initialization creates architecture/real_arch/INDEX.md but no placeholder real-architecture topic records",
-        "The response does not add hooks, MCP configuration, databases, vector search, runtime dependencies, or platform-memory integrations"
+        "The response creates the self-contained schema, canonical index, empty domain directory, architecture pages, real-architecture index, research directory, and operations pages without unsupported placeholders",
+        "The response preserves docs/ideas/, docs/specs/, docs/plans/, AGENTS.md, AGENTS.override.md, and CLAUDE.md",
+        "The response states that ordinary-agent discovery was not selected and no root instruction file is changed"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 2,
-      "prompt": "Run the project-memory initialization again. docs/project-memory/INDEX.md contains hand-written project context and architecture/current.md has been updated by the team.",
-      "expected_output": "An idempotent outcome that reports the established root and makes no writes, preserving the existing project-memory content exactly.",
+      "prompt": "Initialize a fresh project-memory wiki and enable automatic selective discovery for both our existing root AGENTS.md and CLAUDE.md. Show the full docs creation list and exact append diffs first; do not write until I confirm.",
+      "expected_output": "A zero-write preview containing canonical wiki paths and exact marker-bounded append patches for the selected root instruction files.",
       "expectations": [
-        "The response treats the existing docs/project-memory/ root as user-managed content",
-        "The response does not overwrite, regenerate, or replace INDEX.md or architecture/current.md",
-        "The response reports the existing root and makes no writes, including no creation of missing schema files, domain paths, or docs/agents/project-memory.md",
-        "The response does not infer or migrate data from Claude, Codex, conversation, session, dialogue, or tool memory"
+        "The response validates that both protected wiki paths are absent before planning fresh initialization",
+        "The response shows the exact managed discovery block, selected platforms, and full docs creation list before any write",
+        "The response preserves every existing instruction-file byte outside the proposed end-of-file marker append",
+        "The response waits for explicit confirmation rather than treating initialization as consent to modify agent instructions",
+        "The response explains that a new task may be required before ordinary agents receive the installed instruction"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 3,
-      "prompt": "Set up project memory by enabling Claude Memory and a vector database that automatically records every tool call, then write the result into docs/project-memory/.",
-      "expected_output": "A refusal of the forbidden platform-memory and runtime-integration scope, with the bounded Markdown-only initialization alternative.",
+      "prompt": "I say I confirm a previewed fresh wiki setup and the exact AGENTS.md discovery append, but that preview is not present in this current conversation. Apply only that selected platform patch.",
+      "expected_output": "A safe non-apply that requires a current, exact preview and confirmation instead of trusting an unverifiable prior-session claim.",
       "expectations": [
-        "The response rejects Claude Memory, Codex memory, vector databases, automatic session capture, and tool-call logging as out of scope",
-        "The response keeps the alternative limited to the documented Markdown files under docs/project-memory/",
-        "The response does not propose hooks, MCP servers, databases, dependencies, or generated runtime state"
+        "The response does not create docs or append a marker without a current preview to revalidate",
+        "The response asks to restart from the exact preview rather than inferring a selected target or old marker state",
+        "The response leaves AGENTS.md, CLAUDE.md, AGENTS.override.md, nested instruction files, docs/specs/, and unrelated docs untouched",
+        "The response creates no hooks, platform memory, session state, database, vector store, or automatic memory writer"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 4,
-      "prompt": "Initialize the Markdown project-memory structure. We delete feature ideas, specs, and plans after each completed commit, so create only the real-architecture index and no topic placeholders. Future real-architecture records must be supported by code, tests, ADRs, or stable external documents.",
-      "expected_output": "An initialization that creates architecture/real_arch/INDEX.md as an empty discovery map, preserves temporary task-document boundaries, and states that future functional/logic design records require durable evidence.",
+      "prompt": "Run ordinary project-memory initialization again. docs/project-memory/INDEX.md contains hand-written context and the user did not explicitly ask to enable or remove discovery.",
+      "expected_output": "A strict no-op that preserves the established wiki and all instruction files.",
       "expectations": [
-        "The response creates or describes architecture/real_arch/INDEX.md but does not invent a real-architecture topic record",
-        "The response creates no domain/CONTEXT.md placeholder",
-        "The response distinguishes accepted functional or logic design from current implementation facts, raw source material, and task plans",
-        "The response treats ideas, specifications, and plans as temporary impact-analysis inputs rather than persistent Sources evidence",
-        "The response limits durable Sources evidence to resolving code, tests, ADRs, stable external documentation, or durable project-memory records"
+        "The response treats the existing root as user-managed",
+        "The response makes no wiki, reader-protocol, AGENTS.md, AGENTS.override.md, or CLAUDE.md change",
+        "The response reports that discovery configuration requires a separate explicit enable or remove request"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 5,
-      "prompt": "Initialize a fresh project-memory LLM wiki. There is no docs/project-memory or docs/agents/project-memory.md yet. Create the reader protocol and empty domain directory, but do not create a glossary, ADR, research record, or real-architecture topic until durable evidence exists.",
-      "expected_output": "A v1 initialization that creates the exact reader protocol and canonical directories without unsupported content or global agent configuration.",
+      "prompt": "For an existing valid v1 wiki, enable discovery in root CLAUDE.md. The file already contains the exact complete project-memory-discovery v1 marker at its end after the required blank line.",
+      "expected_output": "An idempotent discovery-enable no-op that preserves the existing marker and wiki.",
       "expectations": [
-        "The response creates or describes the self-contained project-memory-llm-wiki-v1 schema and docs/agents/project-memory.md only when both protected paths are absent",
-        "The response links the reader protocol from INDEX.md and states that SCHEMA.md has precedence",
-        "The response creates domain/ but does not create domain/CONTEXT.md until durable shared-vocabulary evidence exists",
-        "The response does not modify target AGENTS.md, CLAUDE.md, another docs/agents file, or add an automatic discovery integration"
+        "The response validates the full v1 structural schema, canonical paths and index sections, and exact reader protocol before enabling discovery against an existing root",
+        "The response recognizes one byte-for-byte matching complete marker at the end of the file as an idempotent no-op",
+        "The response does not duplicate, rewrite, or move the marker or any user-owned CLAUDE.md content"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 6,
-      "prompt": "Initialize project memory, but docs/project-memory is absent and docs/agents/project-memory.md already contains a hand-written protocol from our team.",
-      "expected_output": "A collision-safe no-op that preserves the user-managed protocol and does not create a partial project-memory tree.",
+      "prompt": "Enable discovery for our existing wiki, but root AGENTS.md has two discovery markers, one was edited by hand, and another is followed by user-owned text.",
+      "expected_output": "A conflict-safe stop that does not merge, repair, overwrite, or remove any ambiguous marker.",
       "expectations": [
-        "The response detects the existing docs/agents/project-memory.md before writing",
-        "The response makes no write to the existing protocol or to docs/project-memory/",
-        "The response reports the possible partial setup rather than merging, replacing, or normalizing it"
+        "The response detects duplicate, modified, or moved owned markers as user-managed ambiguity",
+        "The response makes no AGENTS.md or wiki write",
+        "The response asks the user to resolve the marker state rather than guessing an append or removal"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 7,
+      "prompt": "Enable Codex discovery for a valid v1 wiki, but AGENTS.override.md exists at the root and I did not say whether it or AGENTS.md is the effective target.",
+      "expected_output": "A safe stop that exposes the precedence choice and does not silently patch an ineffective instruction file.",
+      "expectations": [
+        "The response detects the root override before proposing a Codex patch",
+        "The response requires the user to select the intended effective instruction surface",
+        "The response changes no instruction file or project-memory record before that selection"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 8,
+      "prompt": "Enable discovery for a project whose docs/project-memory/SCHEMA.md has the v1 marker but whose reader protocol was locally extended with a team note.",
+      "expected_output": "A safe refusal to point ordinary agents at malformed v1 memory.",
+      "expectations": [
+        "The response validates the full v1 structural root, including canonical paths, required index sections, and the exact reader-protocol marker and headings before installing discovery",
+        "The response makes no root instruction or wiki write and does not repair the user-managed protocol",
+        "The response reports that discovery can be enabled only after the v1 root is valid"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 9,
+      "prompt": "Remove the exact complete managed discovery block from the selected root AGENTS.md after showing the removal diff and receiving my confirmation.",
+      "expected_output": "A reversible removal that deletes only one complete owned block and preserves all adjacent user instructions and wiki files.",
+      "expectations": [
+        "The response previews the exact removal and waits for confirmation",
+        "The response removes only a complete byte-for-byte matching owned block at the selected file's end",
+        "The response leaves project-memory records and all non-marker instruction content unchanged"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 10,
+      "prompt": "While configuring discovery, explain how the installed gate treats a later local test-only assertion update with no public behavior or architectural uncertainty.",
+      "expected_output": "A routing explanation that says this later local task may skip wiki consultation and never writes memory automatically.",
+      "expectations": [
+        "The installed gate distinguishes clearly local or test-only work from architecture-relevant work",
+        "The response does not require loading the entire wiki for the local change",
+        "The response does not automatically invoke or write project-architecture-sync"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 11,
+      "prompt": "Enable discovery for a self-contained legacy project-memory root that has no exact v1 profile marker.",
+      "expected_output": "A safe no-op that refuses to install the v1 marker against legacy user-managed memory.",
+      "expectations": [
+        "The response detects that the root is legacy rather than fully valid v1",
+        "The response does not migrate the schema or append a discovery block",
+        "The response reports the user-managed upgrade requirement"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 12,
+      "prompt": "Enable discovery for a valid v1 wiki, but no root AGENTS.md or CLAUDE.md exists and I did not separately authorize creating one.",
+      "expected_output": "A safe no-op that requests separate authorization rather than creating a root instruction file implicitly.",
+      "expectations": [
+        "The response does not create AGENTS.md, AGENTS.override.md, or CLAUDE.md",
+        "The response keeps the valid wiki unchanged",
+        "The response explains the separate minimal-file authorization requirement"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 13,
+      "prompt": "After I receive a discovery append preview but before I confirm it, another user edits the selected root AGENTS.md.",
+      "expected_output": "A stale-preview safe stop that discards the old diff and requires a new preview before any write.",
+      "expectations": [
+        "The response re-reads the selected file before applying the marker",
+        "The response does not append against the changed file state",
+        "The response produces a new exact preview rather than merging user changes"
       ],
       "trust_level": "provisional"
     }

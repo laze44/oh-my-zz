@@ -17,7 +17,7 @@ This repository is a focused ten-skill pack for Claude Code and Codex. It intent
 - `project-memory-init`
 - `project-architecture-sync`
 
-`project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. They do not change, invoke, or alter the workflows of the other eight skills. `code-review-and-fix` is a bounded contract-preserving repair workflow: it consumes an approved specification and plan but never invokes or replaces `planning-and-task-breakdown`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
+`project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Neither workflow changes or invokes the other eight skills. `code-review-and-fix` is a bounded contract-preserving repair workflow: it consumes an approved specification and plan but never invokes or replaces `planning-and-task-breakdown`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
 
 ## Intent mapping
 
@@ -29,8 +29,8 @@ This repository is a focused ten-skill pack for Claude Code and Codex. It intent
 - Pre-merge branch or pull-request readiness review → `code-review-and-quality`
 - Approved spec-and-plan implementation needing bounded independent review, repair, and re-review → `code-review-and-fix`
 - Behavior-preserving cleanup → `code-simplification`
-- Initialize the Markdown-only project-memory schema → `project-memory-init`
-- Synchronize a completed feature specification with project-memory architecture records → `project-architecture-sync`
+- Initialize the Markdown-only project-memory schema and optionally configure selective ordinary-agent discovery → `project-memory-init`
+- Review a completed implementation scope, propose architecture-memory changes, and synchronize only approved items → `project-architecture-sync`
 
 If a request matches a retained skill, read and follow its complete `SKILL.md` before acting.
 
@@ -64,4 +64,5 @@ node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
 node scripts/test-grill-with-docs-runtime.js
 node scripts/test-code-review-and-fix-runtime.js
+node scripts/test-project-memory-contracts.js
 ```

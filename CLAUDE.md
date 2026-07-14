@@ -12,10 +12,10 @@ This repository is a focused plugin pack for Claude Code and Codex.
 - `code-review-and-quality` — make a read-only pre-merge readiness decision for a branch or pull request
 - `code-review-and-fix` — independently review an approved implementation contract, triage repairability, and run a bounded repair/re-review loop
 - `code-simplification` — reduce complexity without changing behavior
-- `project-memory-init` — initialize the Markdown-only project-memory schema in a target project
-- `project-architecture-sync` — synchronize a completed feature specification with target-project architecture records
+- `project-memory-init` — initialize the Markdown-only project-memory schema and, after confirmation, optionally append selective-discovery guidance to target root agent instructions
+- `project-architecture-sync` — review a completed implementation scope, draft target-project architecture-memory changes, and synchronize only approved items
 
-The two project-memory skills are independent: they do not change or invoke the workflows of the other eight skills. Load the matching `skills/<name>/SKILL.md` before working on a task in that category. Do not route work to skills that are not in this list.
+The two project-memory skills are independent: initialization owns fresh docs plus an explicitly confirmed marker-bounded discovery append, while synchronization owns review, approval, and verified fact updates. They do not change or invoke the workflows of the other eight skills. Load the matching `skills/<name>/SKILL.md` before working on a task in that category. Do not route work to skills that are not in this list.
 
 ## Structure
 
@@ -40,6 +40,7 @@ node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
 node scripts/test-grill-with-docs-runtime.js
 node scripts/test-code-review-and-fix-runtime.js
+node scripts/test-project-memory-contracts.js
 ```
 
 Keep the pack deliberately small. Adding another skill or platform integration requires an explicit scope change.

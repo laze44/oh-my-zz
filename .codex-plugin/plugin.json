@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "1.4.0",
-  "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization, architecture synchronization, pre-merge review decisions, and simplification.",
+  "version": "1.4.1",
+  "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
   "author": {
     "name": "laze44",
     "url": "https://github.com/laze44"
@@ -12,7 +12,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Focused workflows for ideas, specs, plans, session handoffs, review-and-fix, project memory, architecture, reviews, and simplification.",
+    "shortDescription": "Focused workflows for ideas, specs, plans, handoffs, review-and-fix, opt-in project memory discovery, proposal-first architecture sync, reviews, and simplification.",
     "category": "Productivity"
   }
 }

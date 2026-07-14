@@ -1,111 +1,99 @@
 ---
 name: project-architecture-sync
-description: Performs a pre-commit impact assessment and synchronizes verified architecture, domain vocabulary, governed ADR, and operations records from an explicitly named completed feature specification. Use after implementation when a docs/specs path and project-memory schema exist. Do not use before implementation, without a spec path, or to rewrite a specification.
+description: Reviews a completed implementation scope, drafts only necessary project-memory and ADR changes, and synchronizes explicitly approved items after revalidation. Use after code changes when docs/project-memory exists; a docs/specs path is optional, but a concrete implementation scope and durable evidence are required.
 ---
 
 # Project Architecture Sync
 
 ## Overview
 
-Align target-project memory with what an implemented feature actually changed before that feature is committed. The skill is evidence-led: it uses the exact completed feature specification as the primary validation path, then reads durable implementation evidence, the project-memory schema, and relevant current records before making narrowly scoped Markdown updates.
+Synchronize target-project memory with completed code through three phases: zero-write review, explicit confirmation, then revalidated apply. Require a concrete implementation scope and durable evidence; never infer either from chat alone.
 
-For a `project-memory-llm-wiki-v1` target, also maintain durable shared domain language and governed ADRs. For a valid legacy schema, retain only its permitted architecture and operations sync behavior; do not silently migrate it into v1.
+An optional completed `docs/specs/` Markdown file may focus review, but is never a durable `Sources` record. Append one `## Implementation Alignment` only when its separate item is explicitly approved after a successful approved apply or approved `no-impact` outcome. Without a spec, create or modify no specification.
 
-A completed plan may narrow which architecture topics need inspection, but plans are transient task aids. They must not be a source of verified facts or a durable `Sources` link. Verified facts require durable evidence: current code, applicable tests, ADRs, or stable external documentation.
-
-Read [the shared project-memory schema](../../references/project-memory-schema.md) before taking action.
+Read [the shared project-memory schema](../../references/project-memory-schema.md) before acting. It owns record authority, templates, lifecycle, redaction, and consistency details.
 
 ## When to Use
 
-- A feature has been implemented and the user supplies its exact path under `docs/specs/`.
-- The project has an initialized `docs/project-memory/` root and the implementation may affect architecture, shared domain language, decisions, or operations.
-- The feature is ready for a pre-commit architecture-impact assessment, including a possible no-impact result after confirming the implementation follows the current architecture.
+- Review completed code for architecture, domain-language, ADR, operations, or `no-impact` memory changes.
+- Apply an approved proposal for a concrete Git range/current-worktree boundary or user-confirmed path set.
+- Use a supplied completed spec only as optional scope context.
 
-Do not use this skill for pre-implementation plans or design changes, unspecified specifications, initialization, bulk documentation cleanup, or platform-memory/session logging. Do not use it to rewrite requirements or pre-implementation design.
+Do not use this skill for pre-implementation design, bulk cleanup, automatic session logging, or an ordinary-agent discovery gate.
 
 ## Preconditions
 
-Reject the request without modifying files when any condition fails:
+Stop without writing when any condition fails:
 
-- The supplied path is not an explicit, normalized existing Markdown file under `docs/specs/`.
-- The feature is not complete, or implementation evidence is unavailable (for example, completed code and applicable verification).
-- `docs/project-memory/INDEX.md` or `docs/project-memory/SCHEMA.md` is missing, unreadable, or not self-contained. Direct the user to repair the user-managed root; do not initialize, migrate, or repair it here.
-- A v1 `SCHEMA.md` fails the shared schema's structural validation, including its required sections, canonical paths, index sections, or exact reader-protocol template. Stop without writes; do not recreate, normalize, or otherwise repair the root.
-- The specification already has an `## Implementation Alignment` section. Report the existing alignment and make no write, rather than duplicating or replacing it.
-- The request asks to overwrite the specification, alter its original requirements/design, record secrets, or add Claude/Codex memory, hooks, MCP, databases, vector search, dependencies, session logs, or runtime state.
+- The implementation, concrete scope, or applicable code/test evidence is incomplete or ambiguous.
+- The project-memory root is missing or invalid. Validate the target profile before classification; for v1 require the self-contained schema, canonical paths/indexes, and exact reader protocol. Do not initialize, repair, migrate, or normalize it. For a legacy root, follow only records its schema permits and report the user-managed upgrade requirement.
+- A supplied spec is not an existing normalized Markdown file under `docs/specs/`, or already contains `## Implementation Alignment`.
+- The request would rewrite requirements/spec content, record secrets, mutate a discovery marker, add hooks, MCP, databases, vector search, platform/session memory, dependencies, logs, or runtime state.
 
 ## Workflow
 
-1. After implementation and before commit, validate the explicit completed specification path and inspect the current worktree plus implementation evidence. Read the supplied specification, `SCHEMA.md`, and `INDEX.md`. The specification is the primary validation path for the completed feature. If a completed plan is available, use it only to narrow this inspection; do not treat it as evidence or cite it in a verified record.
-2. Detect and validate the schema profile before reading profile-specific records or classifying. For `project-memory-llm-wiki-v1`, require every structural condition in the shared schema: the exact profile marker and self-contained sections, all canonical v1 paths and INDEX sections, and the reader protocol's exact template (marker, required headings in order, and no project-specific content). Only then read the valid protocol, constraints/current/real-architecture/operations records, `domain/CONTEXT.md` when it exists, and relevant active ADRs. A missing domain context is normal. If the self-contained schema is valid but lacks the v1 marker, treat it as legacy: validate only the paths that its own schema requires, then read only the existing records relevant to its permitted impact. Do not require a v1-only path, create v1 content, or governed ADRs; report the user-managed upgrade requirement. Do not use this skill to repair either profile.
-3. Classify two independent outcomes. The broad impact set is `no-impact` alone, or every applicable member of `current-architecture`, `real-architecture`, `domain-language`, and `operations`. `no-impact` is exclusive among those four non-ADR categories. Separately select the ADR outcome: `new`, `supersede`, or `no-ADR`. `no-ADR` does not turn an otherwise affected feature into `no-impact`; a qualifying ADR may also accompany broad `no-impact`. For a legacy profile, limit the broad impact set to the records its schema permits and report governed ADR/domain work as unavailable. Record durable code, test, active-ADR, or stable-external-documentation evidence for every selected update.
-4. Before any write, compare verified implementation with relevant active ADRs. If it conflicts, stop without modifying project memory or appending `Implementation Alignment` unless durable evidence supports a qualifying replacement ADR with one unambiguous active predecessor. Do not use `current.md`, `real_arch`, or `domain/CONTEXT.md` to silently normalize the conflict.
-5. Map the broad impact set to the smallest permitted edits:
+### 1. Review and proposal — zero writes
 
-   | Impact | Permitted project-memory changes |
+1. Validate the completed scope and record a transient scope fingerprint: resolved base/range; normalized paths; a digest of staged, unstaged, and in-scope untracked changes; the optional spec's normalized path and content identity; selected wiki/active-ADR states; and examined evidence. Keep the proposal only in the current conversation.
+2. Validate and read the reader protocol, target `SCHEMA.md`, and `INDEX.md`. Use the index, optional retrieval cues, and scoped Markdown search for targeted retrieval rather than a full-wiki tour:
+
+   | Cue | Read when relevant |
    | --- | --- |
-   | `no-impact` | No current-architecture, real-architecture, domain-language, or operations page changes; write an ADR only when the separate ADR outcome is `new` or `supersede`. |
-   | `current-architecture` | Append verified facts and source links to `architecture/current.md`. |
-   | `real-architecture` | Add or update the smallest applicable functional-design record under `architecture/real_arch/`; update `architecture/real_arch/INDEX.md` and the top-level `INDEX.md` when the schema requires it. Link only durable evidence. |
-   | `domain-language` | In v1 only, create or update `domain/CONTEXT.md` only for stable evidenced vocabulary; update `INDEX.md` when the context is first created. |
-   | `operations` | Append redacted facts or procedures to `operations/environment.md` and/or `operations/runbooks.md`. |
+   | Module boundary, public interface, constraint | `architecture/constraints.md`, `architecture/current.md` |
+   | Stable behavior, invariant, scenario, contract | Matching `architecture/real_arch/` record |
+   | Shared term or API naming | `domain/CONTEXT.md` when present |
+   | Decision, trade-off, conflict | Matching active ADRs |
+   | Configuration or operator behavior | Relevant `operations/` record |
 
-   `real-architecture` describes accepted, stable functional or domain design logic, such as invariants, critical scenarios, interfaces, and non-goals. It is neither a plan nor a duplicate of `current.md`'s verified implementation facts. `domain/CONTEXT.md` records only canonical vocabulary, term boundaries, discouraged synonyms, lifecycle, and sources; it never duplicates a real-architecture model, constraint, or implementation fact. If evidence about a term is incomplete or conflicting, skip that entry and report it rather than guessing.
-6. Evaluate the ADR outcome independently for v1. Select `new` or `supersede` only when the decision is hard to reverse, surprising without context, and a real trade-off, and when durable sources support its context, decision, why, and any alternatives. Otherwise select and report `no-ADR`. Create a compact active ADR with a one-to-three-sentence Context/Decision/Why statement; add alternatives or consequences only when they preserve non-obvious durable value. Normalize a meaningful English slug, probe the date-based filename and `-2`, `-3`, and later suffixes, and update `INDEX.md`. A supersession may target exactly one known active ADR: during that operation preserve the old title and body, change only permitted lifecycle/link metadata, add reciprocal resolving links, and index both statuses. Stop without writes if the predecessor is ambiguous or multiple.
-7. If evidence would change `architecture/constraints.md`, show the proposed constraint edit and request explicit confirmation before modifying it. Do not treat a request to sync as consent. If confirmation is absent or declined, reject the unconfirmed constraint change and stop without writing a dependent memory or specification update.
-8. Redact credentials, tokens, keys, passwords, private connection strings, and other secrets before any operations edit. Record only non-secret names, storage location classes, or access procedures.
-9. Append one `## Implementation Alignment` section to the supplied completed specification. Do not edit any existing specification text. Include the completion date, implementation evidence, broad impact set, ADR outcome, changed project-memory records (use `None` only when broad `no-impact` also has ADR outcome `no-ADR`), source links, schema-profile/legacy-upgrade outcome, and constraint-confirmation status.
-10. Immediately before commit, revalidate the current worktree and every source link added or retained by the changed records. Run the shared link, index, metadata, domain, ADR supersession, and redaction checks. Do not add or rely on a Git hook. Report the classification, ADR outcome, changed paths, legacy/no-op outcomes, active-ADR conflicts, and any requested constraint confirmation.
+   Clearly local, test-only, formatting-only, generated, or verified behavior-preserving work may conclude `no-impact` without unrelated reads. Use code, tests, active ADRs, stable external documentation, and resolving memory records as evidence; never use temporary plans, specs, chats, or drafts as `Sources`.
+3. Classify the complete impact set as `no-impact` alone or the applicable members of `current-architecture`, `real-architecture`, `domain-language`, and `operations`. Separately choose `new`, `supersede`, or `no-ADR`. For legacy, offer only records its schema permits and report v1-only domain/ADR work as unavailable. Before proposing writes, stop an active-ADR conflict unless durable evidence supports one unambiguous qualifying replacement.
+4. Present numbered, exact Markdown drafts with target files, durable sources, approval IDs, scope fingerprint, evidence, read/skipped records, exclusions, impact set, ADR result, and constraint/ADR-conflict status. Treat `Implementation Alignment` as its own approval item. Propose an ADR only when the target schema's qualification gates pass. Do not write any record or specification in review.
+
+### 2. Confirmation
+
+5. Apply only IDs the user explicitly approves in the current conversation; allow partial approval. An approved `no-impact` conclusion needs its own ID. Approval of project-memory records does not approve a proposed `Implementation Alignment`. For `architecture/constraints.md`, show the exact draft and obtain separate exact-text confirmation. Without it, leave that constraint and every dependent item, including Alignment, untouched; independently valid approved items may proceed. If a replacement ADR resolves an active conflict, its approved lifecycle/index update must succeed atomically before any conflict-dependent record or Alignment; otherwise leave those items untouched.
+
+### 3. Apply and verify
+
+6. Immediately before every write or finalizing an approved `no-impact` outcome, recompute the fingerprint and revalidate the schema, selected records, active ADRs, and evidence. Any change to its base/range, paths, content digest, optional-spec identity, wiki/ADR state, or evidence invalidates the proposal and returns to review.
+7. Apply only independently valid approved items:
+
+   | Impact | Permitted change |
+   | --- | --- |
+   | `no-impact` | No architecture/domain/operations record; a qualifying approved ADR may still be written. |
+   | `current-architecture` | Append verified facts and sources to `architecture/current.md`. |
+   | `real-architecture` | Add/update the smallest stable functional-design record and required indexes/cues. |
+   | `domain-language` | In v1 only, add/update durable vocabulary in `domain/CONTEXT.md`. |
+   | `operations` | Append redacted facts/procedures to the relevant operations record. |
+
+   Follow the target schema for templates, index updates, ADR filename/lifecycle/supersession, and redaction. Never use `real_arch` as a plan or source-tree tour, or domain context for implementation facts. Stop rather than guess an ADR predecessor or incomplete/conflicting evidence.
+8. Append one `## Implementation Alignment` only when an optional valid spec was supplied and its approval ID was explicitly approved. It cannot be a standalone write: it must either accompany its approved `no-impact` outcome or describe only memory/ADR items that succeeded. If partial approval changes its facts, outcomes, records, or sources, omit it or regenerate the exact draft from the actual outcome and obtain fresh separate approval. Preserve the original spec content. Record completion date, scope/evidence, impact/ADR outcomes, changed records and source links, profile result, and constraint status. Re-run the target schema's Required consistency checks and report approved/skipped IDs, changed paths, profile/no-op status, alignment or no-spec outcome, and conflicts.
 
 ## Common Rationalizations
 
 | Rationalization | Reality |
 | --- | --- |
-| “The spec shows the desired architecture, so current.md can follow it before code exists.” | This skill records verified implementation outcomes only; pre-implementation use is rejected. |
-| “The completed plan says the design changed, so it is enough to verify `real_arch`.” | A plan may narrow inspection, but it is transient. Use durable code, tests, ADRs, or stable external documentation to support verified facts. |
-| “`real_arch` can repeat the branch plan or current.md.” | `real_arch` records stable functional design logic; `current.md` records verified implementation facts. Keep their authority distinct. |
-| “One primary category is enough.” | A feature can change current architecture, real architecture, domain language, and operations simultaneously; use the complete impact set. |
-| “Every architecture update deserves an ADR.” | Select `no-ADR` unless the decision is hard to reverse, surprising without context, and a real durable trade-off. |
-| “The Grill draft already explains why, so it can become an ADR.” | Local drafts and temporary task documents may focus review but are not durable ADR rationale or sources. |
-| “The old ADR can be rewritten to match the new decision.” | Preserve the historic decision. Create a new ADR with reciprocal supersession links when exactly one predecessor is known. |
-| “A v1 reader protocol is missing, but sync can recreate it.” | The target root is user-managed. Stop safely and report the malformed setup; do not repair or migrate it. |
-| “A glossary term is an architecture record in smaller words.” | Domain context is vocabulary only. Do not duplicate implementation facts, functional models, constraints, or decisions. |
-| “Sync authority includes rewriting the spec to make it accurate.” | Requirements and pre-implementation design stay intact. The only permitted spec change is one appended alignment section. |
-| “A constraint update is obvious, so confirmation would only slow us down.” | Constraints are high-impact. Show the exact proposed edit and wait for explicit confirmation. |
-| “The runbook needs the credential so operators can act.” | Record the secret's name and approved storage/access route, never its value. |
-| “A hook can keep this documentation current automatically.” | This skill performs an explicit pre-commit assessment; do not add hooks or runtime integrations. |
+| “No spec means no sync.” | A completed scope and durable evidence are required; a spec is optional context. |
+| “Chat or a broad sync request approves the change.” | Require concrete scope, durable evidence, and explicit item approval. |
+| “The diff is unchanged, so apply is safe.” | Revalidate the full fingerprint, including wiki and ADR state. |
+| “Alignment follows memory approval automatically.” | Alignment has its own approval ID; constraints also require exact-text confirmation. |
+| “Read every page to be safe.” | Retrieve only records relevant to the scope cues. |
 
 ## Red Flags
 
-- A missing or pre-implementation specification path.
-- Writing to project memory before reading the schema, index, current constraints/architecture, and active ADRs where v1 applies.
-- Treating a malformed v1 protocol as permission to repair or bypass it.
-- Adding v1 domain, protocol, or governed ADR records to a legacy schema.
-- Treating the classifications as mutually exclusive.
-- Treating `no-ADR` as `no-impact`, or manufacturing an ADR from a routine implementation detail.
-- Treating a temporary specification, plan, chat, or Grill draft as durable domain or ADR evidence.
-- Updating architecture/domain records to mask a conflict with an active ADR.
-- Superseding an ADR with multiple or ambiguous predecessors, or rewriting its historic body.
-- Treating a transient plan as a verified source, citing it from `real_arch`, or copying it into a real-architecture record.
-- Updating `real_arch` without checking its index, durable sources, and the current worktree immediately before commit.
-- A second `Implementation Alignment` section or a changed original spec paragraph.
-- An unconfirmed edit to `constraints.md`.
-- A literal secret in environment/runbook material or any platform-memory, hook, or runtime integration.
+- Writing during review, after a stale fingerprint, or without an approved item ID.
+- Treating task documents or chat as durable evidence, or masking an active-ADR conflict.
+- Creating a spec, changing original spec content, or appending an unapproved/second alignment.
+- Repairing/migrating a user-managed wiki or adding v1 records to a legacy root.
+- Recording secrets; mutating a discovery marker; or adding runtime/platform integrations, hooks, dependencies, or generated state.
 
 ## Verification
 
 Before declaring success, confirm:
 
-- [ ] The feature was complete and the exact `docs/specs/` path was validated.
-- [ ] The schema profile was identified before classification; a v1 reader protocol was validated and read, while a valid legacy schema received no migration or governed ADR/domain write.
-- [ ] The project-memory schema, index, constraints, current architecture, real-architecture index/relevant records, relevant active ADRs, relevant domain context, and relevant operations records were read before classification when they apply.
-- [ ] The exact completed specification was the primary validation path; any completed plan only narrowed inspection and was not cited as a verified fact.
-- [ ] The broad classification is `no-impact` alone or the complete applicable impact set, and the ADR outcome is separately `new`, `supersede`, or `no-ADR`.
-- [ ] Every verified update has durable code, test, active-ADR, or stable-external-documentation evidence; no temporary document or local draft is a retained source.
-- [ ] Every domain term has its own durable sources and is vocabulary only; absent or ambiguous terms were skipped rather than invented.
-- [ ] Each new ADR met all three qualification gates, has durable rationale evidence and a resolving date-slug filename; every supersession is one-to-one, reciprocal, indexed, and preserves the old substantive body.
-- [ ] Any active-ADR conflict stopped all project-memory and specification writes unless a qualifying, unambiguous replacement ADR resolved it.
-- [ ] Only pages permitted by that classification changed, including `real_arch` records and their required indexes, and `constraints.md` changed only after explicit confirmation.
-- [ ] The supplied spec's original content is unchanged and exactly one `Implementation Alignment` section was appended.
-- [ ] Added or retained source/index/domain/supersession links resolve; index coverage and statuses are current; the current worktree was revalidated immediately before commit.
-- [ ] Environment and runbook content is redacted and no forbidden integration, hook, or runtime state was introduced.
+- [ ] The implementation, scope fingerprint, evidence, and target profile were valid; the spec was optional and never a `Sources` record.
+- [ ] Review was zero-write and produced exact drafts, evidence, exclusions, impact/ADR outcomes, and approval IDs.
+- [ ] Each applied item had explicit approval; constraints had exact-text confirmation; rejected items were untouched.
+- [ ] The fingerprint, schema, selected records, active ADRs, and evidence were revalidated immediately before apply or finalizing an approved `no-impact` outcome.
+- [ ] Target-schema templates, links, indexes, lifecycle, retrieval cues, and redaction checks pass.
+- [ ] Alignment was separately approved and appended once after the actual approved outcome, or no-spec runs left specifications unchanged.
