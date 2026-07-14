@@ -30,11 +30,14 @@
     {
       "id": 1,
       "prompt": "Initialize project memory for this repository. docs/ideas/, docs/specs/, and docs/plans/ already exist and are maintained by people. Create the standard Markdown-only memory structure under docs/project-memory/.",
-      "expected_output": "An initialization that creates only the project-memory schema structure, clearly preserving the existing human-managed documentation roots.",
+      "expected_output": "An initialization that creates the v1 project-memory schema plus its one reader protocol, clearly preserving existing human-managed documentation roots.",
       "expectations": [
-        "The response creates or describes only docs/project-memory/ and its documented Markdown schema files",
+        "The response creates or describes docs/project-memory/ and exactly the authorized docs/agents/project-memory.md reader protocol",
         "The response does not create, move, rewrite, or claim ownership of docs/ideas/, docs/specs/, or docs/plans/",
-        "The created structure includes an index, schema, architecture, research, and operations locations",
+        "The created structure includes an index, self-contained v1 schema, reader protocol, empty domain directory, architecture, a real-architecture index, research, and operations locations",
+        "The reader protocol has the v1 marker plus read-order, evidence-boundary, domain-language, and ADR-conflict rules without project facts",
+        "The initialization creates the domain directory but no domain/CONTEXT.md placeholder",
+        "The initialization creates architecture/real_arch/INDEX.md but no placeholder real-architecture topic records",
         "The response does not add hooks, MCP configuration, databases, vector search, runtime dependencies, or platform-memory integrations"
       ],
       "trust_level": "provisional"
@@ -46,7 +49,7 @@
       "expectations": [
         "The response treats the existing docs/project-memory/ root as user-managed content",
         "The response does not overwrite, regenerate, or replace INDEX.md or architecture/current.md",
-        "The response reports the existing root and makes no writes, including no creation of missing schema files",
+        "The response reports the existing root and makes no writes, including no creation of missing schema files, domain paths, or docs/agents/project-memory.md",
         "The response does not infer or migrate data from Claude, Codex, conversation, session, dialogue, or tool memory"
       ],
       "trust_level": "provisional"
@@ -59,6 +62,42 @@
         "The response rejects Claude Memory, Codex memory, vector databases, automatic session capture, and tool-call logging as out of scope",
         "The response keeps the alternative limited to the documented Markdown files under docs/project-memory/",
         "The response does not propose hooks, MCP servers, databases, dependencies, or generated runtime state"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 4,
+      "prompt": "Initialize the Markdown project-memory structure. We delete feature ideas, specs, and plans after each completed commit, so create only the real-architecture index and no topic placeholders. Future real-architecture records must be supported by code, tests, ADRs, or stable external documents.",
+      "expected_output": "An initialization that creates architecture/real_arch/INDEX.md as an empty discovery map, preserves temporary task-document boundaries, and states that future functional/logic design records require durable evidence.",
+      "expectations": [
+        "The response creates or describes architecture/real_arch/INDEX.md but does not invent a real-architecture topic record",
+        "The response creates no domain/CONTEXT.md placeholder",
+        "The response distinguishes accepted functional or logic design from current implementation facts, raw source material, and task plans",
+        "The response treats ideas, specifications, and plans as temporary impact-analysis inputs rather than persistent Sources evidence",
+        "The response limits durable Sources evidence to resolving code, tests, ADRs, stable external documentation, or durable project-memory records"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 5,
+      "prompt": "Initialize a fresh project-memory LLM wiki. There is no docs/project-memory or docs/agents/project-memory.md yet. Create the reader protocol and empty domain directory, but do not create a glossary, ADR, research record, or real-architecture topic until durable evidence exists.",
+      "expected_output": "A v1 initialization that creates the exact reader protocol and canonical directories without unsupported content or global agent configuration.",
+      "expectations": [
+        "The response creates or describes the self-contained project-memory-llm-wiki-v1 schema and docs/agents/project-memory.md only when both protected paths are absent",
+        "The response links the reader protocol from INDEX.md and states that SCHEMA.md has precedence",
+        "The response creates domain/ but does not create domain/CONTEXT.md until durable shared-vocabulary evidence exists",
+        "The response does not modify target AGENTS.md, CLAUDE.md, another docs/agents file, or add an automatic discovery integration"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 6,
+      "prompt": "Initialize project memory, but docs/project-memory is absent and docs/agents/project-memory.md already contains a hand-written protocol from our team.",
+      "expected_output": "A collision-safe no-op that preserves the user-managed protocol and does not create a partial project-memory tree.",
+      "expectations": [
+        "The response detects the existing docs/agents/project-memory.md before writing",
+        "The response makes no write to the existing protocol or to docs/project-memory/",
+        "The response reports the possible partial setup rather than merging, replacing, or normalizing it"
       ],
       "trust_level": "provisional"
     }
