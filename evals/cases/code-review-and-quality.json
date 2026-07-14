@@ -7,11 +7,11 @@
         "top_k": 3
       },
       {
-        "prompt": "Do a quality pass on this diff for correctness and readability",
+        "prompt": "Before I merge this branch into main, do a five-axis readiness review of its diff",
         "top_k": 3
       },
       {
-        "prompt": "Can you review the changes another model just wrote for me?",
+        "prompt": "Is this pull request ready to land in the release branch after an independent review?",
         "top_k": 3
       }
     ],
@@ -29,13 +29,26 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Review the provided diff that adds a user-search endpoint. Deliver a structured review.",
-      "expected_output": "A multi-axis review with severity-labelled findings and file:line references",
+      "prompt": "Review the complete branch diff before merging it into main. It adds a user-search endpoint. Deliver a merge-readiness decision.",
+      "expected_output": "A read-only multi-axis merge-readiness decision with severity-labelled findings, file:line references, and the reviewed merge range",
       "expectations": [
+        "The response establishes the target branch and reviews the complete branch-to-target range rather than only the latest commit",
         "Findings cover more than one axis (correctness, readability, architecture, security, performance)",
         "Every finding carries a severity label from the skill's taxonomy",
         "Security of user input is explicitly considered for the new endpoint",
-        "The review leads with high-leverage findings rather than nits"
+        "The review leads with high-leverage findings rather than nits",
+        "The response returns APPROVE, CHANGES_REQUESTED, or BLOCKED without editing code"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Do a general code-quality pass on this module. I am not deciding whether to merge a branch.",
+      "expected_output": "A concise boundary response that does not perform a merge-readiness review or edit code without a merge decision",
+      "expectations": [
+        "The response states that the skill is limited to pre-merge branch or pull-request decisions",
+        "The response does not invent a merge target or review range",
+        "The response does not produce a merge verdict or edit code"
       ],
       "trust_level": "provisional"
     }

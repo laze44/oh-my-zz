@@ -5,7 +5,7 @@
     "url": "https://github.com/laze44"
   },
   "metadata": {
-    "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, project-memory initialization, architecture synchronization, review, and simplification."
+    "description": "A focused engineering skill pack for idea refinement, specifications, planning, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization, architecture synchronization, pre-merge review decisions, and simplification."
   },
   "plugins": [
     {
@@ -14,10 +14,10 @@
         "source": "github",
         "repo": "laze44/oh-my-zz"
       },
-      "description": "Eight focused engineering skills for shaping ideas, specifying, planning, interrogating designs, initializing project memory, synchronizing architecture records, reviewing code, and simplifying implementations.",
+      "description": "Ten focused engineering skills for shaping ideas, specifying, planning, interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory, synchronizing architecture records, making pre-merge review decisions, and simplifying implementations.",
       "homepage": "https://github.com/laze44/oh-my-zz",
       "license": "MIT",
-      "keywords": ["oh-my-zz", "skills", "engineering", "ideas", "spec", "planning", "design", "interview", "project-memory", "architecture", "ADR", "review", "simplification"]
+      "keywords": ["oh-my-zz", "skills", "engineering", "ideas", "spec", "planning", "design", "interview", "handoff", "project-memory", "architecture", "ADR", "review", "review-fix", "simplification"]
     }
   ]
 }

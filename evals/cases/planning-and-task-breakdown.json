@@ -21,7 +21,7 @@
         "owner": "code-simplification"
       },
       {
-        "prompt": "Review this endpoint implementation for security and correctness",
+        "prompt": "Before merging this branch, review the endpoint implementation for security and correctness",
         "owner": "code-review-and-quality"
       }
     ]

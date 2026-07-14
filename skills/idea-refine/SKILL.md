@@ -1,6 +1,6 @@
 ---
 name: idea-refine
-description: Challenges, clarifies, and refines a rough idea into a concise draft by testing its problem framing, causal logic, assumptions, and trade-offs before converging. Use when a user wants a critical thinking partner to improve, correct, clarify, or save an idea before writing a specification or implementation plan.
+description: Challenges and refines rough ideas into concise drafts by testing framing, logic, assumptions, and trade-offs. Use before specification or planning to refine or save an idea.
 ---
 
 # Idea Refine

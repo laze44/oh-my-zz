@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${PLUGIN_ROOT:-$CLAUDE_PLUGIN_ROOT}/skills/code-review-and-fix/hooks/stop-review-fix-gate.js\"",
+            "timeout": 10,
+            "statusMessage": "Checking code-review-and-fix state"
+          }
+        ]
+      }
+    ]
+  }
+}

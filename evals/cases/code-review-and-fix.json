@@ -1,0 +1,59 @@
+{
+  "skill_name": "code-review-and-fix",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Run a bounded code review and fix loop against the approved spec and implementation plan",
+        "top_k": 3
+      },
+      {
+        "prompt": "Review this completed implementation against docs/spec.md and docs/plan.md, make a repair plan for deviations, fix them, then have a fresh subagent re-review it",
+        "top_k": 3
+      },
+      {
+        "prompt": "Use a review-fix workflow that decides whether findings need a plan change or a user decision before repairing the code",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Give this pull request a one-time read-only code quality review before I merge it; do not change any code",
+        "owner": "code-review-and-quality"
+      },
+      {
+        "prompt": "Break this approved specification into an ordered implementation plan before coding starts",
+        "owner": "planning-and-task-breakdown"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use the approved spec at docs/specs/notifications.md and plan at docs/plans/notifications.md to review the completed implementation. If the reviewer finds deviations, repair only safe local issues, verify them, and re-review up to three cycles.",
+      "expected_output": "A bounded, evidence-backed review-and-repair loop that preserves the approved contract and reaches a clean, blocked, stalled, or maximum-cycle terminal state",
+      "expectations": [
+        "The workflow treats the supplied specification as the highest behavioral contract and the plan as an implementation-scope contract",
+        "A fresh read-only reviewer evaluates the full implementation diff against the supplied spec and plan rather than reviewing only the latest commit",
+        "Before writing a Repair Plan, the primary agent adjudicates whether each material finding is locally repairable, needs a plan or spec change, or requires a user decision",
+        "Each repair item maps to a spec or plan anchor, a minimal code change, an explicit non-goal, and a verification command",
+        "The workflow does not invoke planning-and-task-breakdown or silently redefine the approved spec or plan",
+        "After a repair it runs relevant verification and obtains a fresh independent re-review, with a bounded cycle count",
+        "The workflow reports a truthful terminal state instead of claiming success when it is blocked, stalled, awaiting a user decision, or out of cycles"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "A code reviewer says the completed implementation violates AC-4, but the only two plausible fixes change a public API in incompatible ways and the current plan is ambiguous. Run the review-and-fix workflow.",
+      "expected_output": "A concise adjudication that pauses for a user decision rather than inventing a repair plan or changing the approved contract",
+      "expectations": [
+        "The primary agent records the finding's contract anchor and the evidence for the claimed deviation",
+        "It identifies the material API compatibility trade-off and classifies the finding as requiring a user decision or plan change",
+        "It presents concrete options, a recommendation when evidence supports one, and the consequence of each option",
+        "It does not edit code, create a speculative Repair Plan, or launch planning-and-task-breakdown while user authority is required",
+        "The loop enters a truthful waiting or blocked terminal state that allows the user to respond"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

@@ -6,9 +6,11 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_SKILLS = [
+  'code-review-and-fix',
   'code-review-and-quality',
   'code-simplification',
   'grill-with-docs',
+  'handoff',
   'idea-refine',
   'planning-and-task-breakdown',
   'project-architecture-sync',
@@ -18,9 +20,11 @@ const EXPECTED_SKILLS = [
 const EXPECTED_CLAUDE_COMMANDS = [
   'code-simplify.md',
   'plan.md',
+  'review-fix.md',
   'review.md',
   'spec.md',
 ];
+const HOOKS_PATH = 'hooks/hooks.json';
 const PLUGIN_NAME = 'oh-my-zz';
 const REPOSITORY = 'https://github.com/laze44/oh-my-zz';
 const REPOSITORY_SLUG = 'laze44/oh-my-zz';
@@ -58,6 +62,7 @@ const claudePlugin = readJson('.claude-plugin/plugin.json');
 const claudeMarketplace = readJson('.claude-plugin/marketplace.json');
 const codexPlugin = readJson('.codex-plugin/plugin.json');
 const codexMarketplace = readJson('.agents/plugins/marketplace.json');
+const bundledHooks = readJson(HOOKS_PATH);
 
 assert(claudePlugin.name === PLUGIN_NAME, `Claude plugin name must be ${PLUGIN_NAME}`);
 assert(/project memory/i.test(claudePlugin.description) && /architecture/i.test(claudePlugin.description),
@@ -75,7 +80,9 @@ assert(/project-memory/i.test(claudeMarketplace.metadata.description) && /archit
   'Claude marketplace description must cover project-memory initialization and architecture synchronization');
 assert(codexPlugin.skills === './skills/', 'Codex plugin must load ./skills/');
 assert(codexPlugin.name === PLUGIN_NAME, `Codex plugin name must be ${PLUGIN_NAME}`);
-assert(codexPlugin.version === '1.2.0', 'Codex plugin version must be 1.2.0 for the backward-compatible skill addition');
+assert(codexPlugin.version === '1.4.0', 'Codex plugin version must be 1.4.0 for the handoff skill addition');
+assert(codexPlugin.hooks === undefined,
+  'Codex plugin must use default hooks/hooks.json discovery rather than overriding it with an inline hooks object');
 assert(/project-memory/i.test(codexPlugin.description) && /architecture/i.test(codexPlugin.description),
   'Codex plugin description must cover project-memory initialization and architecture synchronization');
 assert(/project memory/i.test(codexPlugin.interface?.shortDescription) && /architecture/i.test(codexPlugin.interface?.shortDescription),
@@ -84,8 +91,8 @@ assert(codexPlugin.homepage === REPOSITORY && codexPlugin.repository === REPOSIT
   'Codex plugin homepage and repository must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
-assert(/Eight focused engineering skills/.test(claudeMarketplace.plugins[0].description),
-  'Claude marketplace must describe the eight-skill scope');
+assert(/Ten focused engineering skills/.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe the ten-skill scope');
 assert(Array.isArray(codexMarketplace.plugins) && codexMarketplace.plugins.length === 1,
   'Codex marketplace must contain exactly one plugin');
 assert(claudeMarketplace.plugins[0].name === PLUGIN_NAME,
@@ -95,9 +102,20 @@ assert(claudeMarketplace.plugins[0].source?.repo === REPOSITORY_SLUG,
 assert(codexMarketplace.name === PLUGIN_NAME, `Codex marketplace name must be ${PLUGIN_NAME}`);
 assert(codexMarketplace.plugins[0].name === PLUGIN_NAME,
   `Codex marketplace plugin name must be ${PLUGIN_NAME}`);
-assert(/Eight focused engineering skills/.test(codexMarketplace.plugins[0].description),
-  'Codex marketplace must describe the eight-skill scope');
+assert(/Ten focused engineering skills/.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe the ten-skill scope');
 assert(codexMarketplace.plugins[0].source?.path === './',
   'Codex marketplace plugin source must point at the repository root');
 
-console.log('Plugin manifests, eight-skill scope, and unchanged Claude command configuration validated.');
+const stopHandlers = bundledHooks.hooks?.Stop;
+assert(Array.isArray(stopHandlers) && stopHandlers.length === 1,
+  'Bundled hooks must define exactly one Stop matcher group');
+const stopHook = stopHandlers?.[0]?.hooks?.[0];
+assert(stopHook?.type === 'command', 'Bundled Stop hook must be a command hook');
+assert(typeof stopHook?.command === 'string'
+  && stopHook.command.includes('skills/code-review-and-fix/hooks/stop-review-fix-gate.js')
+  && stopHook.command.includes('PLUGIN_ROOT'),
+'Bundled Stop hook must invoke the code-review-and-fix gate through the plugin root');
+assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
+
+console.log('Plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');

@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "oh-my-zz",
-      "description": "Eight focused engineering skills for shaping ideas, specifying, planning, interrogating designs, initializing project memory, synchronizing architecture records, reviewing code, and simplifying implementations.",
+      "description": "Ten focused engineering skills for shaping ideas, specifying, planning, interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory, synchronizing architecture records, making pre-merge review decisions, and simplifying implementations.",
       "source": {
         "source": "local",
         "path": "./"
