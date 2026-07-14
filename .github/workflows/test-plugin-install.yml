@@ -23,6 +23,9 @@ jobs:
       - name: Run skill evals (trigger + routing)
         run: node scripts/run-evals.js
 
+      - name: Run grill-with-docs session lifecycle checks
+        run: node scripts/test-grill-with-docs-runtime.js
+
   validate-commands:
     name: Validate Claude command metadata
     runs-on: ubuntu-latest
