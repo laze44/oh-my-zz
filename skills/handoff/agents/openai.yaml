@@ -1,0 +1,7 @@
+interface:
+  display_name: "Handoff"
+  short_description: "Create a secure, concise agent-session handoff"
+  default_prompt: "Use $handoff to create a redacted temporary handoff document for the next agent session."
+
+policy:
+  allow_implicit_invocation: false

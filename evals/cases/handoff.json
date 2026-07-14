@@ -1,0 +1,44 @@
+{
+  "skill_name": "handoff",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Create a handoff document so a fresh agent can continue this conversation tomorrow",
+        "top_k": 3
+      },
+      {
+        "prompt": "Summarize our current work for another agent session, redact secrets, and save it outside this repository",
+        "top_k": 3
+      },
+      {
+        "prompt": "I need a continuation summary with the next steps and suggested skills for the next session",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Turn the current requirements into an implementation plan with ordered tasks",
+        "owner": "planning-and-task-breakdown"
+      },
+      {
+        "prompt": "Initialize the target repository's durable project memory documentation",
+        "owner": "project-memory-init"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Prepare a handoff for a new agent session that will finish the login bug. We have already updated docs/spec.md and changed src/auth.ts. Tests have not been run. Save the document outside this workspace, do not paste our API token into it, and recommend the best next workflow.",
+      "expected_output": "A concise, redacted temporary handoff document that names the next-session goal, references existing artifacts, records unverified tests, and recommends an available skill.",
+      "expectations": [
+        "The agent writes one Markdown handoff document in the host operating system's temporary directory rather than the workspace",
+        "The handoff references docs/spec.md and src/auth.ts instead of duplicating their contents",
+        "The handoff records that tests have not been run without claiming they passed",
+        "The handoff excludes the API token and includes a mandatory Suggested skills section",
+        "The response returns the handoff's absolute path and a concise next-session focus"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

@@ -6,7 +6,10 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const AGENTS_DIR = path.join(ROOT, 'agents');
-const REQUIRED_AGENT = 'plan-reviewer.md';
+const REQUIRED_AGENTS = [
+  'code-reviewer.md',
+  'plan-reviewer.md',
+];
 const READ_ONLY_TOOLS = new Set(['Read', 'Grep', 'Glob']);
 
 function fail(message) {
@@ -19,8 +22,10 @@ if (!fs.existsSync(AGENTS_DIR)) {
 } else {
   const files = fs.readdirSync(AGENTS_DIR).filter((file) => file.endsWith('.md')).sort();
 
-  if (!files.includes(REQUIRED_AGENT)) {
-    fail(`${REQUIRED_AGENT}: required Claude Code reviewer is missing`);
+  for (const requiredAgent of REQUIRED_AGENTS) {
+    if (!files.includes(requiredAgent)) {
+      fail(`${requiredAgent}: required Claude Code reviewer is missing`);
+    }
   }
 
   for (const file of files) {

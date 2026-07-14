@@ -1,4 +1,4 @@
 interface:
   display_name: "Grill With Docs"
-  short_description: "Clarify plans through structured decisions and local docs"
-  default_prompt: "Use $grill-with-docs to interrogate this plan, resolve its decisions, and record the resulting context and ADRs."
+  short_description: "Bounded plan clarification with visible progress and disposable interview notes"
+  default_prompt: "Use $grill-with-docs to interrogate this plan in standard mode, resolve its highest-priority decisions, show progress, and clean temporary interview notes after the final handoff."

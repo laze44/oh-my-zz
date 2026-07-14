@@ -1,23 +1,29 @@
 ---
 name: code-review-and-quality
-description: Conducts multi-axis code review. Use before merging any change. Use when reviewing code written by yourself, another agent, or a human. Use when you need to assess code quality across multiple dimensions before it enters the main branch.
+description: Conducts a read-only multi-axis merge-readiness review. Use when a user needs to decide whether a branch or pull request can be merged into its target branch.
 ---
 
 # Code Review and Quality
 
 ## Overview
 
-Multi-dimensional code review with quality gates. Every change gets reviewed before merge — no exceptions. Review covers five axes: correctness, readability, architecture, security, and performance.
+This is a read-only pre-merge decision gate. It evaluates the complete branch-to-target diff across correctness, readability, architecture, security, and performance, then reports whether the branch is ready to merge. It does not repair code, redefine requirements, or merge branches.
 
-**The approval standard:** Approve a change when it definitely improves overall code health, even if it isn't perfect. Perfect code doesn't exist — the goal is continuous improvement. Don't block a change because it isn't exactly how you would have written it. If it improves the codebase and follows the project's conventions, approve it.
+**The approval standard:** Return `APPROVE` only when the complete merge scope has adequate verification and no Critical or Required issue remains. Do not block a branch for personal style preferences, but do not approve one on a vague "looks good" assessment.
 
 ## When to Use
 
-- Before merging any PR or change
-- After completing a feature implementation
-- When another agent or model produced code you need to evaluate
-- When refactoring existing code
-- After any bug fix (review both the fix and the regression test)
+- The user asks whether a branch, pull request, or complete diff is ready to merge into a named or evident target branch.
+- The user requests a pre-merge review, approval decision, or change-request decision, even if they say "PR" or "landing" rather than "merge."
+
+Do not use this skill for a general code-quality pass with no merge decision, an implementation review that must make repairs, a refactoring request, or post-implementation feedback. For a bounded review-and-repair loop against an approved specification and plan, use `code-review-and-fix`. For behavior-preserving cleanup, use `code-simplification`.
+
+## Scope and Boundaries
+
+1. Establish the source branch, target branch, and full merge range before reviewing. Use the merge base of the target and source, then review that complete range rather than only staged files or the latest commit.
+2. If the target branch or review range cannot be established from the request and repository evidence, return `BLOCKED` and ask for the missing merge context. Do not silently assume an arbitrary target.
+3. Remain read-only. This skill does not edit code, create a Repair Plan, approve a contract change, or execute a merge.
+4. Assess all five axes, but only raise security and performance findings when they are material to the merge scope. State why an axis is not materially affected instead of inventing a concern.
 
 ## The Five-Axis Review
 
@@ -139,19 +145,22 @@ Every change needs a description that stands alone in version control history.
 
 ## Review Process
 
-### Step 1: Understand the Context
+### Step 1: Establish the Merge Scope
 
-Before looking at code, understand the intent:
+Before looking at code, establish the decision being made:
 
 ```
-- What is this change trying to accomplish?
-- What spec or task does it implement?
-- What is the expected behavior change?
+- What source branch is under review?
+- What target branch will receive it?
+- What is the merge-base-to-source range?
+- Is the user asking for a merge decision, rather than a general quality opinion?
 ```
 
-### Step 2: Review the Tests First
+Inspect the complete range from the merge base to the source `HEAD`, its changed paths, the pull-request description when available, and the relevant tests. Do not limit the review to `HEAD~1` or staged files unless they are provably the complete merge scope.
 
-Tests reveal intent and coverage:
+### Step 2: Understand Intent and Review the Tests First
+
+Use the branch description, linked task or specification, and tests to establish intent and coverage:
 
 ```
 - Do tests exist for the change?
@@ -180,15 +189,16 @@ Label every comment with its severity so the author knows what's required vs opt
 
 | Prefix | Meaning | Author Action |
 |--------|---------|---------------|
-| *(no prefix)* | Required change | Must address before merge |
 | **Critical:** | Blocks merge | Security vulnerability, data loss, broken functionality |
-| **Nit:** | Minor, optional | Author may ignore — formatting, style preferences |
-| **Optional:** / **Consider:** | Suggestion | Worth considering but not required |
+| **Required:** | Blocks merge | Must address before merge |
+| **Suggestion:** | Non-blocking improvement | Author may choose to address separately |
 | **FYI** | Informational only | No action needed — context for future reference |
 
 This prevents authors from treating all feedback as mandatory and wasting time on optional suggestions.
 
 **Lead with what matters.** Order findings by leverage: correctness and security first, then structural regressions and missed simplifications, then everything else. Don't bury a real issue under cosmetic nits — a few high-conviction comments beat a long list. If you have one structural problem and ten nits, the structural problem *is* the review.
+
+Every Critical or Required finding must name the affected file and line or symbol, the relevant merge-scope evidence, concrete impact, and a repair direction. Do not elevate a personal preference to Required.
 
 ### Step 5: Verify the Verification
 
@@ -202,21 +212,39 @@ Check the author's verification story:
 - Is there a before/after comparison?
 ```
 
+### Step 6: Return a Merge Decision
+
+Use this response shape:
+
+```text
+VERDICT: APPROVE | CHANGES_REQUESTED | BLOCKED
+MERGE_TARGET:
+REVIEW_RANGE:
+VERIFICATION_EVIDENCE:
+CRITICAL_FINDINGS:
+REQUIRED_FINDINGS:
+SUGGESTIONS:
+AXIS_NOT_MATERIALLY_AFFECTED:
+```
+
+- `APPROVE`: the merge range is established, relevant verification is sufficient, and no Critical or Required finding remains.
+- `CHANGES_REQUESTED`: one or more Critical or Required findings prevent merge. Suggestions alone do not prevent approval.
+- `BLOCKED`: the target branch, full review range, essential evidence, or authority needed for a merge decision is unavailable.
+
+The review ends after this decision. A later repair and re-review is a new invocation; do not edit code inside this skill.
+
 ## Multi-Model Review Pattern
 
 Use different models for different review perspectives:
 
 ```
-Model A writes the code
+Model A prepares the branch
     │
     ▼
-Model B reviews for correctness and architecture
+Model B performs the read-only merge review
     │
     ▼
-Model A addresses the feedback
-    │
-    ▼
-Human makes the final call
+Human makes the merge decision
 ```
 
 This catches issues that a single model might miss — different models have different blind spots.
@@ -225,7 +253,9 @@ This catches issues that a single model might miss — different models have dif
 ```
 Review this code change for correctness, security, and adherence to
 our project conventions. The spec says [X]. The change should [Y].
-Flag any issues as Critical, Required, Optional, or Nit.
+Review the complete branch-to-target range and return APPROVE,
+CHANGES_REQUESTED, or BLOCKED. Flag issues as Critical, Required,
+Suggestion, or FYI.
 ```
 
 ## Dead Code Hygiene
@@ -304,7 +334,9 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 ```markdown
 ## Review: [PR/Change title]
 
-### Context
+### Merge Scope
+- [ ] Source branch, target branch, and merge-base-to-source range are established
+- [ ] I reviewed the complete merge range, not only the latest commit or staged files
 - [ ] I understand what this change does and why
 
 ### Correctness
@@ -326,6 +358,7 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 - [ ] No feature logic in shared modules; file stays within a healthy size
 
 ### Security
+- [ ] Security materiality assessed for this merge scope
 - [ ] No secrets in code
 - [ ] Input validated at boundaries
 - [ ] No injection vulnerabilities
@@ -333,6 +366,7 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 - [ ] External data sources treated as untrusted
 
 ### Performance
+- [ ] Performance materiality assessed for this merge scope
 - [ ] No N+1 patterns
 - [ ] No unbounded operations
 - [ ] Pagination on list endpoints
@@ -343,8 +377,9 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 - [ ] Manual verification done (if applicable)
 
 ### Verdict
-- [ ] **Approve** — Ready to merge
-- [ ] **Request changes** — Issues must be addressed
+- [ ] **APPROVE** — Ready to merge; no Critical or Required finding remains
+- [ ] **CHANGES_REQUESTED** — Critical or Required issues must be addressed
+- [ ] **BLOCKED** — Merge scope or essential evidence is missing
 ```
 ## See Also
 
@@ -357,6 +392,7 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 |---|---|
 | "It works, that's good enough" | Working code that's unreadable, insecure, or architecturally wrong creates debt that compounds. |
 | "I wrote it, so I know it's correct" | Authors are blind to their own assumptions. Every change benefits from another set of eyes. |
+| "They only asked for a quality pass" | This skill is reserved for a merge decision. Do not invoke it unless the user intends to decide whether the branch can merge. |
 | "We'll clean it up later" | Later never comes. The review is the quality gate — use it. Require cleanup before merge, not after. |
 | "AI-generated code is probably fine" | AI code needs more scrutiny, not less. It's confident and plausible, even when wrong. |
 | "The tests pass, so it's good" | Tests are necessary but not sufficient. They don't catch architecture problems, security issues, or readability concerns. |
@@ -368,6 +404,8 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 ## Red Flags
 
 - PRs merged without any review
+- A general quality or refactoring request routed here without a merge decision
+- A review that inspects only the latest commit rather than the complete branch-to-target range
 - Review that only checks if tests pass (ignoring other axes)
 - "LGTM" without evidence of actual review
 - Security-sensitive changes without security-focused review
@@ -384,13 +422,13 @@ For `npm audit` findings and supply-chain risk, use the security checklist below
 
 ## Verification
 
-After review is complete:
+Before reporting a pre-merge decision:
 
-- [ ] All Critical issues are resolved
-- [ ] All Required (no-prefix) changes are resolved or explicitly deferred with justification
-- [ ] Tests pass
-- [ ] Build succeeds
-- [ ] The verification story is documented (what changed, how it was verified)
-- [ ] Dependency upgrades were reviewed against their changelog, isolated per package, and verified by a green suite with the lockfile diff reviewed
+- [ ] The source, target, and full merge range are recorded
+- [ ] Every relevant five-axis concern was assessed, including security and performance materiality
+- [ ] Test, build, manual, and dependency-upgrade evidence was inspected as applicable
+- [ ] Every Critical or Required finding has file/symbol evidence, impact, and a repair direction
+- [ ] `APPROVE` is used only with no unresolved Critical or Required finding; otherwise the verdict is `CHANGES_REQUESTED` or `BLOCKED`
+- [ ] The skill remained read-only and did not merge or repair the branch
 
 **Presumptive blockers:** surface and propose the simpler design for each of these; escalate to Required only when the change actively makes structure worse: a refactor that relocates complexity instead of reducing it; a change that pushes a file past the size boundary with no decomposition; feature logic added to a shared module; a near-duplicate of an existing canonical helper; a silent fallback that hides an unclear invariant.
