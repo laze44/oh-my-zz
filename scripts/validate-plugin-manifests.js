@@ -6,6 +6,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_SKILLS = [
+  'brief-change-plan',
   'code-review-and-fix',
   'code-review-and-quality',
   'code-simplification',
@@ -69,6 +70,8 @@ assert(/project memory/i.test(claudePlugin.description) && /architecture/i.test(
   'Claude plugin description must cover project memory and architecture synchronization');
 assert(/discovery/i.test(claudePlugin.description) && /approved architecture synchronization/i.test(claudePlugin.description),
   'Claude plugin description must cover opt-in discovery and explicitly approved architecture synchronization');
+assert(/brief.*plan/i.test(claudePlugin.description),
+  'Claude plugin description must cover brief change plans');
 assert(claudePlugin.skills === './skills', 'Claude plugin must load ./skills');
 assert(Array.isArray(claudePlugin.commands) && claudePlugin.commands.length === 1 &&
   claudePlugin.commands[0] === './.claude/commands',
@@ -82,25 +85,33 @@ assert(/project-memory/i.test(claudeMarketplace.metadata.description) && /archit
   'Claude marketplace description must cover project-memory initialization and architecture synchronization');
 assert(/discovery/i.test(claudeMarketplace.metadata.description) && /proposal-first/i.test(claudeMarketplace.metadata.description),
   'Claude marketplace metadata must cover opt-in discovery and proposal-first synchronization');
+assert(/brief.*plan/i.test(claudeMarketplace.metadata.description),
+  'Claude marketplace metadata must cover brief change plans');
 assert(codexPlugin.skills === './skills/', 'Codex plugin must load ./skills/');
 assert(codexPlugin.name === PLUGIN_NAME, `Codex plugin name must be ${PLUGIN_NAME}`);
-assert(codexPlugin.version === '1.4.1', 'Codex plugin version must be 1.4.1 for the project-memory discovery and proposal-first sync update');
+assert(codexPlugin.version === '1.5.0', 'Codex plugin version must be 1.5.0 for the brief change-plan skill update');
 assert(codexPlugin.hooks === undefined,
   'Codex plugin must use default hooks/hooks.json discovery rather than overriding it with an inline hooks object');
 assert(/project-memory/i.test(codexPlugin.description) && /architecture/i.test(codexPlugin.description),
   'Codex plugin description must cover project-memory initialization and architecture synchronization');
 assert(/discovery/i.test(codexPlugin.description) && /proposal/i.test(codexPlugin.description),
   'Codex plugin description must cover opt-in discovery and proposal-first synchronization');
+assert(/brief.*plan/i.test(codexPlugin.description),
+  'Codex plugin description must cover brief change plans');
 assert(/project memory/i.test(codexPlugin.interface?.shortDescription) && /architecture/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover project memory and architecture records');
 assert(/discovery/i.test(codexPlugin.interface?.shortDescription) && /proposal/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover opt-in discovery and proposal-first synchronization');
+assert(/brief.*plan/i.test(codexPlugin.interface?.shortDescription),
+  'Codex plugin short description must cover brief plans');
 assert(codexPlugin.homepage === REPOSITORY && codexPlugin.repository === REPOSITORY,
   'Codex plugin homepage and repository must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
-assert(/Ten focused engineering skills/.test(claudeMarketplace.plugins[0].description),
-  'Claude marketplace must describe the ten-skill scope');
+assert(/Eleven focused engineering skills/.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe the eleven-skill scope');
+assert(/brief.*plan/i.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe brief change plans');
 assert(/discovery/i.test(claudeMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(claudeMarketplace.plugins[0].description),
   'Claude marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(Array.isArray(codexMarketplace.plugins) && codexMarketplace.plugins.length === 1,
@@ -112,8 +123,10 @@ assert(claudeMarketplace.plugins[0].source?.repo === REPOSITORY_SLUG,
 assert(codexMarketplace.name === PLUGIN_NAME, `Codex marketplace name must be ${PLUGIN_NAME}`);
 assert(codexMarketplace.plugins[0].name === PLUGIN_NAME,
   `Codex marketplace plugin name must be ${PLUGIN_NAME}`);
-assert(/Ten focused engineering skills/.test(codexMarketplace.plugins[0].description),
-  'Codex marketplace must describe the ten-skill scope');
+assert(/Eleven focused engineering skills/.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe the eleven-skill scope');
+assert(/brief.*plan/i.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe brief change plans');
 assert(/discovery/i.test(codexMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(codexMarketplace.plugins[0].description),
   'Codex marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(codexMarketplace.plugins[0].source?.path === './',
@@ -130,4 +143,4 @@ assert(typeof stopHook?.command === 'string'
 'Bundled Stop hook must invoke the code-review-and-fix gate through the plugin root');
 assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
 
-console.log('Plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');
+console.log('Plugin manifests, eleven-skill scope, Claude command configuration, and bundled Stop gate validated.');

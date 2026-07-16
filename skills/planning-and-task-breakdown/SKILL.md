@@ -1,105 +1,73 @@
 ---
 name: planning-and-task-breakdown
-description: Creates repository-grounded implementation plans and independently reviews them before finalization. Use when a specification or clear requirements need to become ordered, verifiable vertical tasks, when dependency sequencing is unclear, or when work may be parallelized.
+description: Creates repository-grounded implementation plans with an independent review gate. Use when a specification or clear requirements must become ordered, verifiable tasks, dependency sequencing is unclear, or parallel work needs explicit contracts.
 ---
 
 # Planning and Task Breakdown
 
 ## Overview
 
-Turn requirements into a repository-grounded implementation plan without changing implementation code. Define the intended outcome and scope boundaries first, derive acceptance criteria, then organize the work into dependency-aware vertical slices with explicit verification.
+Create a repository-grounded implementation plan without changing implementation code. Define the outcome and boundaries, derive testable acceptance criteria, then organize dependency-aware vertical tasks.
 
-A newly written plan is a **candidate**. It becomes **final** only after a separate subagent reviews it and the planning agent resolves the findings. The reviewer challenges the plan; it does not author or edit it.
+A new plan is a **candidate**. Mark it **final** only after a separate read-only reviewer returns a complete `PASS` verdict. The planner owns revisions; the reviewer never edits the plan. Reuse a live reviewer only for a delta recheck.
 
 ## When to Use
 
-- A specification, PRD, or clear request needs an executable implementation plan.
-- The work spans components, has non-obvious dependencies, or carries material risk.
-- Several contributors or agents may work in parallel and need explicit ownership boundaries.
-- An existing plan needs to be checked for completeness and feasibility before implementation.
+- A specification or PRD needs a durable, executable plan.
+- Work crosses components, has non-obvious dependencies or material risk, or needs parallel ownership boundaries.
+- An existing plan needs an independent feasibility and completeness check.
 
-Do not use this workflow for a trivial, obvious change unless the user explicitly asks for a plan. If requirements are still materially ambiguous, clarify them before claiming the plan is final.
+For a brief, quick, patch, correction, or repair plan without independent review, use the `brief-change-plan` skill. Clarify material ambiguity before calling a plan final.
 
 ## Planning Boundary
 
-- Read requirements, relevant code, tests, configuration, and project guidance before planning.
-- Do not implement source changes while this skill is active. Writing or updating the requested plan artifact is allowed.
-- Use the output path requested by the user or established by the repository. Do not force `tasks/plan.md`, create a duplicate todo file, or invent a path convention.
-- Do not estimate time, lines of code, or task size by file count. Use dependency, outcome, risk, and verification to shape tasks.
-- Treat stated requirements and repository evidence as authoritative. Label assumptions and inferences rather than presenting them as facts.
-- Ask the user only when a missing decision materially changes scope, architecture, acceptance criteria, or safety. Otherwise choose the safest reversible option and record it.
+- Read the requirements, relevant code, tests, configuration, and repository guidance before planning.
+- Do not change implementation code. Write only the requested plan artifact at the user-requested or repository-established path.
+- Treat requirements and repository evidence as authoritative; label assumptions and inferences. Ask only when a decision materially changes scope, architecture, acceptance criteria, or safety.
+- Do not estimate effort from time, line count, or file count. Shape work by outcomes, dependencies, risk, and proof.
+- Save the candidate before review. Reviewers read it by path, never as an inline duplicate.
 
 ## Workflow
 
 ### 1. Ground the plan
 
-Read the source requirements and inspect only the repository areas needed to understand:
+Inspect only the repository areas needed to identify existing patterns, implementation and test surfaces, interfaces or migrations, compatibility or rollout constraints, and required validation. Cite concrete paths when useful; do not invent files or line numbers.
 
-- existing architecture, conventions, and reusable patterns;
-- likely implementation and test surfaces;
-- external interfaces, migrations, compatibility constraints, and rollout concerns;
-- repository-specific validation commands and definition-of-done requirements.
+### 2. Define scope
 
-Record concrete paths when they help an implementer navigate. Avoid speculative line numbers and invented files.
-
-### 2. Define the goal and path boundaries
-
-State:
-
-- **Goal:** the observable result the work must produce.
-- **Upper bound:** the broadest acceptable scope; work must not expand beyond it.
-- **Lower bound:** the smallest acceptable result; work must not shrink below it.
-- **Allowed choices:** implementation decisions the executor may make without reopening the plan.
-- **Out of scope:** adjacent work that is explicitly excluded.
-
-Upper and lower bounds are affirmative descriptions of acceptable paths. They are stronger than a list of exclusions because they define both maximum and minimum completion.
+State the **Goal**, **Upper Bound**, **Lower Bound**, **Allowed Choices**, and **Out of Scope**. Bounds describe the largest and smallest acceptable outcome; allowed choices are decisions an executor may make without reopening the plan.
 
 ### 3. Derive acceptance criteria
 
-Give each criterion a stable ID such as `AC-1`.
+Assign stable IDs such as `AC-1`. Make every criterion observable and map every source requirement to at least one criterion. For behavior, specify positive and negative or boundary proof; otherwise name the command, artifact, inspection, or evidence. Distinguish hard numeric requirements from directional goals.
 
-- Write observable, deterministic completion conditions.
-- For behavioral criteria, include both a positive case and a meaningful negative or boundary case.
-- For non-behavioral criteria, name the command, artifact, inspection, or evidence that proves completion.
-- Distinguish hard numeric requirements from directional goals.
-- Ensure every source requirement maps to at least one acceptance criterion.
+### 4. Sequence by real dependencies
 
-### 4. Map dependencies and sequence
+Surface risky assumptions and integration constraints early. Use milestones only for independently verifiable states. Name the contract or prerequisite that makes parallel work safe; keep migrations, shared contracts, and other true dependency chains sequential.
 
-Build the sequence from actual prerequisites, not from a generic layer order.
+### 5. Create vertical tasks
 
-- Surface risky assumptions and integration constraints early.
-- Use milestones only when they mark a coherent, independently verifiable state.
-- Identify work that can run in parallel and the contract that keeps parallel tasks compatible.
-- Keep migrations, shared contracts, and other dependency chains sequential where necessary.
+Give each task one observable outcome and a coherent verification step. Prefer an end-to-end feature path over artificial database/API/UI layers. Foundation work is valid only when it is a real prerequisite with its own proof.
 
-### 5. Break work into vertical tasks
-
-Each task should deliver one observable outcome and leave the repository in a verifiable state. Prefer a complete feature path across the necessary layers over separate “all database,” “all API,” and “all UI” tasks.
-
-Foundation tasks are valid only when they are real prerequisites with their own verification. Do not create horizontal layers merely to make the plan look orderly.
-
-For every task provide:
-
-| Field | Requirement |
+| Field | Required content |
 | --- | --- |
-| Task ID and outcome | Stable ID and a result-oriented title |
-| Target criteria | One or more `AC-*` IDs the task advances or completes |
+| Task ID and outcome | Stable ID and result-oriented title |
+| Target criteria | One or more `AC-*` IDs |
 | Dependencies | Prior task IDs or `None` |
-| Likely paths | Evidence-based repository areas, not a guaranteed file list |
-| Work | Concrete changes needed to produce the outcome |
-| Verification | Tests, commands, or observable checks that prove the task complete |
+| Likely paths | Evidence-based areas, not a guaranteed file list |
+| Work | Concrete changes needed for the outcome |
+| Verification | Tests, commands, or observable checks |
 | Parallel status | `Sequential` or `Parallel after <contract/task>` |
 
-Split a task further when it has multiple independent outcomes, cannot be verified coherently, or hides a material architectural decision. Do not split a cohesive vertical slice merely because it crosses several files.
+Split a task only when it contains independent outcomes, lacks coherent proof, or hides a material decision.
 
-### 6. Capture risks and pending decisions
+### 6. Record risks and decisions
 
-For each material risk, state its impact and mitigation. Separate these from pending decisions that require user authority. A decision is blocking only if different answers would materially change the plan.
+For each material risk, state impact and mitigation. Keep pending decisions separate; call one blocking only when different answers materially change the plan.
 
-### 7. Write the candidate plan
+### 7. Save the candidate plan
 
-Use this structure unless the repository supplies a compatible plan template:
+Use a repository template when compatible; otherwise use this minimum structure:
 
 ```markdown
 # Implementation Plan: [Name]
@@ -117,17 +85,12 @@ Status: CANDIDATE
 ## Repository Context
 
 ## Acceptance Criteria
-- AC-1: [observable condition]
-  - Positive: [proof]
-  - Negative or boundary: [proof]
 
 ## Dependencies and Sequence
-### Milestones
-### Parallelization
 
 ## Task Breakdown
-| Task | Outcome | Target AC | Depends On | Likely Paths | Verification | Parallel |
-| --- | --- | --- | --- | --- | --- | --- |
+| Task | Outcome | Target AC | Depends On | Likely Paths | Work | Verification | Parallel |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 
 ## Risks and Mitigations
 
@@ -135,22 +98,31 @@ Status: CANDIDATE
 
 ## Independent Review Record
 - Status: PENDING
-- Completed rounds: 0
+- Candidate plan: [saved path]
+- Requirements source: [path or concise chat excerpt]
+- Guidance paths: [paths]
+- Reviewed paths: [paths]
+- Reviewer session: PENDING
+- Completed responses: 0
+- Review packet: PENDING
+- Recovery status: None
 ```
 
-Add detail below a task table row when the work cannot be stated clearly in the table alone. Do not create a second checklist that can drift from the plan.
+Add task detail below the table only when the row cannot state the work clearly. Do not create a second drifting checklist.
 
 ### 8. Run the independent review gate
 
-After the candidate is complete, invoke one fresh, independent subagent as the reviewer.
+**Preflight.** Confirm that the candidate is saved, all required sections and task fields exist, every requirement maps to an acceptance criterion, and the review record names the source material. Fix omissions before dispatch.
 
-- In Claude Code, prefer the bundled `oh-my-zz:plan-reviewer` subagent.
-- In Codex, use a configured plan-reviewer agent when available; otherwise spawn a fresh native subagent and include the reviewer brief below in the request.
-- Pass the original requirements, the complete candidate plan, and the relevant repository constraints or paths.
-- Do **not** pass the planning agent's expected findings, preferred verdict, intended fixes, or self-justification. Independence requires the reviewer to reach its own conclusion.
-- Keep the reviewer read-only. It reports findings; the primary planning agent adjudicates them and edits the plan.
+**Packet and reviewer.** Create one separate, read-only reviewer. In Claude Code, prefer `oh-my-zz:plan-reviewer`; in Codex, use a configured plan reviewer or create one native subagent and retain its session ID. Send only:
 
-The reviewer must assess requirement coverage, scope bounds, repository grounding, dependency correctness, vertical slicing, feasibility, verification quality, risks, and unresolved decisions. Require this response shape:
+- the saved candidate-plan path;
+- the requirement source or a concise chat-only excerpt;
+- relevant guidance paths, inspected evidence paths, and `agents/plan-reviewer.md` when available.
+
+Do not send the full plan inline, expected findings, a preferred verdict, intended fixes, or self-justification. The reviewer may inspect extra files only to support a material claim; it must not edit, restart broad discovery, run validation, or add prose outside the required fields. Record the packet, session, and every response in `Independent Review Record` immediately.
+
+Require this complete response shape:
 
 ```text
 VERDICT: PASS | REVISE | BLOCKED
@@ -164,61 +136,37 @@ SUGGESTED_CHANGES:
 PENDING_DECISIONS:
 ```
 
-Verdict meanings:
+The review must cover requirement and scope coverage, repository grounding, dependencies, vertical slicing, feasibility, verification, risks, and decisions. `PASS` means no material correction; `REVISE` means the planner can fix it from available evidence; `BLOCKED` means essential information or authority is missing.
 
-- `PASS`: no material correction is required.
-- `REVISE`: the primary agent can correct the plan using available evidence.
-- `BLOCKED`: essential information or user authority is missing.
+**Resolve.** Check every material finding against requirements and evidence, apply accepted corrections, and record accepted or rejected findings with reasons. If corrected, send the same live reviewer a delta packet containing the saved path, resolved finding IDs, and changed sections; require the full response again. Create a replacement reviewer only when the live session cannot continue **and** a requirement, bound, criterion, dependency, interface/migration decision, or verification strategy changed. Stop after at most two complete reviewer responses. Mark the plan `FINAL` only when the latest complete independent verdict is `PASS`, criteria remain mapped, and no blocking decision remains.
 
-After a complete review:
-
-1. Check every material finding against the requirements and repository evidence.
-2. Apply accepted corrections to the candidate plan.
-3. Record accepted findings and any rejected material finding with a brief evidence-based reason.
-4. If material changes were made, request one final review from a fresh reviewer. Stop after at most two complete review rounds. A complete round returns every required review heading, regardless of whether its verdict is `PASS`, `REVISE`, or `BLOCKED`.
-5. Mark the plan `FINAL` only when the latest independent verdict is `PASS`, acceptance criteria remain fully mapped, and no blocking decision remains.
-
-If reviewer invocation fails or the verdict is incomplete, retry once with a fresh subagent. If no complete independent review succeeds, keep the plan as `CANDIDATE`, set the review status to `INDEPENDENT_REVIEW_BLOCKED`, and report the failure. Never substitute self-review or claim the plan is final.
+**Recover.** If dispatch fails before a reviewer starts, retry once with a compact fresh dispatch. If a live reviewer omits headings, ask once only for the missing headings. After a started reviewer times out, is cancelled, or loses its result, do not self-review or launch a same-turn replacement. Keep the plan `CANDIDATE`, set review status to `INDEPENDENT_REVIEW_BLOCKED`, and record `DISPATCH_REJECTED`, `TIMED_OUT`, `RESULT_UNAVAILABLE`, or `INCOMPLETE_OUTPUT` with attempt details. A later invocation may create one recovery reviewer from the saved packet; it resumes the candidate rather than regenerating it.
 
 ## Common Rationalizations
 
-| Rationalization | Correction |
+| Rationalization | Rule |
 | --- | --- |
-| “The plan is obvious, so repository inspection is unnecessary.” | An executable plan must reflect actual constraints, patterns, and verification commands. |
-| “The reviewer is unavailable, so a self-review is close enough.” | It is not independent. Keep candidate status and report `INDEPENDENT_REVIEW_BLOCKED`. |
-| “The reviewer should edit the plan directly.” | Separate review from authorship; the primary agent owns adjudication and revision. |
-| “More tasks always make execution safer.” | Extra horizontal or duplicate tasks increase coordination and drift. Split only around outcomes, dependencies, or verification. |
-| “Estimated time or file count proves a task is small.” | Those estimates are unstable. Judge task quality by cohesion, dependencies, and proof of completion. |
+| “The plan is obvious” or “self-review is enough.” | Ground the plan in repository evidence and require independent review. |
+| “Every edit needs a new reviewer” or “retry the timeout now.” | Use the live reviewer for one delta recheck; preserve a timed-out candidate for recovery. |
+| “More tasks, estimates, or horizontal layers prove safety.” | Use outcome cohesion, real dependencies, and verification instead. |
+| “The reviewer can edit the plan.” | Keep review and authorship separate. |
 
 ## Red Flags
 
-- Planning starts before reading the source requirements and relevant repository guidance.
-- The goal has no upper or lower scope bound.
-- Acceptance criteria are vague, unnumbered, or not mapped to tasks.
-- Behavioral criteria omit negative or boundary cases.
-- Tasks are horizontal layers or have no observable outcome.
-- Dependencies, likely repository paths, or verification steps are missing.
-- The reviewer receives the author's desired conclusion or edits the plan itself.
-- The plan is labeled final without a complete independent `PASS` verdict.
-- Implementation code is changed during planning.
+- Requirements or repository guidance were not inspected, or assumptions are presented as facts.
+- Scope bounds, mapped `AC-*` criteria, task proof, dependencies, paths, or parallel contracts are missing.
+- The review packet contains an inline plan or the planner's desired conclusion, or the reviewer edits the plan.
+- A started reviewer is blindly replaced after timeout or lost output.
+- The plan is final without a complete independent `PASS`, or implementation code changed during planning.
 
 ## Verification
 
-Before presenting a final plan, confirm:
+Before presenting the result, confirm:
 
-- [ ] Source requirements and relevant repository constraints were inspected.
-- [ ] Goal, upper bound, lower bound, allowed choices, and out-of-scope work are explicit.
-- [ ] Every source requirement maps to a stable acceptance criterion.
-- [ ] Behavioral criteria include positive and negative or boundary proof.
-- [ ] Every task has an outcome, target criteria, dependencies, likely paths, and verification.
-- [ ] Tasks are vertical where possible and ordered by real dependencies.
-- [ ] Parallel work names the contract or prerequisite that makes it safe.
-- [ ] Risks, assumptions, and pending decisions are distinguished.
-- [ ] A separate subagent completed an unbiased review using the required response shape.
-- [ ] Material findings were adjudicated and the review record was updated.
-- [ ] The latest verdict is `PASS`; otherwise the plan remains `CANDIDATE`, with review status `INDEPENDENT_REVIEW_BLOCKED` when no complete independent review could be obtained.
-- [ ] No implementation code was changed.
+- [ ] Scope, acceptance criteria, risks, and decisions are explicit; every source requirement maps to an `AC-*` criterion.
+- [ ] Tasks are evidence-grounded vertical slices with outcome, dependencies, likely paths, work, verification, and parallel status.
+- [ ] The candidate and compact review packet are saved, and the review record is complete.
+- [ ] Independent findings were adjudicated; any recheck followed the live-session and recovery rules.
+- [ ] The latest verdict is `PASS` before `FINAL`; otherwise keep `CANDIDATE` and record `INDEPENDENT_REVIEW_BLOCKED` with its recovery reason. No implementation code changed.
 
-## See Also
-
-Task acceptance criteria answer “did this work produce the intended outcome?” Every task must also satisfy the project-wide completion bar in `references/definition-of-done.md`.
+Task acceptance criteria prove the intended outcome. Also apply the project-wide completion bar in [references/definition-of-done.md](../../references/definition-of-done.md).

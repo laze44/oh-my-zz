@@ -1,6 +1,6 @@
 ---
 name: code-review-and-fix
-description: Runs a bounded, independent review-and-repair loop. Use when implemented work must be checked against an approved specification and implementation plan.
+description: Runs a bounded, independent review-and-repair loop for completed changes. Use when already-delivered behavior must be checked against its governing contract before minimal safe repairs.
 ---
 
 # Code Review and Fix

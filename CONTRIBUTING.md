@@ -1,11 +1,12 @@
 # Contributing
 
-This branch intentionally maintains a focused ten-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused eleven-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
 - `idea-refine`
 - `spec-from-idea`
+- `brief-change-plan`
 - `planning-and-task-breakdown`
 - `grill-with-docs`
 - `handoff`
@@ -15,7 +16,7 @@ This branch intentionally maintains a focused ten-skill pack for Claude Code and
 - `project-memory-init`
 - `project-architecture-sync`
 
-The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. They do not change or invoke the other eight skill workflows. Adding another skill or platform integration is a product-scope decision, not routine maintenance. Propose that change explicitly before implementation.
+The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. They do not change or invoke the other retained skill workflows. Adding another skill or platform integration is a product-scope decision, not routine maintenance. Propose that change explicitly before implementation.
 
 ## Modifying a skill
 
