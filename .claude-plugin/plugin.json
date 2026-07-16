@@ -1,6 +1,6 @@
 {
   "name": "oh-my-zz",
-  "description": "A focused engineering skill pack for refining ideas, writing specs, planning and interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization, making pre-merge review decisions, and simplifying implementations.",
+  "description": "A focused engineering skill pack for refining ideas, writing specs, making brief dated change plans or formal reviewed plans, interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization, making pre-merge review decisions, and simplifying implementations.",
   "author": {
     "name": "laze44"
   },

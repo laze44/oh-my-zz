@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brief Change Plan"
+  short_description: "Create a short dated change plan without review"
+  default_prompt: "Use $brief-change-plan to write a dated concise change plan for this repair."

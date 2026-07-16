@@ -124,7 +124,7 @@ function main() {
   assert.match(sync, /mutate a discovery marker/i);
 
   // Public project guidance must send contributors through the deterministic
-  // contract test, and it must not regress the ten-skill inventory.
+  // contract test, and it must not regress the eleven-skill inventory.
   for (const [label, text] of [
     ['README.md', readme],
     ['AGENTS.md', agents],

@@ -1,0 +1,46 @@
+{
+  "skill_name": "brief-change-plan",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Write a short dated change plan for this patch without code or an independent review",
+        "top_k": 3
+      },
+      {
+        "prompt": "Create a quick repair plan with scope, risks, and acceptance criteria",
+        "top_k": 3
+      },
+      {
+        "prompt": "Save a brief plan for the login bug fix without code or an independent review",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Turn this PRD into a durable task breakdown with dependencies and an independent plan review",
+        "owner": "planning-and-task-breakdown"
+      },
+      {
+        "prompt": "Run an independent code review and repair loop against this approved specification and implementation plan",
+        "owner": "code-review-and-fix"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a brief plan for a known login retry bug. Save a dated Markdown file, do not write code, do not request an independent review, and keep the plan to approach, scope, risks, and acceptance criteria.",
+      "expected_output": "One dated Markdown change-plan artifact with only a title and the four required Chinese sections, grounded acceptance proof, no implementation code, and no review workflow.",
+      "expectations": [
+        "The agent writes one dated Markdown plan under docs/plans/ when the user supplies no destination",
+        "The filename begins with the execution environment's local YYYY-MM-DD date and does not overwrite an existing plan",
+        "The artifact contains only a title and the headings 方案, 范围, 风险, and 验收标准",
+        "范围 explicitly distinguishes included and excluded work",
+        "风险 gives a mitigation, evidence-to-obtain, or formal-planning escalation condition",
+        "Every acceptance criterion includes observable proof such as a targeted test, command, or inspection",
+        "The artifact contains no implementation code, pseudocode, diff, CANDIDATE or FINAL status, reviewer, or subagent record"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}
