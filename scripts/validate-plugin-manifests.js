@@ -29,6 +29,7 @@ const HOOKS_PATH = 'hooks/hooks.json';
 const PLUGIN_NAME = 'oh-my-zz';
 const REPOSITORY = 'https://github.com/laze44/oh-my-zz';
 const REPOSITORY_SLUG = 'laze44/oh-my-zz';
+const SEMVER_PATTERN = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
 function readJson(relativePath) {
   const fullPath = path.join(ROOT, relativePath);
@@ -66,6 +67,8 @@ const codexMarketplace = readJson('.agents/plugins/marketplace.json');
 const bundledHooks = readJson(HOOKS_PATH);
 
 assert(claudePlugin.name === PLUGIN_NAME, `Claude plugin name must be ${PLUGIN_NAME}`);
+assert(typeof claudePlugin.version === 'string' && SEMVER_PATTERN.test(claudePlugin.version),
+  'Claude plugin version must be strict SemVer');
 assert(/project memory/i.test(claudePlugin.description) && /architecture/i.test(claudePlugin.description),
   'Claude plugin description must cover project memory and architecture synchronization');
 assert(/discovery/i.test(claudePlugin.description) && /approved architecture synchronization/i.test(claudePlugin.description),
@@ -89,7 +92,10 @@ assert(/brief.*plan/i.test(claudeMarketplace.metadata.description),
   'Claude marketplace metadata must cover brief change plans');
 assert(codexPlugin.skills === './skills/', 'Codex plugin must load ./skills/');
 assert(codexPlugin.name === PLUGIN_NAME, `Codex plugin name must be ${PLUGIN_NAME}`);
-assert(codexPlugin.version === '1.5.0', 'Codex plugin version must be 1.5.0 for the brief change-plan skill update');
+assert(typeof codexPlugin.version === 'string' && SEMVER_PATTERN.test(codexPlugin.version),
+  'Codex plugin version must be strict SemVer');
+assert(claudePlugin.version === codexPlugin.version,
+  'Claude and Codex plugin versions must match');
 assert(codexPlugin.hooks === undefined,
   'Codex plugin must use default hooks/hooks.json discovery rather than overriding it with an inline hooks object');
 assert(/project-memory/i.test(codexPlugin.description) && /architecture/i.test(codexPlugin.description),
