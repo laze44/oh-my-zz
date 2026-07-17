@@ -3,7 +3,7 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "Run a bounded code review and fix loop against the approved spec and implementation plan",
+        "prompt": "Explicitly run a bounded code review and fix loop against the approved spec and implementation plan",
         "top_k": 3
       },
       {
@@ -23,6 +23,12 @@
       {
         "prompt": "Break this approved specification into an ordered implementation plan before coding starts",
         "owner": "planning-and-task-breakdown"
+      },
+      {
+        "prompt": "Implement the approved plan now: make the requested code changes and run the targeted tests."
+      },
+      {
+        "prompt": "Continue with the next task in the implementation plan; apply the changes and verify them."
       }
     ]
   },

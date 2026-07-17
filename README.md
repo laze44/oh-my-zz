@@ -13,7 +13,7 @@ A focused plugin pack for Claude Code and Codex. It contains eleven focused work
 | [grill-with-docs](skills/grill-with-docs/SKILL.md) | Stress-test a plan through a bounded, priority-aware interview with visible progress and disposable session notes |
 | [handoff](skills/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
 | [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
-| [code-review-and-fix](skills/code-review-and-fix/SKILL.md) | Independently review implemented work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
+| [code-review-and-fix](skills/code-review-and-fix/SKILL.md) | Explicitly review completed work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
 | [code-simplification](skills/code-simplification/SKILL.md) | Reduce complexity while preserving behavior |
 | [project-memory-init](skills/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
 | [project-architecture-sync](skills/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
@@ -46,9 +46,9 @@ Claude Code exposes these convenience commands:
 - `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `brief-change-plan`, `grill-with-docs`, `handoff`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` is intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
+Invoke `idea-refine`, `brief-change-plan`, `grill-with-docs`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
 
-`/plan` is a thin entry point to the formal planning skill and always retains its independent-review contract. The plugin also bundles read-only `oh-my-zz:plan-reviewer` and `oh-my-zz:code-reviewer` subagents. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` requires an approved specification and implementation plan; it does not invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
+`/plan` is a thin entry point to the formal planning skill and always retains its independent-review contract. The plugin also bundles read-only `oh-my-zz:plan-reviewer` and `oh-my-zz:code-reviewer` subagents. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
 ## Codex
 
@@ -67,7 +67,7 @@ codex plugin marketplace add /path/to/oh-my-zz
 codex plugin add oh-my-zz@oh-my-zz
 ```
 
-Start a new Codex task after installation. Invoke a skill with `@`, for example `@spec-from-idea`, or describe the task and let Codex select the matching skill.
+Start a new Codex task after installation. Invoke a skill with `@`, for example `@spec-from-idea`, or describe the task and let Codex select the matching skill. Invoke `@code-review-and-fix` explicitly for its post-implementation loop; normal coding and plan execution do not start it.
 
 The formal planning skill asks Codex to create a fresh native subagent for independent plan review. `brief-change-plan` never requests a reviewer or subagent. The review-and-fix skill likewise asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
 

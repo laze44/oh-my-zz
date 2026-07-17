@@ -11,7 +11,7 @@ This repository is a focused plugin pack for Claude Code and Codex.
 - `grill-with-docs` — interrogate plans with bounded priority-aware decisions and clean temporary interview records after handoff
 - `handoff` — compact the current conversation into a redacted temporary handoff document for a fresh agent session
 - `code-review-and-quality` — make a read-only pre-merge readiness decision for a branch or pull request
-- `code-review-and-fix` — independently review an approved implementation contract, triage repairability, and run a bounded repair/re-review loop
+- `code-review-and-fix` — explicitly review a completed approved implementation contract, triage repairability, and run a bounded repair/re-review loop
 - `code-simplification` — reduce complexity without changing behavior
 - `project-memory-init` — initialize the Markdown-only project-memory schema and, after confirmation, optionally append selective-discovery guidance to target root agent instructions
 - `project-architecture-sync` — review a completed implementation scope, draft target-project architecture-memory changes, and synchronize only approved items

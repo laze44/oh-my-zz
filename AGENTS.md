@@ -18,7 +18,7 @@ This repository is a focused eleven-skill pack for Claude Code and Codex. It int
 - `project-memory-init`
 - `project-architecture-sync`
 
-`brief-change-plan` creates dated, bounded change-plan artifacts without code or independent review. `project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Neither workflow changes or invokes the other retained skills. `code-review-and-fix` is a bounded contract-preserving repair workflow: it consumes an approved specification and plan but never invokes or replaces `planning-and-task-breakdown`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
+`brief-change-plan` creates dated, bounded change-plan artifacts without code or independent review. `project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Neither workflow changes or invokes the other retained skills. `code-review-and-fix` is an explicitly user-invoked, bounded contract-preserving repair workflow for completed work: it consumes an approved specification and plan, never starts while code is modified or a plan is executed, and never invokes or replaces `planning-and-task-breakdown`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
 
 ## Intent mapping
 
@@ -29,7 +29,7 @@ This repository is a focused eleven-skill pack for Claude Code and Codex. It int
 - Plan or design interrogation with session-local decision docs → `grill-with-docs`
 - Current conversation transfer to a fresh agent session → `handoff`
 - Pre-merge branch or pull-request readiness review → `code-review-and-quality`
-- Approved spec-and-plan implementation needing bounded independent review, repair, and re-review → `code-review-and-fix`
+- Explicitly requested independent review, repair, and re-review of a completed approved implementation → `code-review-and-fix`
 - Behavior-preserving cleanup → `code-simplification`
 - Initialize the Markdown-only project-memory schema and optionally configure selective ordinary-agent discovery → `project-memory-init`
 - Review a completed implementation scope, propose architecture-memory changes, and synchronize only approved items → `project-architecture-sync`

@@ -1,5 +1,5 @@
 ---
-description: Run a bounded contract-driven code review, repair, and fresh re-review loop
+description: Explicitly run a bounded contract-driven code review, repair, and fresh re-review loop
 ---
 
 Invoke the `oh-my-zz:code-review-and-fix` skill and follow it as the single source of truth.
