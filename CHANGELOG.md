@@ -2,6 +2,13 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.3] - 2026-07-18
+
+### Changed
+
+- Merged `spec-from-idea` and `planning-and-task-breakdown` into a single `idea-to-spec-and-plan` skill, so each approved idea yields one traceable specification and one complete independently reviewed plan.
+- Updated the skill inventory, plugin manifests, and related docs/evals to reflect the unified workflow.
+
 ## [1.5.2] - 2026-07-17
 
 ### Changed
