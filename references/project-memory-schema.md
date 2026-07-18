@@ -111,7 +111,13 @@ No domain context yet.
 
 ## Decision records
 
-No decision records yet.
+### Active
+
+No active decision records yet.
+
+### Superseded
+
+No superseded decision records yet.
 
 ## Research records
 
@@ -122,7 +128,7 @@ No research records yet.
 No retrieval cues yet.
 ```
 
-When `domain/CONTEXT.md` is first created, replace `No domain context yet.` with its relative link and status. When a decision or research record is created, replace its corresponding `No ... yet.` line with a relative Markdown link and status. Update an index entry only when adding a new record, changing a record's status, or changing its supersession relationship; do not churn the index for ordinary edits to an already-indexed canonical page.
+When `domain/CONTEXT.md` is first created, replace `No domain context yet.` with its relative link and status. When a research record is created, replace `No research records yet.` with a relative Markdown link and status. Add a new decision record's relative Markdown link and status under `### Active` in the Decision records section; when a record becomes superseded, move its existing entry from `### Active` to `### Superseded` in the same update rather than duplicating or deleting it, and add the replacement record's entry under `### Active`. This split keeps default agent scanning proportional to currently binding decisions while every superseded entry stays linked for history. Update an index entry only when adding a new record, changing a record's status, or changing its supersession relationship; do not churn the index for ordinary edits to an already-indexed canonical page.
 
 `## Retrieval cues` is optional navigation metadata, not a source-tree inventory or an architecture statement. A cue may map a stable subsystem, public contract, canonical term, configuration surface, path class, or symbol to one or more existing project-memory records, for example `- billing export API — [Export contract](architecture/real_arch/export-contract.md)`. Add or amend a cue only when an approved sync creates or materially changes its linked record and the cue helps selective retrieval. Every cue link must resolve; do not invent a cue from a plan, chat, or temporary draft. Existing v1 roots may lack this section and remain valid; agents fall back to the canonical indexes and scoped Markdown search.
 
@@ -273,11 +279,26 @@ Create an ADR only when all of the following are true:
 
 Otherwise record the ADR outcome as `no-ADR`; this does not mean the broad architecture impact is `no-impact`. Conversely, broad `no-impact` means no current-architecture, real-architecture, domain-language, or operations page changes; it can still accompany a qualifying `new` or `supersede` ADR outcome. Never turn a temporary idea, specification, plan, chat, or local Grill draft into an ADR source.
 
-An ADR uses the metadata form above, has status `active` when sync creates it, and contains a compact one-to-three-sentence statement of context, decision, and why. It may use `## Considered Alternatives` and `## Consequences` only when they retain non-obvious durable value. A manually maintained `proposed` or `verified` ADR remains valid under the generic status rules, but only an `active` ADR is binding for conflict checks.
+An ADR uses the metadata form above and has status `active` when sync creates it. Its decision body—everything after the metadata, including any optional-section bullets—must be at most 120 words. Default to the shortest valid form: one unheaded paragraph of one to three short sentences that states the context, decision, and durable why or trade-off. Use this form unless an optional section passes the stricter rule below:
+
+```markdown
+# <Short decision title>
+
+- Status: `active`
+- Sources: <the smallest sufficient set of resolving durable evidence links>
+- Supersedes: None
+- Superseded by: None
+
+<One unheaded paragraph of one to three short sentences: context, decision, and durable why.>
+```
+
+Do not include either `## Considered Alternatives` or `## Consequences` by default. Add one only when omitting one non-obvious, durable fact would materially mislead a future reader; each included heading has at most one concise, single-sentence bullet. An alternatives bullet names the rejected choice and why it conflicts with the decision. A consequences bullet names an enduring trade-off or guardrail. The ADR qualification gate still requires review evidence that a real alternative was considered, but the record need not enumerate every alternative.
+
+Do not turn an ADR into a source-tree tour, review transcript, or implementation checklist. Keep routine lifecycle and cleanup mechanics, test or benchmark/RSS details, and temporary rollout or acceptance work out of the decision body. Record durable functional behavior and invariants in `architecture/real_arch/`, verified implementation facts in `architecture/current.md`, and lasting operator guidance in `operations/`; otherwise omit the detail. `Sources` is the smallest sufficient resolving evidence set, not an exhaustive code inventory. A manually maintained `proposed` or `verified` ADR remains valid under the generic status rules, but only an `active` ADR is binding for conflict checks.
 
 Create an ADR filename from an English short decision name: lowercase it, replace each maximal run outside `[a-z0-9]` with `-`, collapse adjacent hyphens, and trim leading/trailing hyphens. If the result is empty, stop and report instead of inventing an opaque filename. Probe `YYYY-MM-DD-slug.md`, then `YYYY-MM-DD-slug-2.md`, `YYYY-MM-DD-slug-3.md`, and so on until the first unoccupied filename; this date-based convention is an intentional adaptation from numeric ADR series.
 
-When a decision changes, create a new ADR rather than rewriting history. A sync-created replacement may supersede exactly one known active ADR. It must update the old record only by marking it `superseded` and adding the reciprocal `Superseded by` link; preserve the old title, Context, Decision, Why, and optional body byte-for-byte. The new record links the old one through `Supersedes`, and `INDEX.md` lists both records with their current statuses. If more than one possible prior ADR exists or the relationship is ambiguous, stop and report; do not guess. Outside a supersession, correct a clearly non-semantic typo or broken link in an historic ADR only when it does not alter the decision or rationale.
+When a decision changes, create a new ADR rather than rewriting history. A sync-created replacement may supersede exactly one known active ADR. It must update the old record only by marking it `superseded` and adding the reciprocal `Superseded by` link; preserve the old title, Context, Decision, Why, and optional body byte-for-byte. The new record links the old one through `Supersedes`, and `INDEX.md` moves the old record's entry from `### Active` to `### Superseded` while adding the new record's entry under `### Active`, so both remain linked with their current statuses. If more than one possible prior ADR exists or the relationship is ambiguous, stop and report; do not guess. Outside a supersession, correct a clearly non-semantic typo or broken link in an historic ADR only when it does not alter the decision or rationale.
 
 Every ADR source, index, and supersession link must resolve from its containing file.
 
@@ -296,8 +317,8 @@ Before declaring an initialization or sync complete:
 1. Confirm every canonical v1 file exists, `domain/CONTEXT.md` is absent unless it has evidenced terms, and each created substantive record has valid metadata.
 2. Confirm the reader protocol matches the v1 template: exact marker, required headings in order, no project-specific content, and `SCHEMA.md` precedence on conflict.
 3. Confirm every relative Markdown link in `INDEX.md` and `architecture/real_arch/INDEX.md`, every `Sources` field, and every supersession field resolves from its containing file.
-4. Confirm `INDEX.md` links every created domain context, decision, and research record with its current status; confirm `architecture/real_arch/INDEX.md` links every created real-architecture topic record with its status and implementation status.
+4. Confirm `INDEX.md` links every created domain context, decision, and research record with its current status, and that each decision record's entry sits under `### Active` or `### Superseded` matching that status with no entry duplicated or dropped; confirm `architecture/real_arch/INDEX.md` links every created real-architecture topic record with its status and implementation status.
 5. Confirm every domain term and real-architecture topic has durable resolving sources, never temporary ideas, specifications, plans, chats, or local design drafts; confirm domain entries contain vocabulary only and real-architecture implementation status is `verified`, `partial`, or `not-started`.
-6. Confirm every `superseded` ADR and its replacement link to one another, the old ADR's substantive body is unchanged, and each new ADR meets the qualification and rationale-evidence rules.
+6. Confirm every `superseded` ADR and its replacement link to one another, `INDEX.md` reflects the old entry moved to `### Superseded` and the new entry under `### Active`, the old ADR's substantive body is unchanged, and each new ADR meets the qualification and rationale-evidence rules.
 7. Confirm environment and runbook text contains no secrets, no placeholder domain/real-architecture topic records exist, and no prohibited platform-memory or runtime integration was introduced.
 8. When discovery setup was explicitly selected, confirm each selected root instruction file contains exactly one complete, unmodified owned marker at its end, every unselected instruction file is unchanged, and the marker points only to existing valid v1 paths. Its absence remains valid when discovery was not selected.

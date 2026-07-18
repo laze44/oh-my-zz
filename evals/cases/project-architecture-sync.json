@@ -195,6 +195,30 @@
         "The response appends exactly one alignment only after the approved no-impact outcome completes"
       ],
       "trust_level": "provisional"
+    },
+    {
+      "id": 16,
+      "prompt": "Review a completed implementation range that changes a hard-to-reverse group-streaming residency policy. Durable code and tests establish the trade-off, while the review also contains cache cleanup steps, RSS accounting, contract-test details, and rollout acceptance criteria. Draft only; do not write files.",
+      "expected_output": "A zero-write proposal with a short ADR draft that preserves the decision and durable trade-off without becoming an implementation narrative.",
+      "expectations": [
+        "The response creates an ADR draft only after applying the hard-to-reverse, surprising, real-trade-off, and durable-evidence qualification gates",
+        "The ADR decision body is at most 120 words and has a one-to-three-sentence core covering context, decision, and durable why",
+        "The response omits Considered Alternatives and Consequences unless one non-obvious durable fact requires it; any included section has only one concise single-sentence bullet",
+        "The ADR does not absorb cache cleanup, RSS accounting, contract-test detail, or temporary rollout acceptance work; durable facts are routed to the appropriate record or remain evidence"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 17,
+      "prompt": "Apply an approved replacement ADR that supersedes an existing active ADR about queue-partitioning residency. The fingerprint and evidence still match after revalidation.",
+      "expected_output": "An approved apply that writes the new active ADR, marks the old one superseded, and regroups both INDEX.md decision-record entries.",
+      "expectations": [
+        "The response marks the old ADR superseded with a reciprocal Superseded by link while preserving its title, Context, Decision, Why, and optional body byte-for-byte",
+        "The response moves the old ADR's INDEX.md entry from the Decision records Active subsection to the Superseded subsection in the same update",
+        "The response adds the new ADR's INDEX.md entry under the Active subsection rather than duplicating or leaving the old entry in place",
+        "The response links the new record to the old one through Supersedes"
+      ],
+      "trust_level": "provisional"
     }
   ]
 }
