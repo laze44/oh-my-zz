@@ -5,9 +5,8 @@ This repository is a focused plugin pack for Claude Code and Codex.
 ## Retained skills
 
 - `idea-refine` — clarify intent and save a concise idea draft
-- `spec-from-idea` — expand a clarified idea into an implementation-ready specification
+- `idea-to-spec-and-plan` — turn a clarified idea into a specification and one independently reviewed implementation plan
 - `brief-change-plan` — create a dated, concise change plan without code or independent review
-- `planning-and-task-breakdown` — produce a formal, independently reviewed task plan
 - `grill-with-docs` — interrogate plans with bounded priority-aware decisions and clean temporary interview records after handoff
 - `handoff` — compact the current conversation into a redacted temporary handoff document for a fresh agent session
 - `code-review-and-quality` — make a read-only pre-merge readiness decision for a branch or pull request
@@ -22,7 +21,7 @@ The two project-memory skills are independent: initialization owns fresh docs pl
 
 ```text
 skills/              Shared skill content
-.claude/commands/    /spec, /plan, /review, /code-simplify
+.claude/commands/    /spec, /review, /code-simplify
 .claude-plugin/      Claude Code manifests
 .codex-plugin/       Codex manifest
 .agents/plugins/     Codex marketplace entry

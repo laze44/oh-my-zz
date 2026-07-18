@@ -21,8 +21,7 @@
         "owner": "code-review-and-quality"
       },
       {
-        "prompt": "Break this approved specification into an ordered implementation plan before coding starts",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Break this approved specification into an ordered implementation plan before coding starts"
       },
       {
         "prompt": "Implement the approved plan now: make the requested code changes and run the targeted tests."
@@ -42,7 +41,7 @@
         "A fresh read-only reviewer evaluates the full implementation diff against the supplied spec and plan rather than reviewing only the latest commit",
         "Before writing a Repair Plan, the primary agent adjudicates whether each material finding is locally repairable, needs a plan or spec change, or requires a user decision",
         "Each repair item maps to a spec or plan anchor, a minimal code change, an explicit non-goal, and a verification command",
-        "The workflow does not invoke planning-and-task-breakdown or silently redefine the approved spec or plan",
+        "The workflow does not invoke idea-to-spec-and-plan or silently redefine the approved spec or plan",
         "After a repair it runs relevant verification and obtains a fresh independent re-review, with a bounded cycle count",
         "The workflow reports a truthful terminal state instead of claiming success when it is blocked, stalled, awaiting a user decision, or out of cycles"
       ],
@@ -56,7 +55,7 @@
         "The primary agent records the finding's contract anchor and the evidence for the claimed deviation",
         "It identifies the material API compatibility trade-off and classifies the finding as requiring a user decision or plan change",
         "It presents concrete options, a recommendation when evidence supports one, and the consequence of each option",
-        "It does not edit code, create a speculative Repair Plan, or launch planning-and-task-breakdown while user authority is required",
+        "It does not edit code, create a speculative Repair Plan, or launch idea-to-spec-and-plan while user authority is required",
         "The loop enters a truthful waiting or blocked terminal state that allows the user to respond"
       ],
       "trust_level": "provisional"

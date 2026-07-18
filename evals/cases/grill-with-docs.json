@@ -17,8 +17,7 @@
     ],
     "negative": [
       {
-        "prompt": "Turn this accepted specification into ordered implementation tasks",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Turn this accepted specification into ordered implementation tasks"
       },
       {
         "prompt": "Before merging this branch, review the complete diff for correctness and security issues",

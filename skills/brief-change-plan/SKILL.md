@@ -14,7 +14,7 @@ Create one concise, dated Markdown plan for a bounded change. Keep its contract 
 - Use when the user asks for a short, quick, patch, repair, correction, or change plan and does not need independent review.
 - Use when the intended change is already sufficiently bounded to express its approach, scope, risks, and observable acceptance criteria concisely.
 
-Do not use this skill for a PRD, a full task breakdown, dependency or parallel-work planning, or work with material migration, security, public-compatibility, or cross-module architecture risk. If that need becomes apparent, explain why formal planning is needed; do not automatically invoke the `planning-and-task-breakdown` skill or a reviewer.
+Do not use this skill for a PRD, a full task breakdown, dependency or parallel-work planning, or work with material migration, security, public-compatibility, or cross-module architecture risk. If that need becomes apparent, explain why the user needs an idea-to-spec-and-plan workflow; do not automatically invoke `idea-to-spec-and-plan` or a reviewer.
 
 ## Boundaries
 

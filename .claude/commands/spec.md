@@ -1,9 +1,9 @@
 ---
-description: Expand a clarified idea into an implementation-ready specification
+description: Turn a clarified idea into an independently reviewed specification-and-plan bundle
 ---
 
-Invoke the oh-my-zz:spec-from-idea skill.
+Invoke the oh-my-zz:idea-to-spec-and-plan skill.
 
 Use the supplied idea document, or locate a clearly matching draft under `docs/ideas/`. Clarify only material gaps and establish what reproducible evidence the user accepts as proof of completion.
 
-Generate the specification, present it for review, and save it only after approval. Stop before planning or implementation.
+Generate and save a baselined specification and one repository-grounded candidate plan from that exact baseline. Use milestones only to group the complete plan, obtain one independent read-only review across it, and present the two artifacts together for approval; do not implement code.

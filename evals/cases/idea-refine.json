@@ -21,12 +21,11 @@
         "owner": "code-review-and-quality"
       },
       {
-        "prompt": "Turn this approved specification into an ordered task list",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Turn this approved specification into an ordered task list"
       },
       {
         "prompt": "Write an implementation-ready specification for this new feature",
-        "owner": "spec-from-idea"
+        "owner": "idea-to-spec-and-plan"
       }
     ]
   },

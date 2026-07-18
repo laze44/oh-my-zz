@@ -1,0 +1,59 @@
+{
+  "skill_name": "idea-to-spec-and-plan",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Turn this approved idea document into a specification and an independently reviewed implementation plan",
+        "top_k": 3
+      },
+      {
+        "prompt": "Turn docs/ideas/usage-billing.md into a spec, a repository-grounded plan, and a plan review",
+        "top_k": 3
+      },
+      {
+        "prompt": "We have clarified the feature idea; now create the requirements, success criteria, and reviewed execution plan",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Help me clarify and save this rough product idea",
+        "owner": "idea-refine"
+      },
+      {
+        "prompt": "Write a short dated plan for this known login patch without code or independent review",
+        "owner": "brief-change-plan"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use the approved idea for usage-based billing to produce a specification and reviewed plan before implementation. The idea explains the goal but does not say how completion should be proven.",
+      "expected_output": "A two-artifact workflow that establishes completion evidence, saves a baselined spec with canonical acceptance criteria, creates a traceable candidate plan, and independently reviews that plan before final approval.",
+      "expectations": [
+        "Material repository context is inspected rather than commands or conventions being invented",
+        "The agent proposes a small number of outcome-based verification candidates and asks what evidence is sufficient",
+        "Success criteria contain an observable outcome, proof method, and explicit pass condition",
+        "Acceptance criteria, success criteria, and repository-specific plan verification remain distinct",
+        "The spec owns stable acceptance-criteria IDs and the plan maps every ID to verifiable tasks without redefining it",
+        "Milestones group the one complete plan rather than creating additional planning artifacts",
+        "A separate read-only subagent reviews the saved plan against the saved spec baseline without receiving the desired verdict or proposed repairs",
+        "The reviewer returns every required verdict field even when the bundled reviewer prompt is unavailable",
+        "No implementation code is produced"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Create the spec and plan from this idea draft, but it does not say whether existing clients must remain compatible.",
+      "expected_output": "A focused clarification workflow that treats compatibility as a material blocker and does not create a candidate plan until it is resolved.",
+      "expectations": [
+        "The agent asks one focused compatibility question rather than inventing a requirement",
+        "The agent does not baseline a spec or create a plan while the material gap remains",
+        "The response distinguishes a material decision from a non-material assumption"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

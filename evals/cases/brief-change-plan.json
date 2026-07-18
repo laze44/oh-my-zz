@@ -17,8 +17,7 @@
     ],
     "negative": [
       {
-        "prompt": "Turn this PRD into a durable task breakdown with dependencies and an independent plan review",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Turn this PRD into a durable task breakdown with dependencies and an independent plan review"
       },
       {
         "prompt": "Run an independent code review and repair loop against this approved specification and implementation plan",
