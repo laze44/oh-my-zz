@@ -4,12 +4,11 @@ This file configures agents working on this repository. The reusable plugin cont
 
 ## Scope
 
-This repository is a focused eleven-skill pack for Claude Code and Codex. It intentionally contains only:
+This repository is a focused ten-skill pack for Claude Code and Codex. It intentionally contains only:
 
 - `idea-refine`
-- `spec-from-idea`
+- `idea-to-spec-and-plan`
 - `brief-change-plan`
-- `planning-and-task-breakdown`
 - `grill-with-docs`
 - `handoff`
 - `code-review-and-quality`
@@ -18,14 +17,13 @@ This repository is a focused eleven-skill pack for Claude Code and Codex. It int
 - `project-memory-init`
 - `project-architecture-sync`
 
-`brief-change-plan` creates dated, bounded change-plan artifacts without code or independent review. `project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Neither workflow changes or invokes the other retained skills. `code-review-and-fix` is an explicitly user-invoked, bounded contract-preserving repair workflow for completed work: it consumes an approved specification and plan, never starts while code is modified or a plan is executed, and never invokes or replaces `planning-and-task-breakdown`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
+`idea-to-spec-and-plan` owns the single idea-to-spec-and-plan path; its milestones organize one complete plan rather than spawning subplans. `brief-change-plan` creates dated, bounded change-plan artifacts without code or independent review. `project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Neither workflow changes or invokes the other retained skills. `code-review-and-fix` is an explicitly user-invoked, bounded contract-preserving repair workflow for completed work: it consumes an approved specification and plan, never starts while code is modified or a plan is executed, and never invokes or replaces `idea-to-spec-and-plan`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
 
 ## Intent mapping
 
 - Rough or ambiguous idea → `idea-refine`
-- Clarified idea requiring a specification → `spec-from-idea`
+- Clarified idea requiring a specification and reviewed implementation plan → `idea-to-spec-and-plan`
 - Brief, quick, patch, correction, or repair plan without independent review → `brief-change-plan`
-- Formal planning or task breakdown → `planning-and-task-breakdown`
 - Plan or design interrogation with session-local decision docs → `grill-with-docs`
 - Current conversation transfer to a fresh agent session → `handoff`
 - Pre-merge branch or pull-request readiness review → `code-review-and-quality`

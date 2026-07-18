@@ -1,6 +1,6 @@
 ---
 name: code-review-and-fix
-description: Runs an explicitly requested, bounded independent review-and-repair loop for an already-completed change. Use when the user explicitly asks for a fresh independent review, minimal repairs, and re-review against an approved contract; never auto-invoke it as a side effect of another task.
+description: Runs an explicitly requested, bounded independent review-and-repair loop for an already-completed implementation. Use when the user explicitly asks for a fresh independent review, minimal repairs, and re-review against a fixed contract; never auto-invoke it as a side effect of another task.
 ---
 
 # Code Review and Fix
@@ -9,7 +9,7 @@ description: Runs an explicitly requested, bounded independent review-and-repair
 
 Run this as an explicit post-implementation workflow, never as part of normal coding or plan execution. A fresh reviewer checks the complete implementation scope; the primary agent triages findings, makes only small contract-preserving repairs, verifies them, and obtains a fresh re-review.
 
-Treat the specification as the behavioral contract and the plan as secondary scope evidence. Do not create or change either contract, replace `planning-and-task-breakdown`, or silently broaden the work.
+Treat the specification as the behavioral contract and the plan as secondary scope evidence. Do not create or change either contract, replace `idea-to-spec-and-plan`, or silently broaden the work.
 
 ## When to Use
 

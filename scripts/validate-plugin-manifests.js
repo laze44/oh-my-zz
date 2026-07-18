@@ -13,14 +13,12 @@ const EXPECTED_SKILLS = [
   'grill-with-docs',
   'handoff',
   'idea-refine',
-  'planning-and-task-breakdown',
+  'idea-to-spec-and-plan',
   'project-architecture-sync',
   'project-memory-init',
-  'spec-from-idea',
 ];
 const EXPECTED_CLAUDE_COMMANDS = [
   'code-simplify.md',
-  'plan.md',
   'review-fix.md',
   'review.md',
   'spec.md',
@@ -114,8 +112,8 @@ assert(codexPlugin.homepage === REPOSITORY && codexPlugin.repository === REPOSIT
   'Codex plugin homepage and repository must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
-assert(/Eleven focused engineering skills/.test(claudeMarketplace.plugins[0].description),
-  'Claude marketplace must describe the eleven-skill scope');
+assert(/Ten focused engineering skills/.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe the ten-skill scope');
 assert(/brief.*plan/i.test(claudeMarketplace.plugins[0].description),
   'Claude marketplace must describe brief change plans');
 assert(/discovery/i.test(claudeMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(claudeMarketplace.plugins[0].description),
@@ -129,8 +127,8 @@ assert(claudeMarketplace.plugins[0].source?.repo === REPOSITORY_SLUG,
 assert(codexMarketplace.name === PLUGIN_NAME, `Codex marketplace name must be ${PLUGIN_NAME}`);
 assert(codexMarketplace.plugins[0].name === PLUGIN_NAME,
   `Codex marketplace plugin name must be ${PLUGIN_NAME}`);
-assert(/Eleven focused engineering skills/.test(codexMarketplace.plugins[0].description),
-  'Codex marketplace must describe the eleven-skill scope');
+assert(/Ten focused engineering skills/.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe the ten-skill scope');
 assert(/brief.*plan/i.test(codexMarketplace.plugins[0].description),
   'Codex marketplace must describe brief change plans');
 assert(/discovery/i.test(codexMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(codexMarketplace.plugins[0].description),
@@ -149,4 +147,4 @@ assert(typeof stopHook?.command === 'string'
 'Bundled Stop hook must invoke the code-review-and-fix gate through the plugin root');
 assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
 
-console.log('Plugin manifests, eleven-skill scope, Claude command configuration, and bundled Stop gate validated.');
+console.log('Plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');

@@ -17,8 +17,7 @@
     ],
     "negative": [
       {
-        "prompt": "Turn the current requirements into an implementation plan with ordered tasks",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Turn the current requirements into an implementation plan with ordered tasks"
       },
       {
         "prompt": "Initialize the target repository's durable project memory documentation",

@@ -1,15 +1,14 @@
 # oh-my-zz
 
-A focused plugin pack for Claude Code and Codex. It contains eleven focused workflows for refining ideas, writing specifications, making brief dated change plans or formal reviewed plans, interrogating designs, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
+A focused plugin pack for Claude Code and Codex. It contains ten focused workflows for refining ideas, creating reviewed specification-and-plan bundles, making brief dated change plans, interrogating designs, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
 
 ## Included skills
 
 | Skill | Purpose |
 | --- | --- |
 | [idea-refine](skills/idea-refine/SKILL.md) | Challenge assumptions, improve the idea, and save a concise draft before specification or planning |
-| [spec-from-idea](skills/spec-from-idea/SKILL.md) | Expand a clarified idea into an implementation-ready specification |
+| [idea-to-spec-and-plan](skills/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one independently reviewed implementation plan |
 | [brief-change-plan](skills/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
-| [planning-and-task-breakdown](skills/planning-and-task-breakdown/SKILL.md) | Convert requirements into a repository-grounded plan, then independently review it before finalization |
 | [grill-with-docs](skills/grill-with-docs/SKILL.md) | Stress-test a plan through a bounded, priority-aware interview with visible progress and disposable session notes |
 | [handoff](skills/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
 | [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
@@ -41,14 +40,13 @@ claude plugin install oh-my-zz@oh-my-zz
 Claude Code exposes these convenience commands:
 
 - `/spec`
-- `/plan`
 - `/review`
 - `/review-fix`
 - `/code-simplify`
 
 Invoke `idea-refine`, `brief-change-plan`, `grill-with-docs`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
 
-`/plan` is a thin entry point to the formal planning skill and always retains its independent-review contract. The plugin also bundles read-only `oh-my-zz:plan-reviewer` and `oh-my-zz:code-reviewer` subagents. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
+`/spec` creates a separate spec and one complete plan from an idea, then requires an independent plan review before the bundle can be finalized. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin also bundles read-only `oh-my-zz:plan-reviewer` and `oh-my-zz:code-reviewer` subagents. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
 ## Codex
 
@@ -67,9 +65,9 @@ codex plugin marketplace add /path/to/oh-my-zz
 codex plugin add oh-my-zz@oh-my-zz
 ```
 
-Start a new Codex task after installation. Invoke a skill with `@`, for example `@spec-from-idea`, or describe the task and let Codex select the matching skill. Invoke `@code-review-and-fix` explicitly for its post-implementation loop; normal coding and plan execution do not start it.
+Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill. Invoke `@code-review-and-fix` explicitly for its post-implementation loop; normal coding and plan execution do not start it.
 
-The formal planning skill asks Codex to create a fresh native subagent for independent plan review. `brief-change-plan` never requests a reviewer or subagent. The review-and-fix skill likewise asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
+The idea-to-spec-and-plan skill asks Codex to create a fresh native subagent for independent review of the complete plan. `brief-change-plan` never requests a reviewer or subagent. The review-and-fix skill likewise asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
 
 ## Repository layout
 

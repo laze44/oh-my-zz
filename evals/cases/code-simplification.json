@@ -21,8 +21,7 @@
         "owner": "code-review-and-quality"
       },
       {
-        "prompt": "Break this specification into ordered implementation tasks",
-        "owner": "planning-and-task-breakdown"
+        "prompt": "Break this specification into ordered implementation tasks"
       }
     ]
   },
