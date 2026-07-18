@@ -9,7 +9,7 @@ description: Reviews a completed implementation scope, drafts only necessary pro
 
 Synchronize target-project memory with completed code through three phases: zero-write review, explicit confirmation, then revalidated apply. Require a concrete implementation scope and durable evidence; never infer either from chat alone.
 
-An optional completed `docs/specs/` Markdown file may focus review, but is never a durable `Sources` record. Append one `## Implementation Alignment` only when its separate item is explicitly approved after a successful approved apply or approved `no-impact` outcome. Without a spec, create or modify no specification.
+An optional completed `docs/specs/` Markdown file may focus review, but is never a durable `Sources` record. Append `## Implementation Alignment` only as its own separately approved item — see step 8. Without a spec, create or modify no specification.
 
 Read [the shared project-memory schema](../../references/project-memory-schema.md) before acting. It owns record authority, templates, lifecycle, redaction, and consistency details.
 
@@ -17,7 +17,6 @@ Read [the shared project-memory schema](../../references/project-memory-schema.m
 
 - Review completed code for architecture, domain-language, ADR, operations, or `no-impact` memory changes.
 - Apply an approved proposal for a concrete Git range/current-worktree boundary or user-confirmed path set.
-- Use a supplied completed spec only as optional scope context.
 
 Do not use this skill for pre-implementation design, bulk cleanup, automatic session logging, or an ordinary-agent discovery gate.
 
@@ -47,7 +46,7 @@ Stop without writing when any condition fails:
 
    Clearly local, test-only, formatting-only, generated, or verified behavior-preserving work may conclude `no-impact` without unrelated reads. Use code, tests, active ADRs, stable external documentation, and resolving memory records as evidence; never use temporary plans, specs, chats, or drafts as `Sources`.
 3. Classify the complete impact set as `no-impact` alone or the applicable members of `current-architecture`, `real-architecture`, `domain-language`, and `operations`. Separately choose `new`, `supersede`, or `no-ADR`. For legacy, offer only records its schema permits and report v1-only domain/ADR work as unavailable. Before proposing writes, stop an active-ADR conflict unless durable evidence supports one unambiguous qualifying replacement.
-4. Present numbered, exact Markdown drafts with target files, durable sources, approval IDs, scope fingerprint, evidence, read/skipped records, exclusions, impact set, ADR result, and constraint/ADR-conflict status. Treat `Implementation Alignment` as its own approval item. Propose an ADR only when the target schema's qualification gates pass. Do not write any record or specification in review.
+4. Present numbered, exact Markdown drafts with target files, durable sources, approval IDs, scope fingerprint, evidence, read/skipped records, exclusions, impact set, ADR result, and constraint/ADR-conflict status. Treat `Implementation Alignment` as its own approval item. Propose an ADR only when the target schema's qualification gates pass. For every v1 ADR draft, apply the compact ADR template and budget: keep the decision body within 120 words, use a one-to-three-sentence core statement, omit optional headings by default, and allow at most one short bullet in a qualifying optional section. Keep review evidence and sources outside the decision body; route verified functional behavior, current facts, and operational rules to their appropriate records instead of making the ADR a code tour. Do not write any record or specification in review.
 
 ### 2. Confirmation
 
@@ -66,7 +65,7 @@ Stop without writing when any condition fails:
    | `domain-language` | In v1 only, add/update durable vocabulary in `domain/CONTEXT.md`. |
    | `operations` | Append redacted facts/procedures to the relevant operations record. |
 
-   Follow the target schema for templates, index updates, ADR filename/lifecycle/supersession, and redaction. Never use `real_arch` as a plan or source-tree tour, or domain context for implementation facts. Stop rather than guess an ADR predecessor or incomplete/conflicting evidence.
+   Follow the target schema for templates, index updates, ADR filename/lifecycle/supersession, and redaction. When a replacement ADR supersedes an existing one, move the superseded entry from `INDEX.md`'s Decision records `### Active` subsection to `### Superseded` in the same update, and add the new record under `### Active`. Never use `real_arch` as a plan or source-tree tour, or domain context for implementation facts. Stop rather than guess an ADR predecessor or incomplete/conflicting evidence.
 8. Append one `## Implementation Alignment` only when an optional valid spec was supplied and its approval ID was explicitly approved. It cannot be a standalone write: it must either accompany its approved `no-impact` outcome or describe only memory/ADR items that succeeded. If partial approval changes its facts, outcomes, records, or sources, omit it or regenerate the exact draft from the actual outcome and obtain fresh separate approval. Preserve the original spec content. Record completion date, scope/evidence, impact/ADR outcomes, changed records and source links, profile result, and constraint status. Re-run the target schema's Required consistency checks and report approved/skipped IDs, changed paths, profile/no-op status, alignment or no-spec outcome, and conflicts.
 
 ## Common Rationalizations
@@ -83,6 +82,8 @@ Stop without writing when any condition fails:
 
 - Writing during review, after a stale fingerprint, or without an approved item ID.
 - Treating task documents or chat as durable evidence, or masking an active-ADR conflict.
+- Turning an ADR into a review transcript, code tour, implementation checklist, or default alternatives/consequences dump.
+- Leaving a superseded ADR's `INDEX.md` entry under `### Active`, or duplicating/dropping a decision-records entry during supersession.
 - Creating a spec, changing original spec content, or appending an unapproved/second alignment.
 - Repairing/migrating a user-managed wiki or adding v1 records to a legacy root.
 - Recording secrets; mutating a discovery marker; or adding runtime/platform integrations, hooks, dependencies, or generated state.
@@ -95,5 +96,7 @@ Before declaring success, confirm:
 - [ ] Review was zero-write and produced exact drafts, evidence, exclusions, impact/ADR outcomes, and approval IDs.
 - [ ] Each applied item had explicit approval; constraints had exact-text confirmation; rejected items were untouched.
 - [ ] The fingerprint, schema, selected records, active ADRs, and evidence were revalidated immediately before apply or finalizing an approved `no-impact` outcome.
+- [ ] Each proposed or written v1 ADR uses the compact template and budget: a decision-focused body of at most 120 words, a one-to-three-sentence core, and no optional section unless its single short bullet preserves non-obvious durable value.
+- [ ] A superseded ADR's `INDEX.md` entry moved from `### Active` to `### Superseded` while its replacement was added under `### Active`, with no entry duplicated or dropped.
 - [ ] Target-schema templates, links, indexes, lifecycle, retrieval cues, and redaction checks pass.
 - [ ] Alignment was separately approved and appended once after the actual approved outcome, or no-spec runs left specifications unchanged.

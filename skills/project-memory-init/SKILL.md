@@ -9,7 +9,7 @@ description: Initializes a target project's Markdown-only LLM-wiki project-memor
 
 Create the fixed `project-memory-llm-wiki-v1` layout in a target project exactly once. A fresh setup can also enable ordinary Codex and Claude agents to discover that wiki selectively, but discovery configuration is an explicit, previewed, marker-bounded append to user-owned root instruction files; it is never a hidden side effect.
 
-The result remains inspectable Markdown. It creates project facts only under `docs/project-memory/`, creates the reader protocol at `docs/agents/project-memory.md` only during a fresh initialization, and may append one owned discovery block at the end of a user-selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md`. It does not add hooks, runtime state, platform memory, databases, vector search, nested instruction files, or automatic memory writes.
+The result remains inspectable Markdown. It creates project facts only under `docs/project-memory/`, creates the reader protocol at `docs/agents/project-memory.md` only during a fresh initialization, and may append one owned discovery block at the end of a user-selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` — nothing more (see Red Flags for what it must never add).
 
 Read [the shared project-memory schema](../../references/project-memory-schema.md) before taking action.
 
@@ -19,7 +19,7 @@ Read [the shared project-memory schema](../../references/project-memory-schema.m
 - A user wants that fresh setup to also enable selective wiki consultation for ordinary Codex and/or Claude tasks.
 - A target already has a valid v1 project-memory root and the user explicitly asks to enable or remove its managed discovery block.
 
-Do not use this skill to synchronize an implemented change; use `project-architecture-sync` after implementation. Do not use it to migrate a user-managed schema, rewrite an existing agent instruction file, create nested `AGENTS.md` files, or add hooks, MCP servers, databases, vector search, dependencies, session logs, or tool memory.
+Do not use this skill to synchronize an implemented change; use `project-architecture-sync` after implementation. It is not for migrating a user-managed schema, rewriting an existing agent instruction file, or creating nested `AGENTS.md` files.
 
 ## Setup Modes
 
@@ -60,7 +60,7 @@ or uncertainty makes it relevant.
 <!-- project-memory-discovery: v1:END -->
 ```
 
-The block does not inject the whole wiki into every task. It provides a consultation gate: `SCHEMA.md` and `INDEX.md` orient the agent, and the task then determines the smallest relevant record set. It is a project-level instruction, not a guarantee for tools that do not load the selected instruction surface; advise the user to start a new task after installation.
+It is a project-level instruction, not a guarantee for tools that do not load the selected instruction surface; advise the user to start a new task after installation.
 
 ## Workflow
 

@@ -90,6 +90,29 @@ function main() {
   assert.doesNotMatch(structural, /Retrieval cues/, 'retrieval cues must not become a v1 structural requirement');
   assert.match(schema, /Its presence or absence does not affect v1 structural validity/i);
 
+  // ADRs stay decision-focused rather than becoming implementation narratives.
+  const decisionHeading = '\n### Decision and research records\n';
+  const decisionStart = schema.indexOf(decisionHeading);
+  const compatibilityStart = schema.indexOf('\n## Compatibility\n', decisionStart);
+  assert.ok(decisionStart >= 0 && compatibilityStart > decisionStart, 'schema must contain the ADR rules section before Compatibility');
+  const decisionRecords = schema.slice(decisionStart, compatibilityStart);
+  assert.match(decisionRecords, /at most 120 words/i);
+  assert.match(decisionRecords, /one unheaded paragraph of one to three short sentences/i);
+  assert.match(decisionRecords, /Do not include either `## Considered Alternatives` or `## Consequences` by default/i);
+  assert.match(decisionRecords, /at most one concise, single-sentence bullet/i);
+  assert.match(decisionRecords, /need not enumerate every alternative/i);
+  assert.match(decisionRecords, /not an exhaustive code inventory/i);
+
+  // Decision records split Active from Superseded in INDEX.md so default
+  // agent scanning stays proportional to currently binding decisions while
+  // supersession history remains fully linked, never deleted.
+  assert.match(schema, /### Active\n\nNo active decision records yet\.\n\n### Superseded\n\nNo superseded decision records yet\./);
+  assert.match(schema, /move its existing entry from `### Active` to `### Superseded`/i);
+  assert.match(schema, /keeps default agent scanning proportional to currently binding decisions/i);
+  assert.match(schema, /`INDEX\.md` moves the old record's entry from `### Active` to `### Superseded` while adding the new record's entry under `### Active`/i);
+  assert.match(schema, /each decision record's entry sits under `### Active` or `### Superseded` matching that status with no entry duplicated or dropped/i);
+  assert.match(schema, /`INDEX\.md` reflects the old entry moved to `### Superseded` and the new entry under `### Active`/i);
+
   // Sync must work from a concrete implementation scope without a mandatory
   // specification, and must keep review and apply as distinct gates.
   assert.match(sync, /^name: project-architecture-sync$/m);
@@ -122,9 +145,15 @@ function main() {
   assert.match(sync, /regenerate the exact draft from the actual outcome and obtain fresh separate approval/i);
   assert.match(sync, /impact\/ADR outcomes, changed records and source links, profile result, and constraint status/i);
   assert.match(sync, /mutate a discovery marker/i);
+  assert.match(sync, /compact ADR template and budget/i);
+  assert.match(sync, /within 120 words/i);
+  assert.match(sync, /optional headings by default/i);
+  assert.match(sync, /move the superseded entry from `INDEX\.md`'s Decision records `### Active` subsection to `### Superseded`/i);
+  assert.match(sync, /Leaving a superseded ADR's `INDEX\.md` entry under `### Active`/i);
+  assert.match(sync, /moved from `### Active` to `### Superseded` while its replacement was added under `### Active`/i);
 
   // Public project guidance must send contributors through the deterministic
-  // contract test, and it must not regress the eleven-skill inventory.
+  // contract test, and it must not regress the ten-skill inventory.
   for (const [label, text] of [
     ['README.md', readme],
     ['AGENTS.md', agents],
@@ -148,6 +177,8 @@ function main() {
   assert.match(hasEval('evals/cases/project-architecture-sync.json', 11).expected_output, /stale/i);
   assert.match(hasEval('evals/cases/project-architecture-sync.json', 14).expected_output, /byte-for-byte unchanged/i);
   assert.match(hasEval('evals/cases/project-architecture-sync.json', 15).expected_output, /exactly one approved Implementation Alignment/i);
+  assert.match(hasEval('evals/cases/project-architecture-sync.json', 16).expected_output, /short ADR draft/i);
+  assert.match(hasEval('evals/cases/project-architecture-sync.json', 17).expected_output, /regroups both INDEX\.md decision-record entries/i);
 
   console.log('Project-memory contract checks passed.');
 }
