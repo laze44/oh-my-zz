@@ -2,6 +2,13 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.4] - 2026-07-18
+
+### Changed
+
+- Split `INDEX.md` decision records into Active and Superseded groups so agents scan only currently binding ADRs by default while supersession history stays linked instead of deleted.
+- Trimmed duplicated wording in `project-memory-init` and `project-architecture-sync` so each rule is stated once.
+
 ## [1.5.3] - 2026-07-18
 
 ### Changed
