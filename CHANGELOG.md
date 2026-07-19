@@ -2,6 +2,16 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.5] - 2026-07-19
+
+### Added
+
+- Added Kimi Code plugin and marketplace manifests so the shared skills can be installed from a local directory, GitHub repository, or Kimi marketplace catalog.
+
+### Changed
+
+- Documented Kimi Code installation and skill invocation, and extended manifest validation to keep Claude Code, Codex, and Kimi Code metadata aligned.
+
 ## [1.5.4] - 2026-07-18
 
 ### Changed

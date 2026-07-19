@@ -27,6 +27,7 @@ const HOOKS_PATH = 'hooks/hooks.json';
 const PLUGIN_NAME = 'oh-my-zz';
 const REPOSITORY = 'https://github.com/laze44/oh-my-zz';
 const REPOSITORY_SLUG = 'laze44/oh-my-zz';
+const KIMI_PLUGIN_SOURCE = `${REPOSITORY}/tree/main`;
 const SEMVER_PATTERN = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
 function readJson(relativePath) {
@@ -62,6 +63,8 @@ const claudePlugin = readJson('.claude-plugin/plugin.json');
 const claudeMarketplace = readJson('.claude-plugin/marketplace.json');
 const codexPlugin = readJson('.codex-plugin/plugin.json');
 const codexMarketplace = readJson('.agents/plugins/marketplace.json');
+const kimiPlugin = readJson('kimi.plugin.json');
+const kimiMarketplace = readJson('kimi.marketplace.json');
 const bundledHooks = readJson(HOOKS_PATH);
 
 assert(claudePlugin.name === PLUGIN_NAME, `Claude plugin name must be ${PLUGIN_NAME}`);
@@ -110,6 +113,28 @@ assert(/brief.*plan/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover brief plans');
 assert(codexPlugin.homepage === REPOSITORY && codexPlugin.repository === REPOSITORY,
   'Codex plugin homepage and repository must point at the canonical GitHub repository');
+assert(kimiPlugin.name === PLUGIN_NAME, `Kimi plugin name must be ${PLUGIN_NAME}`);
+assert(typeof kimiPlugin.version === 'string' && SEMVER_PATTERN.test(kimiPlugin.version),
+  'Kimi plugin version must be strict SemVer');
+assert(kimiPlugin.version === claudePlugin.version,
+  'Claude, Codex, and Kimi plugin versions must match');
+assert(kimiPlugin.skills === './skills/', 'Kimi plugin must load ./skills/');
+assert(kimiPlugin.hooks === undefined && kimiPlugin.commands === undefined,
+  'Kimi plugin must not declare incompatible Claude or Codex runtime configuration');
+assert(/project-memory/i.test(kimiPlugin.description) && /architecture/i.test(kimiPlugin.description),
+  'Kimi plugin description must cover project-memory initialization and architecture synchronization');
+assert(/discovery/i.test(kimiPlugin.description) && /proposal/i.test(kimiPlugin.description),
+  'Kimi plugin description must cover opt-in discovery and proposal-first synchronization');
+assert(/brief.*plan/i.test(kimiPlugin.description),
+  'Kimi plugin description must cover brief change plans');
+assert(kimiPlugin.homepage === REPOSITORY && kimiPlugin.license === 'MIT',
+  'Kimi plugin homepage and license must match the canonical plugin metadata');
+assert(kimiPlugin.interface?.displayName === 'Oh My ZZ'
+  && typeof kimiPlugin.interface?.shortDescription === 'string'
+  && kimiPlugin.interface.shortDescription.length > 0,
+  'Kimi plugin must provide display metadata');
+assert(kimiPlugin.interface?.websiteURL === REPOSITORY,
+  'Kimi plugin website must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
 assert(/Ten focused engineering skills/.test(claudeMarketplace.plugins[0].description),
@@ -135,6 +160,15 @@ assert(/discovery/i.test(codexMarketplace.plugins[0].description) && /approved a
   'Codex marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(codexMarketplace.plugins[0].source?.path === './',
   'Codex marketplace plugin source must point at the repository root');
+assert(kimiMarketplace.version === '2', 'Kimi marketplace must use catalog version 2');
+assert(Array.isArray(kimiMarketplace.plugins) && kimiMarketplace.plugins.length === 1,
+  'Kimi marketplace must contain exactly one plugin');
+assert(kimiMarketplace.plugins[0].id === PLUGIN_NAME,
+  `Kimi marketplace plugin id must be ${PLUGIN_NAME}`);
+assert(kimiMarketplace.plugins[0].displayName === 'Oh My ZZ',
+  'Kimi marketplace plugin must expose the expected display name');
+assert(kimiMarketplace.plugins[0].source === KIMI_PLUGIN_SOURCE,
+  'Kimi marketplace plugin source must pin the canonical GitHub main branch');
 
 const stopHandlers = bundledHooks.hooks?.Stop;
 assert(Array.isArray(stopHandlers) && stopHandlers.length === 1,
@@ -147,4 +181,4 @@ assert(typeof stopHook?.command === 'string'
 'Bundled Stop hook must invoke the code-review-and-fix gate through the plugin root');
 assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
 
-console.log('Plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');
+console.log('Claude, Codex, and Kimi plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');
