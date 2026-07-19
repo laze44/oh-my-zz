@@ -1,6 +1,6 @@
 # oh-my-zz
 
-A focused plugin pack for Claude Code and Codex. It contains ten focused workflows for refining ideas, creating reviewed specification-and-plan bundles, making brief dated change plans, interrogating designs, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
+A focused plugin pack for Claude Code, Codex, and Kimi Code. It contains ten focused workflows for refining ideas, creating reviewed specification-and-plan bundles, making brief dated change plans, interrogating designs, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
 
 ## Included skills
 
@@ -69,16 +69,42 @@ Start a new Codex task after installation. Invoke a skill with `@`, for example 
 
 The idea-to-spec-and-plan skill asks Codex to create a fresh native subagent for independent review of the complete plan. `brief-change-plan` never requests a reviewer or subagent. The review-and-fix skill likewise asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
 
+## Kimi Code
+
+In the Kimi Code CLI, install the repository directly:
+
+```text
+/plugins install https://github.com/laze44/oh-my-zz/tree/main
+/reload
+```
+
+For a local clone, replace the URL with its absolute path:
+
+```text
+/plugins install /path/to/oh-my-zz
+/reload
+```
+
+You can also browse the included third-party marketplace catalog with:
+
+```text
+/plugins marketplace https://raw.githubusercontent.com/laze44/oh-my-zz/main/kimi.marketplace.json
+```
+
+After installation, start a new session or run `/reload`. Invoke a workflow explicitly with `/skill:<name>`, for example `/skill:idea-refine`, or describe the task and let Kimi Code select the matching skill. The Kimi plugin intentionally exposes only the shared skills; it does not load Claude/Codex-specific command or hook configuration.
+
 ## Repository layout
 
 ```text
-skills/                    Eleven shared Claude Code and Codex skills
+skills/                    Ten shared Claude Code, Codex, and Kimi Code skills
 agents/                    Claude Code read-only plan and code reviewers
 hooks/                     Shared thin Stop gate configuration
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests
 .codex-plugin/             Codex plugin manifest
 .agents/plugins/           Codex marketplace entry
+kimi.plugin.json           Kimi Code plugin manifest
+kimi.marketplace.json      Kimi Code marketplace catalog
 references/                Checklists and project-memory schema used by retained skills
 evals/                     Trigger and behavioral eval cases
 scripts/                   Repository validators and eval runner

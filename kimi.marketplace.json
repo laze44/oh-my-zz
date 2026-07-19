@@ -1,0 +1,10 @@
+{
+  "version": "2",
+  "plugins": [
+    {
+      "id": "oh-my-zz",
+      "displayName": "Oh My ZZ",
+      "source": "https://github.com/laze44/oh-my-zz/tree/main"
+    }
+  ]
+}

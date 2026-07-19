@@ -1,6 +1,6 @@
 {
   "name": "oh-my-zz",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "A focused engineering skill pack for refining ideas, creating reviewed specification-and-plan bundles, making brief dated change plans, interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization, making pre-merge review decisions, and simplifying implementations.",
   "author": {
     "name": "laze44"
