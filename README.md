@@ -1,13 +1,14 @@
 # oh-my-zz
 
-A focused plugin pack for Claude Code, Codex, and Kimi Code. It contains ten focused workflows for refining ideas, creating reviewed specification-and-plan bundles, making brief dated change plans, interrogating designs, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
+A focused plugin pack for Claude Code, Codex, and Kimi Code. It contains eleven focused workflows for refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, making brief dated change plans, interrogating designs, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
 
 ## Included skills
 
 | Skill | Purpose |
 | --- | --- |
 | [idea-refine](skills/idea-refine/SKILL.md) | Challenge assumptions, improve the idea, and save a concise draft before specification or planning |
-| [idea-to-spec-and-plan](skills/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one independently reviewed implementation plan |
+| [idea-to-spec-and-plan](skills/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one complete implementation plan |
+| [plan-review](skills/plan-review/SKILL.md) | Explicitly review an existing plan against its idea, repository evidence, selective project-memory constraints, and test-execution contract; resolve findings before revising it |
 | [brief-change-plan](skills/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
 | [grill-with-docs](skills/grill-with-docs/SKILL.md) | Stress-test a plan through a bounded, priority-aware interview with visible progress and disposable session notes |
 | [handoff](skills/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
@@ -19,7 +20,7 @@ A focused plugin pack for Claude Code, Codex, and Kimi Code. It contains ten foc
 
 `project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other retained skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`. When the user explicitly selects ordinary-agent discovery, initialization first previews and then appends only its managed block to selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` files; existing content is never rewritten. A normal repeat initialization of an existing root remains a no-op. Sync audits a completed implementation scope with code and test evidence; `docs/specs/` is optional context, not a prerequisite or durable source. Its review phase produces a zero-write proposal, and its apply phase revalidates the scope before changing only approved records; a supplied spec's `Implementation Alignment` is a separately approved item. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents.
 
-Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. The gate never writes memory; after implementation, ask `project-architecture-sync` to review the scope and approve any proposed sync.
+Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. A plan, specification, code diff, or completed implementation alone does not trigger this lookup. The gate never writes or starts a sync; after implementation, the user may explicitly invoke `project-architecture-sync` to review the scope and approve any proposed sync.
 
 ## Claude Code
 
@@ -44,9 +45,9 @@ Claude Code exposes these convenience commands:
 - `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `brief-change-plan`, `grill-with-docs`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
+Invoke `idea-refine`, `plan-review`, `brief-change-plan`, `grill-with-docs`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
 
-`/spec` creates a separate spec and one complete plan from an idea, then requires an independent plan review before the bundle can be finalized. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin also bundles read-only `oh-my-zz:plan-reviewer` and `oh-my-zz:code-reviewer` subagents. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
+`/spec` creates a separate spec and one complete candidate plan from an idea. It never starts plan review automatically; explicitly invoke `plan-review` when review is wanted. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin bundles only the read-only `oh-my-zz:code-reviewer` subagent for the separate review-and-fix workflow. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
 ## Codex
 
@@ -65,9 +66,9 @@ codex plugin marketplace add /path/to/oh-my-zz
 codex plugin add oh-my-zz@oh-my-zz
 ```
 
-Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill. Invoke `@code-review-and-fix` explicitly for its post-implementation loop; normal coding and plan execution do not start it.
+Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill. Invoke `@plan-review` for an explicit main-agent plan review and `@code-review-and-fix` for its post-implementation loop; normal planning, coding, and plan execution do not start either workflow.
 
-The idea-to-spec-and-plan skill asks Codex to create a fresh native subagent for independent review of the complete plan. `brief-change-plan` never requests a reviewer or subagent. The review-and-fix skill likewise asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
+`idea-to-spec-and-plan` and `plan-review` never request a reviewer or subagent. `plan-review` uses the current main agent to compare a saved plan with its sources and to review planned test scope, budgets, timeouts, and escalation rules. `brief-change-plan` likewise never requests a reviewer or subagent. The review-and-fix skill asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
 
 ## Kimi Code
 
@@ -96,8 +97,8 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ## Repository layout
 
 ```text
-skills/                    Ten shared Claude Code, Codex, and Kimi Code skills
-agents/                    Claude Code read-only plan and code reviewers
+skills/                    Eleven shared Claude Code, Codex, and Kimi Code skills
+agents/                    Claude Code read-only code reviewer
 hooks/                     Shared thin Stop gate configuration
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests
@@ -123,6 +124,7 @@ node scripts/validate-plugin-manifests.js
 node scripts/test-grill-with-docs-runtime.js
 node scripts/test-code-review-and-fix-runtime.js
 node scripts/test-project-memory-contracts.js
+node scripts/test-plan-review-contracts.js
 ```
 
 The skills are Markdown-first and have no runtime package dependencies.

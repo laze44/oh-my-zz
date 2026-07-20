@@ -34,6 +34,7 @@ function hasEval(caseFile, id) {
 function main() {
   const init = read('skills/project-memory-init/SKILL.md');
   const sync = read('skills/project-architecture-sync/SKILL.md');
+  const planReview = read('skills/plan-review/SKILL.md');
   const schema = read('references/project-memory-schema.md');
   const readme = read('README.md');
   const agents = read('AGENTS.md');
@@ -65,11 +66,15 @@ function main() {
     '`docs/project-memory/SCHEMA.md` →',
     '`docs/project-memory/INDEX.md` → optional',
     '`## Retrieval cues` → targeted-record order.',
-    'Do not write memory automatically',
+    'Do not write or start a sync automatically',
+    'not a sync',
     'project-architecture-sync',
     'Skip this lookup for clearly local, test-only, formatting-only, generated, or',
     markerEnd,
   ], 'discovery marker');
+  assert.match(init, /A plan, specification, code diff, or\ncompleted implementation is not by itself a reason to consult the wiki/i);
+  assert.match(init, /Completing code,\n   executing a plan, or moving from planning to implementation is not a sync\n   trigger/i);
+  assert.match(planReview, /reuse it rather than restarting the reader protocol/i);
 
   // The v1 reader protocol remains exact and generic. Discovery and retrieval
   // cues are compatibility additions outside the mandatory v1 structure.
@@ -116,6 +121,10 @@ function main() {
   // Sync must work from a concrete implementation scope without a mandatory
   // specification, and must keep review and apply as distinct gates.
   assert.match(sync, /^name: project-architecture-sync$/m);
+  assert.match(sync, /Use when the user explicitly requests a project-memory impact review or synchronization for completed code/i);
+  assert.match(sync, /This is an opt-in post-implementation workflow/i);
+  assert.match(sync, /Finishing code, executing a plan, or a prior selective memory lookup never starts it/i);
+  assert.match(sync, /merely because a plan was created\/executed or code changes are complete/i);
   assert.match(sync, /docs\/specs.*is optional/i);
   assert.match(sync, /Require a concrete implementation scope and durable evidence/i);
   ordered(sync, [
@@ -153,7 +162,7 @@ function main() {
   assert.match(sync, /moved from `### Active` to `### Superseded` while its replacement was added under `### Active`/i);
 
   // Public project guidance must send contributors through the deterministic
-  // contract test, and it must not regress the ten-skill inventory.
+  // contract test, and it must not regress the retained-skill inventory.
   for (const [label, text] of [
     ['README.md', readme],
     ['AGENTS.md', agents],

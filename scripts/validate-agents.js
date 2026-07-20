@@ -8,7 +8,6 @@ const ROOT = path.resolve(__dirname, '..');
 const AGENTS_DIR = path.join(ROOT, 'agents');
 const REQUIRED_AGENTS = [
   'code-reviewer.md',
-  'plan-reviewer.md',
 ];
 const READ_ONLY_TOOLS = new Set(['Read', 'Grep', 'Glob']);
 

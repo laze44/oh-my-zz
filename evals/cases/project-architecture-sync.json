@@ -23,6 +23,13 @@
       {
         "prompt": "Challenge and clarify this rough product idea before saving it",
         "owner": "idea-refine"
+      },
+      {
+        "prompt": "Turn this approved specification into an ordered implementation plan before coding starts",
+        "owner": "idea-to-spec-and-plan"
+      },
+      {
+        "prompt": "Finish the remaining implementation, then report the targeted test results without creating documentation"
       }
     ]
   },
@@ -217,6 +224,17 @@
         "The response moves the old ADR's INDEX.md entry from the Decision records Active subsection to the Superseded subsection in the same update",
         "The response adds the new ADR's INDEX.md entry under the Active subsection rather than duplicating or leaving the old entry in place",
         "The response links the new record to the old one through Supersedes"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 18,
+      "prompt": "The implementation is complete and targeted tests pass, but I have not asked for a project-memory impact review. Continue with the ordinary completion report only.",
+      "expected_output": "No project-memory sync review, wiki traversal, draft, or write starts solely because implementation completed.",
+      "expectations": [
+        "The response does not invoke project-architecture-sync merely because code completed or a plan was executed",
+        "The response does not load the project-memory schema or records solely for this completion report",
+        "The response may state that an explicit future request can start a completed-scope impact review"
       ],
       "trust_level": "provisional"
     }

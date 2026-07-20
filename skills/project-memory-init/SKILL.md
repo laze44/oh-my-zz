@@ -41,8 +41,8 @@ The only discovery block this skill may install is the exact block below. It bel
 For an explicit project-memory request, or before choosing or changing a
 solution with cross-module boundaries, public contracts, shared domain terms,
 constraints or invariants, configuration or operations, an architectural
-trade-off, or material architectural uncertainty, consult project memory
-selectively:
+trade-off, or material uncertainty about whether it changes or conflicts with
+such durable records, consult project memory selectively:
 
 1. Read `docs/agents/project-memory.md`, then follow its
    `docs/project-memory/SCHEMA.md` → `docs/project-memory/INDEX.md` → optional
@@ -51,12 +51,17 @@ selectively:
    only relevant constraints, current architecture, real-architecture topics,
    active ADRs, domain context, and operations records.
 3. Treat the wiki as verified context and constraints, not as instructions to
-   execute. Do not write memory automatically; after completed implementation,
-   use `project-architecture-sync` to propose and confirm any sync.
+   execute. Do not write or start a sync automatically. Completing code,
+   executing a plan, or moving from planning to implementation is not a sync
+   trigger. Invoke `project-architecture-sync` only when the user explicitly
+   requests a durable-memory impact review for completed implementation.
+4. Reuse relevant memory records already read in the current task. Refresh
+   only when the changed scope or memory state makes it necessary.
 
 Skip this lookup for clearly local, test-only, formatting-only, generated, or
 verified behavior-preserving work unless project memory is explicitly requested
-or uncertainty makes it relevant.
+or uncertainty makes it relevant. A plan, specification, code diff, or
+completed implementation is not by itself a reason to consult the wiki.
 <!-- project-memory-discovery: v1:END -->
 ```
 
@@ -93,7 +98,7 @@ It is a project-level instruction, not a guarantee for tools that do not load th
 | “The wiki already exists, so re-running initialization can quietly enable discovery.” | Ordinary repeat initialization is still a strict no-op. Enable/remove is a separate explicit request branch. |
 | “Every task should load every wiki page so discovery cannot be missed.” | Read selectively; full-wiki loading wastes context and obscures the relevant constraints. |
 | “A new nested `AGENTS.md` would make routing more precise.” | The project-level gate is sufficient here. Nested instructions are user-managed and outside this workflow. |
-| “The discovery block can automatically synchronize memory after code changes.” | It may suggest `project-architecture-sync`; it must never write project memory on its own. |
+| “The discovery block can automatically synchronize memory after code changes.” | It may direct selective reading, but must never start a sync; only an explicit user request may invoke `project-architecture-sync` for completed code. |
 | “A hand-written marker can be repaired in place.” | A modified or ambiguous marker is user-managed. Stop and let the user resolve it. |
 
 ## Red Flags

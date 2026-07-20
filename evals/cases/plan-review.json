@@ -1,0 +1,66 @@
+{
+  "skill_name": "plan-review",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Review this saved implementation plan against its idea draft and specification before we execute it",
+        "top_k": 3
+      },
+      {
+        "prompt": "Stress-test docs/plans/cache-migration.md, show findings and questions, then revise the plan after I answer",
+        "top_k": 3
+      },
+      {
+        "prompt": "Check whether this plan's planned tests have safe scope, time budgets, timeout handling, and escalation criteria",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Turn this rough product idea into a specification and complete implementation plan",
+        "owner": "idea-to-spec-and-plan"
+      },
+      {
+        "prompt": "Review the complete pull request diff before merging it into main",
+        "owner": "code-review-and-quality"
+      },
+      {
+        "prompt": "Review and repair the completed implementation against its approved specification and plan",
+        "owner": "code-review-and-fix"
+      },
+      {
+        "prompt": "Write a short dated plan for this known patch without code or independent review",
+        "owner": "brief-change-plan"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review docs/plans/billing-migration.md before implementation. Compare it with its linked idea and specification, inspect only relevant repository and project-memory evidence, ask me about material conflicts, and revise only that plan after my answers.",
+      "expected_output": "A main-agent, evidence-backed review that remains zero-write until user decisions, reports goal/spec/memory/test findings, asks bounded decision-ready questions, then revises only the named plan and rechecks it.",
+      "expectations": [
+        "The agent requires or identifies the exact saved plan and its source idea/spec instead of guessing a current plan",
+        "The main agent performs the review and does not dispatch a subagent or independent reviewer",
+        "The review checks goal alignment, spec coverage, repository grounding, dependencies, and risks without redefining requirements",
+        "Project memory is consulted selectively through the reader protocol, schema, index, retrieval cues, and matching binding constraints or active ADRs only when architecture-relevant",
+        "A plan that changes one architecture principle is checked against other relevant binding principles and active ADRs rather than treating the change in isolation",
+        "The review examines a test execution contract including tier, grounded selector, time budget, escalation trigger, timeout outcome, and evidence requirements without running broad tests",
+        "Findings have stable IDs, priority, evidence, impact, and a grounded recommendation; only P0 and material P1 decisions consume bounded Grill-style questions",
+        "The agent waits for user decisions before editing and then changes only the exact named plan, not the spec, code, tests, or project memory"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Critique this pasted plan, but its idea source is not provided. Do not change any file.",
+      "expected_output": "A read-only review that reports the missing idea authority and does not claim verified goal alignment or mutate an inferred plan file.",
+      "expectations": [
+        "The agent reports a missing idea source rather than claiming the plan matches an unknown goal",
+        "The response remains review-only because no exact plan path and no edit authority are available",
+        "The agent does not start tests, implementation, a reviewer subagent, or project-memory writes"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}
