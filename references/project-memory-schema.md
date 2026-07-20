@@ -12,6 +12,31 @@ project-memory-llm-wiki-v1
 
 The profile adds a reader protocol, durable shared-domain vocabulary, and governed ADR lifecycle rules. `SCHEMA.md` is the source of truth if it conflicts with the reader protocol. The protocol describes how a reader consumes this wiki; it never automatically alters a target project's `AGENTS.md`, `CLAUDE.md`, or other agent configuration. Only an explicitly confirmed `project-memory-init` discovery setup may append its exact managed marker to a user-selected root instruction file.
 
+## Writing language
+
+For newly created records and substantive amendments, write human-facing wiki
+explanations in **Simplified Chinese by default**. This includes record titles,
+architecture and operations prose, domain definitions, real-architecture models,
+ADR titles and decision bodies, research findings, and runbook steps. A concise
+English term in parentheses is welcome when it disambiguates an established
+technical or domain term, for example `请求路由（request routing）`. A user may
+explicitly request another primary language for a target project.
+
+Keep tokens that must remain exact in their original form: repository paths,
+Markdown link targets, filenames, code symbols, API fields, configuration keys,
+commands, error messages, protocol names, status enum values, and the
+`project-memory-llm-wiki-v1` profile marker. The standard metadata keys
+(`Status`, `Sources`, `Supersedes`, and `Superseded by`) also remain English for
+stable tooling and cross-project scanning. Explain those tokens in Chinese;
+never translate the token itself. Keep third-party quotations and evidence
+excerpts in their source language when accuracy requires it.
+
+Do not rewrite a verified historical record solely to translate it. On an
+approved update, write the new or changed explanatory text in Chinese while
+preserving unaffected history and all durable evidence. This language policy is
+included in newly initialized v1 schemas but is not a retroactive structural
+requirement for an existing valid v1 wiki.
+
 ## Canonical layout
 
 ```text
@@ -88,7 +113,7 @@ Initialize the canonical files with these minimal forms. Replace placeholder tex
 ### `INDEX.md`
 
 ```markdown
-# Project Memory Index
+# 项目记忆索引
 
 - Status: `active`
 - Sources: None (schema baseline)
@@ -97,44 +122,44 @@ Initialize the canonical files with these minimal forms. Replace placeholder tex
 
 ## Canonical records
 
-- [Schema](SCHEMA.md) — active
-- [Reader protocol](../agents/project-memory.md) — active
-- [Architecture constraints](architecture/constraints.md) — active
-- [Current architecture](architecture/current.md) — active
-- [Real architecture](architecture/real_arch/INDEX.md) — active
-- [Environment](operations/environment.md) — active
-- [Runbooks](operations/runbooks.md) — active
+- [模式说明（Schema）](SCHEMA.md) — active
+- [阅读协议（Reader protocol）](../agents/project-memory.md) — active
+- [架构约束（Architecture constraints）](architecture/constraints.md) — active
+- [当前架构（Current architecture）](architecture/current.md) — active
+- [真实架构（Real architecture）](architecture/real_arch/INDEX.md) — active
+- [环境（Environment）](operations/environment.md) — active
+- [运行手册（Runbooks）](operations/runbooks.md) — active
 
 ## Domain language
 
-No domain context yet.
+尚未记录领域上下文。
 
 ## Decision records
 
 ### Active
 
-No active decision records yet.
+暂无活跃 ADR。
 
 ### Superseded
 
-No superseded decision records yet.
+暂无已废弃 ADR。
 
 ## Research records
 
-No research records yet.
+暂无研究记录。
 
 ## Retrieval cues
 
-No retrieval cues yet.
+暂无检索线索。
 ```
 
-When `domain/CONTEXT.md` is first created, replace `No domain context yet.` with its relative link and status. When a research record is created, replace `No research records yet.` with a relative Markdown link and status. Add a new decision record's relative Markdown link and status under `### Active` in the Decision records section; when a record becomes superseded, move its existing entry from `### Active` to `### Superseded` in the same update rather than duplicating or deleting it, and add the replacement record's entry under `### Active`. This split keeps default agent scanning proportional to currently binding decisions while every superseded entry stays linked for history. Update an index entry only when adding a new record, changing a record's status, or changing its supersession relationship; do not churn the index for ordinary edits to an already-indexed canonical page.
+When `domain/CONTEXT.md` is first created, replace `尚未记录领域上下文。` with its relative link and status. When a research record is created, replace `暂无研究记录。` with a relative Markdown link and status. Add a new decision record's relative Markdown link and status under `### Active` in the Decision records section; when a record becomes superseded, move its existing entry from `### Active` to `### Superseded` in the same update rather than duplicating or deleting it, and add the replacement record's entry under `### Active`. This split keeps default agent scanning proportional to currently binding decisions while every superseded entry stays linked for history. Update an index entry only when adding a new record, changing a record's status, or changing its supersession relationship; do not churn the index for ordinary edits to an already-indexed canonical page. The fixed English index headings preserve v1 structural compatibility; the user-facing link labels and descriptions remain Chinese-first.
 
 `## Retrieval cues` is optional navigation metadata, not a source-tree inventory or an architecture statement. A cue may map a stable subsystem, public contract, canonical term, configuration surface, path class, or symbol to one or more existing project-memory records, for example `- billing export API — [Export contract](architecture/real_arch/export-contract.md)`. Add or amend a cue only when an approved sync creates or materially changes its linked record and the cue helps selective retrieval. Every cue link must resolve; do not invent a cue from a plan, chat, or temporary draft. Existing v1 roots may lack this section and remain valid; agents fall back to the canonical indexes and scoped Markdown search.
 
 ### `SCHEMA.md`
 
-`SCHEMA.md` is the target project's self-contained copy of this policy. Initialize it with the title and metadata above, then include the exact `project-memory-llm-wiki-v1` profile marker, canonical layout, document authority, metadata/status rules, reader-protocol, optional discovery, domain-context, real-architecture index/topic, ADR/research naming and lifecycle, compatibility, redaction, and consistency-check rules from this reference. Do not leave only a link back to this skill pack: later syncs must be able to read the target project's schema without this repository installed.
+`SCHEMA.md` is the target project's self-contained copy of this policy. Initialize it with the title and metadata above, then include the exact `project-memory-llm-wiki-v1` profile marker, writing-language policy, canonical layout, document authority, metadata/status rules, reader-protocol, optional discovery, domain-context, real-architecture index/topic, ADR/research naming and lifecycle, compatibility, redaction, and consistency-check rules from this reference. Do not leave only a link back to this skill pack: later syncs must be able to read the target project's schema without this repository installed.
 
 ### V1 structural validation
 
@@ -153,26 +178,26 @@ Create `docs/agents/project-memory.md` only with this template on first initiali
 
 ```markdown
 <!-- project-memory-reader-contract: llm-wiki-v1 -->
-# Project Memory Reader Protocol
+# 项目记忆阅读协议
 
 ## Read Order
 
-Read `SCHEMA.md`, then `INDEX.md`, then relevant terms in `domain/CONTEXT.md` if it exists, relevant constraints/current/real-architecture records, relevant active ADRs, and relevant operations records.
+先阅读 `SCHEMA.md`，再阅读 `INDEX.md`；如存在 `domain/CONTEXT.md`，再读取与任务相关的术语，随后仅读取相关的约束、当前架构、真实架构、活跃 ADR 和运维记录。
 
 ## Evidence and Authority Boundaries
 
-Treat durable code, tests, active ADRs, stable external documentation, and project-memory records that resolve to them as evidence. Do not retain temporary ideas, specifications, plans, chats, session data, or local design drafts as Sources. Follow `SCHEMA.md` when this protocol and the schema appear to differ.
+将持久代码、测试、活跃 ADR、稳定的外部文档，以及能追溯到这些来源的项目记忆记录视为证据。不得把临时想法、规格、计划、聊天记录、会话数据或本地设计草稿写入 `Sources`。本协议与模式说明不一致时，以 `SCHEMA.md` 为准。
 
 ## Domain Language Rule
 
-Use a relevant canonical term and avoid its listed synonyms when applicable. `domain/CONTEXT.md` is optional: skip it when absent. It is vocabulary, not evidence for implementation facts or an architectural decision.
+适用时使用相关的规范术语，并避免其列出的同义词。`domain/CONTEXT.md` 是可选的：不存在时跳过。它只定义词汇，不能作为实现事实或架构决策的证据。
 
 ## ADR Conflict Rule
 
-Do not silently update a record to contradict a relevant active ADR. Report the conflict unless durable evidence supports an unambiguous, qualifying replacement ADR that supersedes it.
+不得悄然把记录更新为与相关活跃 ADR 冲突的内容。除非持久证据支持一个明确、合格且取代原记录的 ADR，否则应报告该冲突。
 ```
 
-For a v1 sync, the protocol must contain the exact marker and the four headings above in this order, and contain no project-specific text beyond this template. A missing, malformed, or locally extended protocol is a safe stop: sync does not repair, recreate, or normalize it.
+For a newly initialized v1 wiki, the protocol uses the Chinese-first template above. For compatibility, an existing v1 reader protocol with the same exact marker, the four headings above in order, an English-only body from an earlier template, and no project-specific text is also valid. A missing, malformed, or locally extended protocol is a safe stop: sync does not repair, recreate, or normalize it.
 
 ### Optional agent discovery setup
 
@@ -187,40 +212,40 @@ The marker is external to the canonical docs layout and is optional for both new
 Create `domain/CONTEXT.md` only when at least one stable shared term has durable evidence. Use this template; its record-level `Sources` is the union of its per-term source links.
 
 ```markdown
-# Domain Context
+# 领域上下文
 
 - Status: `active`
 - Sources: <resolving durable source links used by the terms below>
 - Supersedes: None
 - Superseded by: None
 
-## Terms
+## 术语
 
-### <Canonical term>
+### <规范术语>
 
-- Definition: <concise meaning>
-- Use boundary: <when this term applies>
-- Avoid: <discouraged synonym(s) or None>
-- Lifecycle: `active | deprecated`
-- Replacement: <a resolving Markdown link or None>
-- Sources: <one or more resolving durable source links for this term>
+- 定义：<简洁含义>
+- 使用边界：<何时适用>
+- 避免使用：<不建议的同义词，或 None>
+- 生命周期：`active | deprecated`
+- 替代项：<可解析的 Markdown 链接，或 None>
+- Sources: <本术语所依据的一个或多个可解析持久来源链接>
 ```
 
 Update a term only when durable evidence changes its vocabulary meaning or use boundary. To retire one, retain its entry with `Lifecycle: deprecated` and a resolving replacement link when one exists; do not delete its historical evidence. If evidence clearly establishes that implementation uses a different term, amend or retire the glossary entry. If evidence is incomplete or conflicting, skip that term and report the inconsistency; domain vocabulary never overrides verified implementation or an active ADR.
 
 ### Architecture and operations pages
 
-Use this template for `architecture/constraints.md`, `architecture/current.md`, `operations/environment.md`, and `operations/runbooks.md`:
+Use the following Chinese-first templates for `architecture/constraints.md`, `architecture/current.md`, `operations/environment.md`, and `operations/runbooks.md`:
 
 ```markdown
-# <Page title>
+# <架构约束 | 当前架构 | 环境 | 运行手册>
 
 - Status: `active`
 - Sources: None (schema baseline)
 - Supersedes: None
 - Superseded by: None
 
-No verified <constraints | architecture facts | environment facts | runbooks> recorded yet.
+尚未记录经验证的<约束 | 架构事实 | 环境事实 | 运行手册>。
 ```
 
 ### Real-architecture index and topic records
@@ -228,24 +253,24 @@ No verified <constraints | architecture facts | environment facts | runbooks> re
 Initialize `architecture/real_arch/INDEX.md` with this form and no topic files:
 
 ```markdown
-# Real Architecture Index
+# 真实架构索引
 
 - Status: `active`
 - Sources: None (schema baseline)
 - Supersedes: None
 - Superseded by: None
 
-This directory records accepted functional/logic design models. It does not duplicate current implementation facts or temporary task documents.
+本目录记录已接受的功能/逻辑设计模型，不重复当前实现事实或临时任务文档。
 
-## Topics
+## 主题
 
-No real-architecture topic records yet.
+暂无真实架构主题记录。
 ```
 
 Create a topic record only when an accepted functional/logic design needs durable maintenance. Use a focused, meaningful path such as `cpu/pipeline.md`, update `architecture/real_arch/INDEX.md` with its relative link, status, and implementation status, and use this template:
 
 ```markdown
-# <Topic title>
+# <主题中文标题>
 
 - Status: `active`
 - Sources: <resolving Markdown links to durable evidence>
@@ -253,22 +278,22 @@ Create a topic record only when an accepted functional/logic design needs durabl
 - Superseded by: None
 - Implementation status: `<verified | partial | not-started>`
 
-## Functional model
+## 功能模型
 
-## Invariants
+## 不变量
 
-## Critical scenarios
+## 关键场景
 
-## Interfaces and non-goals
+## 接口与非目标
 
-## Related records
+## 相关记录
 ```
 
 For a real-architecture topic, use only `active` or `verified` as `Status`: an unaccepted proposal belongs in a temporary task document instead. `Status` describes the record's lifecycle and acceptance; `Implementation status` describes the gap, if any, between the accepted functional/logic model and the currently verified implementation. Do not infer either field from a temporary idea, specification, or plan. Update a topic record only when stable functional logic, an invariant, a critical scenario, or a cross-boundary contract changes. An impact check may read temporary task documents to select topics for review, but only durable evidence may support the resulting record.
 
 ### Decision and research records
 
-Name research records `YYYY-MM-DD-short-topic.md`. A research record uses the metadata form above and adds `## Question`, `## Findings`, and `## Limits`. Add it to the matching `INDEX.md` section with a relative link and status.
+Name research records `YYYY-MM-DD-short-topic.md`. A research record uses the metadata form above, uses a Chinese title and explanation, and adds `## 问题`, `## 发现`, and `## 局限`. Add it to the matching `INDEX.md` section with a relative link and status.
 
 Create an ADR only when all of the following are true:
 
@@ -282,21 +307,21 @@ Otherwise record the ADR outcome as `no-ADR`; this does not mean the broad archi
 An ADR uses the metadata form above and has status `active` when sync creates it. Its decision body—everything after the metadata, including any optional-section bullets—must be at most 120 words. Default to the shortest valid form: one unheaded paragraph of one to three short sentences that states the context, decision, and durable why or trade-off. Use this form unless an optional section passes the stricter rule below:
 
 ```markdown
-# <Short decision title>
+# <简短的中文决策标题>
 
 - Status: `active`
 - Sources: <the smallest sufficient set of resolving durable evidence links>
 - Supersedes: None
 - Superseded by: None
 
-<One unheaded paragraph of one to three short sentences: context, decision, and durable why.>
+<一个无标题段落，包含一到三句简短中文：背景、决策和持久理由。>
 ```
 
 Do not include either `## Considered Alternatives` or `## Consequences` by default. Add one only when omitting one non-obvious, durable fact would materially mislead a future reader; each included heading has at most one concise, single-sentence bullet. An alternatives bullet names the rejected choice and why it conflicts with the decision. A consequences bullet names an enduring trade-off or guardrail. The ADR qualification gate still requires review evidence that a real alternative was considered, but the record need not enumerate every alternative.
 
 Do not turn an ADR into a source-tree tour, review transcript, or implementation checklist. Keep routine lifecycle and cleanup mechanics, test or benchmark/RSS details, and temporary rollout or acceptance work out of the decision body. Record durable functional behavior and invariants in `architecture/real_arch/`, verified implementation facts in `architecture/current.md`, and lasting operator guidance in `operations/`; otherwise omit the detail. `Sources` is the smallest sufficient resolving evidence set, not an exhaustive code inventory. A manually maintained `proposed` or `verified` ADR remains valid under the generic status rules, but only an `active` ADR is binding for conflict checks.
 
-Create an ADR filename from an English short decision name: lowercase it, replace each maximal run outside `[a-z0-9]` with `-`, collapse adjacent hyphens, and trim leading/trailing hyphens. If the result is empty, stop and report instead of inventing an opaque filename. Probe `YYYY-MM-DD-slug.md`, then `YYYY-MM-DD-slug-2.md`, `YYYY-MM-DD-slug-3.md`, and so on until the first unoccupied filename; this date-based convention is an intentional adaptation from numeric ADR series.
+Create an ADR filename from a concise English decision identifier: lowercase it, replace each maximal run outside `[a-z0-9]` with `-`, collapse adjacent hyphens, and trim leading/trailing hyphens. This identifier is a filename input, not the user-facing ADR title or explanation, which remain Chinese-first. If the result is empty, stop and report instead of inventing an opaque filename. Probe `YYYY-MM-DD-slug.md`, then `YYYY-MM-DD-slug-2.md`, `YYYY-MM-DD-slug-3.md`, and so on until the first unoccupied filename; this date-based convention is an intentional adaptation from numeric ADR series.
 
 When a decision changes, create a new ADR rather than rewriting history. A sync-created replacement may supersede exactly one known active ADR. It must update the old record only by marking it `superseded` and adding the reciprocal `Superseded by` link; preserve the old title, Context, Decision, Why, and optional body byte-for-byte. The new record links the old one through `Supersedes`, and `INDEX.md` moves the old record's entry from `### Active` to `### Superseded` while adding the new record's entry under `### Active`, so both remain linked with their current statuses. If more than one possible prior ADR exists or the relationship is ambiguous, stop and report; do not guess. Outside a supersession, correct a clearly non-semantic typo or broken link in an historic ADR only when it does not alter the decision or rationale.
 

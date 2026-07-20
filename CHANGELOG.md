@@ -2,6 +2,13 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.7] - 2026-07-20
+
+### Changed
+
+- Made newly initialized project-memory wiki explanations Chinese-first, including architecture, ADR, domain, research, and operations templates; exact code, API, path, filename, metadata, and evidence tokens remain unchanged.
+- Preserved compatibility with existing valid v1 wikis and prevented translation-only rewrites of verified historical records.
+
 ## [1.5.6] - 2026-07-20
 
 ### Added
