@@ -1,11 +1,12 @@
 # Contributing
 
-This branch intentionally maintains a focused ten-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused eleven-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
 - `idea-refine`
 - `idea-to-spec-and-plan`
+- `plan-review`
 - `brief-change-plan`
 - `grill-with-docs`
 - `handoff`
@@ -43,6 +44,7 @@ node scripts/validate-commands.js
 node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
 node scripts/test-project-memory-contracts.js
+node scripts/test-plan-review-contracts.js
 ```
 
 All checks must pass, and the final diff must not contain references to removed skills or unsupported platforms.

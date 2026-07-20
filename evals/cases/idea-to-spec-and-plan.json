@@ -3,15 +3,15 @@
   "trigger": {
     "positive": [
       {
-        "prompt": "Turn this approved idea document into a specification and an independently reviewed implementation plan",
+        "prompt": "Turn this approved idea document into a specification and a candidate implementation plan",
         "top_k": 3
       },
       {
-        "prompt": "Turn docs/ideas/usage-billing.md into a spec, a repository-grounded plan, and a plan review",
+        "prompt": "Turn docs/ideas/usage-billing.md into a spec and a repository-grounded candidate plan",
         "top_k": 3
       },
       {
-        "prompt": "We have clarified the feature idea; now create the requirements, success criteria, and reviewed execution plan",
+        "prompt": "We have clarified the feature idea; now create the requirements, success criteria, and execution plan",
         "top_k": 3
       }
     ],
@@ -23,14 +23,18 @@
       {
         "prompt": "Write a short dated plan for this known login patch without code or independent review",
         "owner": "brief-change-plan"
+      },
+      {
+        "prompt": "Review this saved implementation plan against its source specification before we execute it",
+        "owner": "plan-review"
       }
     ]
   },
   "evals": [
     {
       "id": 1,
-      "prompt": "Use the approved idea for usage-based billing to produce a specification and reviewed plan before implementation. The idea explains the goal but does not say how completion should be proven.",
-      "expected_output": "A two-artifact workflow that establishes completion evidence, saves a baselined spec with canonical acceptance criteria, creates a traceable candidate plan, and independently reviews that plan before final approval.",
+      "prompt": "Use the approved idea for usage-based billing to produce a specification and candidate plan before implementation. The idea explains the goal but does not say how completion should be proven.",
+      "expected_output": "A two-artifact workflow that establishes completion evidence, saves a baselined spec with canonical acceptance criteria, and creates a traceable candidate plan with a test execution contract; plan review remains an explicit separate next step.",
       "expectations": [
         "Material repository context is inspected rather than commands or conventions being invented",
         "The agent proposes a small number of outcome-based verification candidates and asks what evidence is sufficient",
@@ -38,8 +42,9 @@
         "Acceptance criteria, success criteria, and repository-specific plan verification remain distinct",
         "The spec owns stable acceptance-criteria IDs and the plan maps every ID to verifiable tasks without redefining it",
         "Milestones group the one complete plan rather than creating additional planning artifacts",
-        "A separate read-only subagent reviews the saved plan against the saved spec baseline without receiving the desired verdict or proposed repairs",
-        "The reviewer returns every required verdict field even when the bundled reviewer prompt is unavailable",
+        "Code-changing tasks have a reviewable test execution contract with grounded scope, budget, escalation, timeout behavior, and evidence requirements",
+        "The workflow states that plan review is optional and explicit rather than dispatching a reviewer or subagent",
+        "The candidate is not marked reviewed merely because it was generated",
         "No implementation code is produced"
       ],
       "trust_level": "provisional"

@@ -1,12 +1,13 @@
 {
   "name": "oh-my-zz",
-  "version": "1.5.5",
-  "description": "A focused engineering skill pack for idea refinement, reviewed specification-and-plan bundles, brief change plans, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
+  "version": "1.5.6",
+  "description": "A focused engineering skill pack for idea refinement, specification-and-plan bundles, explicit main-agent plan review, brief change plans, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
   "keywords": [
     "skills",
     "engineering",
     "ideas",
     "planning",
+    "plan-review",
     "design",
     "handoff",
     "project-memory",
@@ -20,8 +21,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Ten focused workflows for ideas, plans, reviews, project memory, and simplification.",
-    "longDescription": "A ten-skill engineering workflow pack for refining ideas, creating reviewed specification-and-plan bundles, planning brief changes, interrogating designs, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code.",
+    "shortDescription": "Eleven focused workflows for ideas, plans, reviews, project memory, and simplification.",
+    "longDescription": "An eleven-skill engineering workflow pack for refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, planning brief changes, interrogating designs, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code.",
     "developerName": "laze44",
     "websiteURL": "https://github.com/laze44/oh-my-zz"
   }

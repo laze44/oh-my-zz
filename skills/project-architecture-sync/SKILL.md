@@ -1,6 +1,6 @@
 ---
 name: project-architecture-sync
-description: Reviews a completed implementation scope, drafts only necessary project-memory and ADR changes, and synchronizes explicitly approved items after revalidation. Use after code changes when docs/project-memory exists; a docs/specs path is optional, but a concrete implementation scope and durable evidence are required.
+description: Reviews a completed implementation scope, drafts only necessary project-memory and ADR changes, and synchronizes explicitly approved items after revalidation. Use when the user explicitly requests a project-memory impact review or synchronization for completed code; a docs/specs path is optional, but a concrete implementation scope and durable evidence are required.
 ---
 
 # Project Architecture Sync
@@ -9,16 +9,18 @@ description: Reviews a completed implementation scope, drafts only necessary pro
 
 Synchronize target-project memory with completed code through three phases: zero-write review, explicit confirmation, then revalidated apply. Require a concrete implementation scope and durable evidence; never infer either from chat alone.
 
+This is an opt-in post-implementation workflow. Finishing code, executing a plan, or a prior selective memory lookup never starts it; the user must explicitly request the review or synchronization.
+
 An optional completed `docs/specs/` Markdown file may focus review, but is never a durable `Sources` record. Append `## Implementation Alignment` only as its own separately approved item — see step 8. Without a spec, create or modify no specification.
 
 Read [the shared project-memory schema](../../references/project-memory-schema.md) before acting. It owns record authority, templates, lifecycle, redaction, and consistency details.
 
 ## When to Use
 
-- Review completed code for architecture, domain-language, ADR, operations, or `no-impact` memory changes.
+- A user explicitly asks to review completed code for architecture, domain-language, ADR, operations, or `no-impact` memory changes.
 - Apply an approved proposal for a concrete Git range/current-worktree boundary or user-confirmed path set.
 
-Do not use this skill for pre-implementation design, bulk cleanup, automatic session logging, or an ordinary-agent discovery gate.
+Do not use this skill for pre-implementation design, bulk cleanup, automatic session logging, an ordinary-agent discovery gate, or merely because a plan was created/executed or code changes are complete.
 
 ## Preconditions
 

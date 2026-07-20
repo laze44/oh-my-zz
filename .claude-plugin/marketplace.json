@@ -5,7 +5,7 @@
     "url": "https://github.com/laze44"
   },
   "metadata": {
-    "description": "A focused engineering skill pack for idea refinement, reviewed specification-and-plan bundles, brief dated change plans, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification."
+    "description": "A focused engineering skill pack for idea refinement, specification-and-plan bundles, explicit main-agent plan review, brief dated change plans, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification."
   },
   "plugins": [
     {
@@ -14,10 +14,10 @@
         "source": "github",
         "repo": "laze44/oh-my-zz"
       },
-      "description": "Ten focused engineering skills for shaping ideas into reviewed specification-and-plan bundles, making brief dated change plans, interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing implementation scope before explicitly approved architecture synchronization, making pre-merge review decisions, and simplifying implementations.",
+      "description": "Eleven focused engineering skills for shaping ideas into specification-and-plan bundles, providing explicit main-agent plan review, making brief dated change plans, interrogating designs, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing implementation scope before explicitly approved architecture synchronization, making pre-merge review decisions, and simplifying implementations.",
       "homepage": "https://github.com/laze44/oh-my-zz",
       "license": "MIT",
-      "keywords": ["oh-my-zz", "skills", "engineering", "ideas", "spec", "brief-plan", "planning", "design", "interview", "handoff", "project-memory", "discovery", "architecture", "ADR", "review", "review-fix", "simplification"]
+      "keywords": ["oh-my-zz", "skills", "engineering", "ideas", "spec", "brief-plan", "planning", "plan-review", "design", "interview", "handoff", "project-memory", "discovery", "architecture", "ADR", "review", "review-fix", "simplification"]
     }
   ]
 }

@@ -2,6 +2,17 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.6] - 2026-07-20
+
+### Added
+
+- Added the explicitly invoked, main-agent `plan-review` skill for idea/spec alignment, selective project-memory conflict checks, Grill-style decision findings, and bounded test-execution review.
+
+### Changed
+
+- Split automatic independent plan review out of `idea-to-spec-and-plan`; it now produces only the specification and candidate plan, including a reviewable test execution contract.
+- Removed the plan-reviewer subagent path so creating a plan never dispatches a reviewer.
+
 ## [1.5.5] - 2026-07-19
 
 ### Added

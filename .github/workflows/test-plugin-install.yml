@@ -26,6 +26,9 @@ jobs:
       - name: Run grill-with-docs session lifecycle checks
         run: node scripts/test-grill-with-docs-runtime.js
 
+      - name: Run plan-review contract checks
+        run: node scripts/test-plan-review-contracts.js
+
   validate-commands:
     name: Validate Claude command metadata
     runs-on: ubuntu-latest
