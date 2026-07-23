@@ -23,9 +23,6 @@ jobs:
       - name: Run skill evals (trigger + routing)
         run: node scripts/run-evals.js
 
-      - name: Run grill-with-docs session lifecycle checks
-        run: node scripts/test-grill-with-docs-runtime.js
-
       - name: Run plan-review contract checks
         run: node scripts/test-plan-review-contracts.js
 

@@ -2,6 +2,13 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.6.0] - 2026-07-23
+
+### Changed
+
+- Moved the grilling interaction into `idea-refine`: it now resolves material idea decisions one at a time, gives a recommendation with each question, and stops at confirmed shared understanding rather than a fixed question limit.
+- Removed the plan-specific `grill-with-docs` skill and its disposable-session runtime; plan review retains its own bounded priority-aware decision exchange.
+
 ## [1.5.7] - 2026-07-20
 
 ### Changed

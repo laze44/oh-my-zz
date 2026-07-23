@@ -1,6 +1,6 @@
 # Contributing
 
-This branch intentionally maintains a focused eleven-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused ten-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
@@ -8,7 +8,6 @@ This branch intentionally maintains a focused eleven-skill pack for Claude Code 
 - `idea-to-spec-and-plan`
 - `plan-review`
 - `brief-change-plan`
-- `grill-with-docs`
 - `handoff`
 - `code-review-and-quality`
 - `code-review-and-fix`

@@ -13,6 +13,10 @@
       {
         "prompt": "Refine this idea before I write a specification or implementation plan",
         "top_k": 3
+      },
+      {
+        "prompt": "Grill me on this product idea one question at a time until we have a shared understanding",
+        "top_k": 3
       }
     ],
     "negative": [
@@ -33,12 +37,12 @@
     {
       "id": 1,
       "prompt": "Refine and save this idea: Create a shared internal record of recurring customer complaints so our support team can group duplicates and see which problems are becoming more common. We want to stop relying on scattered chat messages when deciding what to fix.",
-      "expected_output": "A concise idea draft after a genuine challenge checkpoint, without manufacturing objections, asking unnecessary questions, or adding implementation details.",
+      "expected_output": "A concise shared-understanding summary and confirmation request after a genuine decision map, without manufacturing objections, asking unnecessary questions, or adding implementation details.",
       "expectations": [
-        "The response tests the idea's problem framing and causal logic but does not manufacture a weakness",
-        "The response does not ask clarification questions or generate alternatives because no material concern exists",
-        "The draft contains Refined Idea, Motivation, Primary Goals, and outcome-level Rough Steps",
-        "The draft does not contain MVP Scope, architecture, source paths, or implementation tasks",
+        "The response maps the idea's problem framing and causal logic but does not manufacture a weakness",
+        "The response does not ask clarification questions or generate alternatives because no material decision remains",
+        "The response asks the user to confirm the shared understanding before it drafts or saves anything",
+        "The summary does not contain MVP Scope, architecture, source paths, or implementation tasks",
         "No repository exploration or implementation action is attempted"
       ],
       "trust_level": "provisional"
@@ -46,13 +50,14 @@
     {
       "id": 2,
       "prompt": "Refine this idea: I want something that summarizes our meetings with AI.",
-      "expected_output": "A direct challenge to the solution-first framing followed by one focused question that resolves the intended purpose before drafting.",
+      "expected_output": "A direct challenge to the solution-first framing followed by one focused, recommendation-backed question that resolves the intended purpose before drafting.",
       "expectations": [
         "Exactly one clarification question is asked in the response",
         "The response identifies that the idea commits to AI summaries before establishing the outcome they should serve",
+        "The response gives a recommended framing or answer with a short rationale",
         "The question focuses on the outcome or purpose of the meeting summaries",
         "The response does not ask a fixed batch of discovery questions",
-        "The response does not inspect a repository, propose architecture, or begin implementation"
+        "The response does not inspect a repository, propose architecture, begin implementation, or draft before the decision is reconciled"
       ],
       "trust_level": "provisional"
     },
@@ -71,12 +76,13 @@
     {
       "id": 4,
       "prompt": "I am inside an existing repository. Refine this idea: let users export their account history so they can keep a personal record before closing an account.",
-      "expected_output": "A codebase-independent idea draft that preserves the clear direction and does not inspect or cite the repository.",
+      "expected_output": "A codebase-independent shared-understanding summary and confirmation request that preserves the clear direction without inspecting or citing the repository.",
       "expectations": [
         "The response does not read, search, list, or cite repository files",
         "The response does not infer architecture or existing components",
         "The idea is normalized without adding new goals or features",
-        "Rough Steps remain outcome-level and contain no technical tasks"
+        "The response asks the user to confirm the shared understanding before it drafts or saves anything",
+        "The summary remains outcome-level and contains no technical tasks"
       ],
       "trust_level": "provisional"
     },
@@ -95,14 +101,27 @@
     },
     {
       "id": 6,
-      "prompt": "Continue refining this idea with my decision: I understand that public employee rankings may discourage openness, but transparent individual comparison is non-negotiable. Rank employees by how consistently they document mistakes and lessons learned; the goal remains to make mistakes easier to discuss.",
-      "expected_output": "A refined draft that preserves the user's chosen direction while explicitly recording the unresolved causal assumption and accepted trade-off.",
+      "prompt": "Continue refining this idea with my decision: I understand that public employee rankings may discourage openness, but transparent individual comparison is non-negotiable. Rank employees by how consistently they document mistakes and lessons learned; the goal remains to make mistakes easier to discuss. All material decisions are resolved, and I confirm this is our shared understanding; now draft it.",
+      "expected_output": "A refined draft after explicit shared-understanding confirmation that preserves the user's chosen direction while explicitly recording the unresolved causal assumption and accepted trade-off.",
       "expectations": [
         "The response does not silently remove or weaken the non-negotiable public-ranking mechanism",
         "The draft records the assumption that rankings can increase accountability without preventing honest mistake reporting",
         "The draft records the trade-off between transparent comparison and psychological safety",
         "The response does not pretend the earlier concern has been resolved",
         "The response remains at idea level without architecture or implementation tasks"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 7,
+      "prompt": "Grill me on this idea: I want a service that helps freelancers avoid late payments. Ask one question at a time and do not start a spec until we agree on the idea.",
+      "expected_output": "A decision-tree grilling response that asks the next highest-leverage idea question, gives a recommendation, and waits without creating a specification or plan.",
+      "expectations": [
+        "Exactly one decision question is asked in the response",
+        "The question distinguishes materially different outcomes or directions for avoiding late payments",
+        "The response gives a recommended answer or framing and explains why it matters",
+        "The response does not send a questionnaire, inspect the repository, draft a specification, create a plan, or implement anything",
+        "The response makes clear that the next decision will follow the user's answer rather than a fixed question list"
       ],
       "trust_level": "provisional"
     }

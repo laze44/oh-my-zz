@@ -1,13 +1,13 @@
 ---
 name: plan-review
-description: Reviews an existing implementation plan against its source idea, specification, repository evidence, and selective project-memory constraints; resolves material findings with the user before revising the plan. Use when the user explicitly asks for a main-agent plan review, critique, stress test, or revision before implementation; never invoke automatically or through a subagent.
+description: Reviews an unexecuted implementation plan against its source idea, specification, repository evidence, and selective project-memory constraints; resolves material findings with the user before revising that plan. Use when the user explicitly asks for a pre-execution main-agent plan critique, stress test, or revision; never invoke automatically or through a subagent.
 ---
 
 # Plan Review
 
 ## Overview
 
-Review an existing plan before execution. The current main agent inspects evidence, publishes findings, collects material decisions in a bounded Grill-style exchange, then revises the named plan after the user resolves material findings.
+Review an existing plan before execution. The current main agent inspects evidence, publishes findings, collects material decisions in a bounded priority-aware exchange, then revises the named plan after the user resolves material findings.
 
 This is explicit, not an automatic `idea-to-spec-and-plan` gate. Do not invoke a subagent, external reviewer, or the removed plan-reviewer persona. Do not implement code, run tests, create a spec, or write project memory.
 
@@ -17,7 +17,7 @@ This is explicit, not an automatic `idea-to-spec-and-plan` gate. Do not invoke a
 - Use to check a plan against its originating idea, specification, repository evidence, architecture constraints, or planned tests.
 - Use when decision-ready findings and a focused user discussion must precede revision.
 
-Do not use for idea-to-spec work (`idea-to-spec-and-plan`), a standalone decision interview (`grill-with-docs`), merge readiness (`code-review-and-quality`), completed-code repair (`code-review-and-fix`), or project-memory synchronization (`project-architecture-sync`).
+Do not use for idea-to-spec work (`idea-to-spec-and-plan`), merge readiness (`code-review-and-quality`), completed-code repair (`code-review-and-fix`), or project-memory synchronization (`project-architecture-sync`).
 
 ## Inputs and Authority
 
@@ -54,7 +54,7 @@ With a valid `docs/project-memory/` root, read the reader protocol, `SCHEMA.md`,
 
 - `architecture/constraints.md` holds confirmed design limits; relevant active ADRs are binding conflict authority.
 - `architecture/current.md` is verified current implementation, not future intent; accepted `real_arch` records are durable functional models.
-- Indexes and retrieval cues are navigation, not architecture facts. Ideas, specs, plans, chats, and temporary Grill notes scope review but are not durable memory sources.
+- Indexes and retrieval cues are navigation, not architecture facts. Ideas, specs, plans, and chats may scope review but are not durable memory sources.
 
 For a proposed architecture-principle change, test the resulting rule against every relevant confirmed constraint and active ADR; do not merely report that a principle changed when its resulting rule conflicts with another.
 
@@ -108,7 +108,7 @@ Use `P0` when no safe default exists or the answer changes architecture, data is
 
 ### 6. Resolve findings with the user
 
-Borrow `grill-with-docs` interaction discipline without invoking that skill or creating its session artifacts:
+Use a bounded priority-aware decision exchange without creating session artifacts:
 
 - Ask at most 3 batches, 6 distinct decision questions, and 3 dependency-safe questions per batch.
 - Ask ready P0 questions before P1; ask the first P0 alone unless independent siblings cannot alter each other's meaning.

@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "1.5.7",
-  "description": "A focused engineering skill pack for idea refinement, specification-and-plan bundles, explicit main-agent plan review, brief dated change plans, design interrogation, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
+  "version": "1.6.0",
+  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, brief dated change plans, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
   "author": {
     "name": "laze44",
     "url": "https://github.com/laze44"
@@ -12,7 +12,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Focused workflows for ideas, spec-and-plan bundles, explicit plan review, brief plans, handoffs, review-and-fix, opt-in project memory discovery, proposal-first architecture sync, and simplification.",
+    "shortDescription": "Focused workflows for grilled ideas, spec-and-plan bundles, explicit plan review, brief plans, handoffs, review-and-fix, opt-in project memory discovery, proposal-first architecture sync, and simplification.",
     "category": "Productivity"
   }
 }

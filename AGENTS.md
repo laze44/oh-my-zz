@@ -4,13 +4,12 @@ This file configures agents working on this repository. The reusable plugin cont
 
 ## Scope
 
-This repository is a focused eleven-skill pack for Claude Code and Codex. It intentionally contains only:
+This repository is a focused ten-skill pack for Claude Code and Codex. It intentionally contains only:
 
 - `idea-refine`
 - `idea-to-spec-and-plan`
 - `plan-review`
 - `brief-change-plan`
-- `grill-with-docs`
 - `handoff`
 - `code-review-and-quality`
 - `code-review-and-fix`
@@ -26,7 +25,6 @@ This repository is a focused eleven-skill pack for Claude Code and Codex. It int
 - Clarified idea requiring a specification and implementation plan → `idea-to-spec-and-plan`
 - Explicit request to check or revise an existing plan before implementation → `plan-review`
 - Brief, quick, patch, correction, or repair plan without independent review → `brief-change-plan`
-- Plan or design interrogation with session-local decision docs → `grill-with-docs`
 - Current conversation transfer to a fresh agent session → `handoff`
 - Pre-merge branch or pull-request readiness review → `code-review-and-quality`
 - Explicitly requested independent review, repair, and re-review of a completed approved implementation → `code-review-and-fix`
@@ -64,7 +62,6 @@ node scripts/run-evals.js
 node scripts/validate-commands.js
 node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
-node scripts/test-grill-with-docs-runtime.js
 node scripts/test-code-review-and-fix-runtime.js
 node scripts/test-project-memory-contracts.js
 node scripts/test-plan-review-contracts.js

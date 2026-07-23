@@ -46,7 +46,7 @@
         "Project memory is consulted selectively through the reader protocol, schema, index, retrieval cues, and matching binding constraints or active ADRs only when architecture-relevant",
         "A plan that changes one architecture principle is checked against other relevant binding principles and active ADRs rather than treating the change in isolation",
         "The review examines a test execution contract including tier, grounded selector, time budget, escalation trigger, timeout outcome, and evidence requirements without running broad tests",
-        "Findings have stable IDs, priority, evidence, impact, and a grounded recommendation; only P0 and material P1 decisions consume bounded Grill-style questions",
+        "Findings have stable IDs, priority, evidence, impact, and a grounded recommendation; only P0 and material P1 decisions consume bounded priority-aware questions",
         "The agent waits for user decisions before editing and then changes only the exact named plan, not the spec, code, tests, or project memory"
       ],
       "trust_level": "provisional"

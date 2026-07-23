@@ -1,23 +1,24 @@
 # Idea Refine Examples
 
-Use these patterns to decide whether to challenge, ask one question, offer alternative directions, or draft.
+Use these patterns to decide whether to challenge, ask one decision question, offer alternative directions, continue the grilling conversation, or draft after shared-understanding confirmation.
 
 | Situation | Response |
 |---|---|
-| The claim is clear and survives the challenge checkpoint | Draft without manufacturing an objection |
+| The claim is clear and its decision map is complete | Summarize it for confirmation without manufacturing an objection |
 | A material concern could change the idea | Explain it and ask one focused question |
 | Several interpretations would change the purpose or outcome | Offer two or three distinct directions |
+| An answer creates another dependent material decision | Update the claim, then ask the next one question |
 | The user accepts a correction | Revise the idea claim before drafting |
 | The user rejects a recommendation knowingly | Preserve the direction and record the assumption or trade-off |
 | The user mentions a repository | Refine from the conversation without inspecting it |
 
-## 1. Clear and coherent: challenge internally, then draft
+## 1. Clear and coherent: map internally, then confirm and draft
 
 **User:**
 
 > I want a shared internal record where our support team can group recurring customer complaints and see which problems are becoming more common. We want to stop relying on scattered chat messages when deciding what to fix.
 
-The problem, proposed change, and desired outcome are coherent. Complaint frequency is presented as useful evidence, not as the only prioritization rule; do not invent that stronger claim and challenge it. The checkpoint finds no material concern, so draft directly without asking a question.
+The problem, proposed change, and desired outcome are coherent. Complaint frequency is presented as useful evidence, not as the only prioritization rule; do not invent that stronger claim and challenge it. The decision map finds no material question. Briefly summarize the shared understanding and ask the user to confirm it. Produce the following draft only after that confirmation.
 
 ```markdown
 # Recurring Customer Problem Record
@@ -97,3 +98,13 @@ Do not silently remove rankings. Continue with the chosen direction and capture 
 > Refine this idea for the project I'm currently in: let users export their account history so they can keep a personal record before closing an account.
 
 The repository does not change the refinement process. Test the causal logic from the conversation, then draft without reading files, inferring architecture, or adding implementation constraints.
+
+## 7. Dependent decisions: continue one branch at a time
+
+**User:**
+
+> I want a service that helps freelancers avoid late payments.
+
+Start with the outcome, not a feature list. Recommend narrowing the primary outcome to either reducing missed invoices or improving recovery after an invoice is late, then ask which matters more. After the user chooses recovery, update the claim and ask the next dependent question: whether the service should help the freelancer decide when to follow up or communicate with the client on their behalf. Do not ask both questions together, because the first answer determines which second question is meaningful.
+
+For each question, explain why it changes the idea and offer a recommendation. Continue only while the next answer can materially change the direction. Before drafting, summarize the agreed outcome, boundaries, assumptions, and trade-offs, then ask for confirmation.
