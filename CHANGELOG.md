@@ -2,7 +2,7 @@
 
 All notable releases follow Semantic Versioning.
 
-## [1.6.0] - 2026-07-23
+## [1.5.8] - 2026-07-23
 
 ### Changed
 
