@@ -9,7 +9,7 @@ description: Initializes a target project's Markdown-only LLM-wiki project-memor
 
 Create the fixed `project-memory-llm-wiki-v1` layout in a target project exactly once. A fresh setup can also enable ordinary Codex and Claude agents to discover that wiki selectively, but discovery configuration is an explicit, previewed, marker-bounded append to user-owned root instruction files; it is never a hidden side effect.
 
-The result remains inspectable Markdown. It creates project facts only under `docs/project-memory/`, creates the reader protocol at `docs/agents/project-memory.md` only during a fresh initialization, and may append one owned discovery block at the end of a user-selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` — nothing more (see Red Flags for what it must never add).
+The result remains inspectable Markdown. New wiki explanations are Chinese-first: architecture, ADR, domain, operations, and research descriptions use Simplified Chinese, while paths, code tokens, metadata keys, and other exact identifiers stay in English when required. It creates project facts only under `docs/project-memory/`, creates the reader protocol at `docs/agents/project-memory.md` only during a fresh initialization, and may append one owned discovery block at the end of a user-selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` — nothing more (see Red Flags for what it must never add).
 
 Read [the shared project-memory schema](../../references/project-memory-schema.md) before taking action.
 
@@ -85,7 +85,7 @@ It is a project-level instruction, not a guarantee for tools that do not load th
    docs/project-memory/operations/{environment.md,runbooks.md}
    ```
 
-   Do not create `domain/CONTEXT.md`, decisions, research records, or real-architecture topic placeholders. The target `SCHEMA.md` must be a self-contained copy of the shared schema; the reader protocol must match its exact template. Do not alter `docs/ideas/`, `docs/specs/`, or `docs/plans/`.
+   Do not create `domain/CONTEXT.md`, decisions, research records, or real-architecture topic placeholders. The target `SCHEMA.md` must be a self-contained copy of the shared schema, including its Chinese-first writing-language policy; the reader protocol must use its Chinese-first template. Do not alter `docs/ideas/`, `docs/specs/`, or `docs/plans/`.
 7. Append or remove only the exact owned marker block that was previewed. Existing instruction content remains untouched; removal deletes only one complete matching block and no adjacent user text. If an instruction-file write cannot complete after a successful fresh docs initialization, report that discovery was not enabled and do not delete the valid new wiki as a rollback shortcut.
 8. Run the shared link, index, metadata, and optional-discovery checks. Report created or untouched paths, selected instruction files, whether a new task is needed, the discovery status, and that future verified architecture changes require an explicitly invoked `project-architecture-sync` review.
 
@@ -124,4 +124,5 @@ Before declaring success, confirm:
 - [ ] Every installed marker is complete, exact, unique, and at the selected file's end; every removed marker was complete and exact.
 - [ ] Modified, duplicate, partial, hand-written, overridden-without-selection, malformed-wiki, and unauthorized-file-creation cases stopped without writes.
 - [ ] The reader protocol remains the exact v1 template with no project facts, and discovery directs selective `SCHEMA.md`/`INDEX.md` routing rather than full-wiki loading.
+- [ ] New wiki templates are Chinese-first for human-facing explanations; repository paths, code/API tokens, filenames, profile markers, and stable metadata keys remain exact English identifiers where required.
 - [ ] No secrets, hooks, MCP configuration, platform/session memory, runtime dependency, database, vector search, nested instruction file, or automatic project-memory write was introduced.

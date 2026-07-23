@@ -54,6 +54,8 @@ function main() {
   assert.match(init, /require separate explicit authorization to create that minimal root instruction file/i);
   assert.match(init, /discard the preview and start again/i);
   assert.match(init, /do not delete the valid new wiki as a rollback shortcut/i);
+  assert.match(init, /New wiki explanations are Chinese-first/i);
+  assert.match(init, /paths, code tokens, metadata keys, and other exact identifiers stay in English/i);
 
   const markerStart = '<!-- project-memory-discovery: v1:START -->';
   const markerEnd = '<!-- project-memory-discovery: v1:END -->';
@@ -89,7 +91,15 @@ function main() {
     '## Domain Language Rule',
     '## ADR Conflict Rule',
   ], 'v1 reader protocol');
-  assert.match(schema, /## Retrieval cues\n\nNo retrieval cues yet\./);
+  assert.match(schema, /## Writing language/);
+  assert.match(schema, /\*\*Simplified Chinese by default\*\*/);
+  assert.match(schema, /ADR titles and decision bodies/i);
+  assert.match(schema, /repository paths,[\s\S]*code symbols, API fields, configuration keys/i);
+  assert.match(schema, /Do not rewrite a verified historical record solely to translate it/i);
+  assert.match(schema, /# 项目记忆索引/);
+  assert.match(schema, /## Retrieval cues\n\n暂无检索线索。/);
+  assert.match(reader, /# 项目记忆阅读协议/);
+  assert.match(reader, /先阅读 `SCHEMA\.md`，再阅读 `INDEX\.md`/);
   assert.match(schema, /Existing v1 roots may lack this section and remain valid/i);
   const structural = schema.slice(schema.indexOf('### V1 structural validation'), readerStart);
   assert.doesNotMatch(structural, /Retrieval cues/, 'retrieval cues must not become a v1 structural requirement');
@@ -111,7 +121,7 @@ function main() {
   // Decision records split Active from Superseded in INDEX.md so default
   // agent scanning stays proportional to currently binding decisions while
   // supersession history remains fully linked, never deleted.
-  assert.match(schema, /### Active\n\nNo active decision records yet\.\n\n### Superseded\n\nNo superseded decision records yet\./);
+  assert.match(schema, /### Active\n\n暂无活跃 ADR。\n\n### Superseded\n\n暂无已废弃 ADR。/);
   assert.match(schema, /move its existing entry from `### Active` to `### Superseded`/i);
   assert.match(schema, /keeps default agent scanning proportional to currently binding decisions/i);
   assert.match(schema, /`INDEX\.md` moves the old record's entry from `### Active` to `### Superseded` while adding the new record's entry under `### Active`/i);
@@ -156,6 +166,9 @@ function main() {
   assert.match(sync, /mutate a discovery marker/i);
   assert.match(sync, /compact ADR template and budget/i);
   assert.match(sync, /within 120 words/i);
+  assert.match(sync, /writing-language policy/i);
+  assert.match(sync, /Chinese-first/i);
+  assert.match(sync, /do not translate third-party evidence excerpts/i);
   assert.match(sync, /optional headings by default/i);
   assert.match(sync, /move the superseded entry from `INDEX\.md`'s Decision records `### Active` subsection to `### Superseded`/i);
   assert.match(sync, /Leaving a superseded ADR's `INDEX\.md` entry under `### Active`/i);

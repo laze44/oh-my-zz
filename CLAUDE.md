@@ -4,11 +4,10 @@ This repository is a focused plugin pack for Claude Code and Codex.
 
 ## Retained skills
 
-- `idea-refine` — clarify intent and save a concise idea draft
+- `idea-refine` — grill and clarify intent one decision at a time, then save a concise idea draft
 - `idea-to-spec-and-plan` — turn a clarified idea into a specification and one complete implementation plan
 - `plan-review` — explicitly review an existing plan in the main agent, resolve material findings, and revise only that plan
 - `brief-change-plan` — create a dated, concise change plan without code or independent review
-- `grill-with-docs` — interrogate plans with bounded priority-aware decisions and clean temporary interview records after handoff
 - `handoff` — compact the current conversation into a redacted temporary handoff document for a fresh agent session
 - `code-review-and-quality` — make a read-only pre-merge readiness decision for a branch or pull request
 - `code-review-and-fix` — explicitly review a completed approved implementation contract, triage repairability, and run a bounded repair/re-review loop
@@ -39,7 +38,6 @@ node scripts/run-evals.js
 node scripts/validate-commands.js
 node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
-node scripts/test-grill-with-docs-runtime.js
 node scripts/test-code-review-and-fix-runtime.js
 node scripts/test-project-memory-contracts.js
 node scripts/test-plan-review-contracts.js
