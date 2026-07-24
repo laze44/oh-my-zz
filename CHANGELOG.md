@@ -2,6 +2,13 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.9] - 2026-07-24
+
+### Changed
+
+- Kept project-memory ADR retrieval scoped to matching active records, with explicit supersession-history exceptions.
+- Made ADR proposals confirm one change at a time before final revalidation and atomic apply.
+
 ## [1.5.8] - 2026-07-23
 
 ### Changed

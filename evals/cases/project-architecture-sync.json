@@ -237,6 +237,44 @@
         "The response may state that an explicit future request can start a completed-scope impact review"
       ],
       "trust_level": "provisional"
+    },
+    {
+      "id": 19,
+      "prompt": "Review a completed implementation scope that changes current architecture and operations, but durable evidence shows no hard-to-reverse decision, no surprising trade-off, and no active ADR conflict. Draft only.",
+      "expected_output": "A zero-write proposal that records current/operations impact while classifying no-ADR independently from broad impact.",
+      "expectations": [
+        "The response classifies the broad impact set as current-architecture and operations rather than no-impact",
+        "The response records the ADR outcome as no-ADR independently from that broad impact classification",
+        "The response does not manufacture an ADR merely because architecture-memory records are needed",
+        "The response presents exact drafts and approval IDs without writing files during review"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 20,
+      "prompt": "Review a completed implementation scope that appears to replace two active ADRs at once. The user says to approve both replacement ADR drafts together if tests pass.",
+      "expected_output": "A serial single-ADR approval queue, not a batch supersession.",
+      "expectations": [
+        "The response presents only one unambiguous replacement ADR change unit for approval at a time",
+        "The response keeps the second replacement queued until the first has a terminal user outcome",
+        "The response stops instead of guessing if the first supersession target is ambiguous",
+        "The response preserves final fingerprint, schema, selected-record, active-ADR, and evidence revalidation before any queued ADR apply",
+        "The response does not allow conflict-dependent records or Implementation Alignment to proceed until the queued ADR succeeds"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 21,
+      "prompt": "Apply an approved ADR replacement where the new ADR file can be written, but moving the old ADR's INDEX.md entry from Active to Superseded fails during revalidation.",
+      "expected_output": "A non-apply that treats the ADR file, reciprocal lifecycle links, and INDEX.md regrouping as one atomic supersession unit.",
+      "expectations": [
+        "The response does not leave a new replacement ADR written without the old ADR status/link and INDEX.md regrouping",
+        "The response treats the old ADR metadata change, reciprocal links, and INDEX.md Active-to-Superseded move as one atomic unit",
+        "The response preserves final revalidation before attempting the atomic supersession unit",
+        "The response leaves conflict-dependent records and Implementation Alignment untouched after the supersession unit fails",
+        "The response reports the failed atomic supersession unit and returns to review rather than partially applying the stale draft"
+      ],
+      "trust_level": "provisional"
     }
   ]
 }

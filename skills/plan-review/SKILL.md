@@ -50,9 +50,16 @@ Consult project memory only for architecture-relevant effects: cross-module boun
 
 If the current task already completed a qualifying discovery lookup, reuse it rather than restarting the reader protocol, `SCHEMA.md`, and `INDEX.md`; refresh only affected records when the plan scope or wiki state changed.
 
-With a valid `docs/project-memory/` root, read the reader protocol, `SCHEMA.md`, `INDEX.md`, retrieval cues, then only matching records—never the whole wiki. Authority rules:
+With a valid `docs/project-memory/` root, read the reader protocol, `SCHEMA.md`, `INDEX.md`, retrieval cues, then only matching records—never the whole wiki.
 
-- `architecture/constraints.md` holds confirmed design limits; relevant active ADRs are binding conflict authority.
+- Ground ADR relevance in task paths, symbols, public APIs, domain terms, or retrieval cues.
+- Check only matching active ADRs.
+- Read superseded ADRs only for direct decision history or a supersession chain.
+- If relevance cannot be grounded, report `MEMORY_UNAVAILABLE` rather than infer compatibility.
+
+Authority rules:
+
+- `architecture/constraints.md` holds confirmed design limits; matching active ADRs are binding conflict authority.
 - `architecture/current.md` is verified current implementation, not future intent; accepted `real_arch` records are durable functional models.
 - Indexes and retrieval cues are navigation, not architecture facts. Ideas, specs, plans, and chats may scope review but are not durable memory sources.
 
