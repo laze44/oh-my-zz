@@ -100,6 +100,7 @@ function main() {
   assert.match(schema, /## Retrieval cues\n\n暂无检索线索。/);
   assert.match(reader, /# 项目记忆阅读协议/);
   assert.match(reader, /先阅读 `SCHEMA\.md`，再阅读 `INDEX\.md`/);
+  assert.match(reader, /活跃 ADR/);
   assert.match(schema, /Existing v1 roots may lack this section and remain valid/i);
   const structural = schema.slice(schema.indexOf('### V1 structural validation'), readerStart);
   assert.doesNotMatch(structural, /Retrieval cues/, 'retrieval cues must not become a v1 structural requirement');
@@ -117,6 +118,11 @@ function main() {
   assert.match(decisionRecords, /at most one concise, single-sentence bullet/i);
   assert.match(decisionRecords, /need not enumerate every alternative/i);
   assert.match(decisionRecords, /not an exhaustive code inventory/i);
+  assert.match(decisionRecords, /no-ADR[\s\S]*broad architecture impact[\s\S]*no-impact/i);
+  assert.match(decisionRecords, /no-impact[\s\S]*current-architecture[\s\S]*real-architecture[\s\S]*domain-language[\s\S]*operations/i);
+  assert.match(decisionRecords, /supersede[\s\S]*ADR outcome/i);
+  assert.match(decisionRecords, /supersede[\s\S]*exactly one[\s\S]*active ADR/i);
+  assert.match(decisionRecords, /more than one[\s\S]*ambiguous[\s\S]*stop/i);
 
   // Decision records split Active from Superseded in INDEX.md so default
   // agent scanning stays proportional to currently binding decisions while
@@ -161,6 +167,13 @@ function main() {
   assert.match(sync, /every write or finalizing an approved `no-impact` outcome/i);
   assert.match(sync, /must succeed atomically before any conflict-dependent record or Alignment/i);
   assert.match(sync, /cannot be a standalone write/i);
+  assert.match(sync, /Separately choose[\s\S]*`new`[\s\S]*`supersede`[\s\S]*`no-ADR`/);
+  assert.match(sync, /ADR decision[\s\S]*independent[\s\S]*broad impact classification/i);
+  assert.match(sync, /present one new or superseding change unit[\s\S]*wait for an explicit response/i);
+  assert.match(sync, /do not display or solicit approval for later full ADR drafts/i);
+  assert.match(sync, /queue reaches terminal outcomes[\s\S]*revalidate before applying approved items/i);
+  assert.match(sync, /recomput[\s\S]*fingerprint[\s\S]*revalidat/i);
+  assert.match(sync, /supersession's new ADR[\s\S]*old-record lifecycle links[\s\S]*`INDEX\.md`[\s\S]*atomic unit/i);
   assert.match(sync, /regenerate the exact draft from the actual outcome and obtain fresh separate approval/i);
   assert.match(sync, /impact\/ADR outcomes, changed records and source links, profile result, and constraint status/i);
   assert.match(sync, /mutate a discovery marker/i);
@@ -201,6 +214,9 @@ function main() {
   assert.match(hasEval('evals/cases/project-architecture-sync.json', 15).expected_output, /exactly one approved Implementation Alignment/i);
   assert.match(hasEval('evals/cases/project-architecture-sync.json', 16).expected_output, /short ADR draft/i);
   assert.match(hasEval('evals/cases/project-architecture-sync.json', 17).expected_output, /regroups both INDEX\.md decision-record entries/i);
+  assert.match(hasEval('evals/cases/project-architecture-sync.json', 19).expected_output, /no-ADR independently/i);
+  assert.match(hasEval('evals/cases/project-architecture-sync.json', 20).expected_output, /single-ADR approval queue/i);
+  assert.match(hasEval('evals/cases/project-architecture-sync.json', 21).expected_output, /atomic supersession unit/i);
 
   console.log('Project-memory contract checks passed.');
 }

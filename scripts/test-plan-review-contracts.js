@@ -11,6 +11,16 @@ function read(relativePath) {
   return fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
 }
 
+function readJson(relativePath) {
+  return JSON.parse(read(relativePath));
+}
+
+function hasEval(caseFile, id) {
+  const evaluation = readJson(caseFile).evals.find((item) => item.id === id);
+  assert.ok(evaluation, `${caseFile} is missing eval ${id}`);
+  return evaluation;
+}
+
 function main() {
   const review = read('skills/plan-review/SKILL.md');
   const planner = read('skills/idea-to-spec-and-plan/SKILL.md');
@@ -31,6 +41,9 @@ function main() {
   assert.match(review, /CONSTRAINT_OR_ADR_CONFLICT/);
   assert.match(review, /MEMORY_INTERNAL_CONFLICT/);
   assert.match(review, /IMPLIED_ARCH_CHANGE/);
+  assert.match(review, /matching[\s\S]*active ADRs/i);
+  assert.match(review, /Read superseded ADRs only for direct decision history or a supersession chain/i);
+  assert.match(review, /If relevance cannot be grounded[\s\S]*MEMORY_UNAVAILABLE[\s\S]*infer compatibility/i);
   assert.match(review, /project-architecture-sync/);
   assert.match(review, /never execute it here/i);
   assert.match(review, /focused-unit/);
@@ -69,6 +82,8 @@ function main() {
   }
   assert.match(readme, /never starts plan review automatically/i);
   assert.match(agents, /runs in the main agent without a subagent/i);
+  assert.match(hasEval('evals/cases/plan-review.json', 3).expected_output, /matching active ADR/i);
+  assert.match(hasEval('evals/cases/plan-review.json', 4).expected_output, /direct-history exception/i);
 
   console.log('Plan-review separation and test-execution contract checks passed.');
 }

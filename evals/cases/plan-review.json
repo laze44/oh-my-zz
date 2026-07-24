@@ -61,6 +61,30 @@
         "The agent does not start tests, implementation, a reviewer subagent, or project-memory writes"
       ],
       "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "prompt": "Review docs/plans/auth-session-routing.md. Retrieval cues mention three old ADRs, but only one active ADR matches the plan's changed task paths and public session API; two superseded ADRs use similar words but are not in the active ADR's direct history.",
+      "expected_output": "A selective project-memory review that checks the matching active ADR and does not read unrelated superseded ADRs.",
+      "expectations": [
+        "The response grounds ADR relevance in the plan's task paths, symbols, public API, terms, or retrieval cues",
+        "The response checks only the matching active ADR as binding conflict authority",
+        "The response does not treat similar wording in unrelated superseded ADRs as relevant authority",
+        "The response reports unavailable compatibility rather than guessing if the active-ADR match cannot be grounded"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 4,
+      "prompt": "Review docs/plans/queue-residency.md. The plan appears to change the active queue-residency ADR, and that active ADR directly supersedes one old residency ADR whose rationale may explain the binding decision history.",
+      "expected_output": "A selective project-memory review that applies the superseded direct-history exception for the active ADR's supersession chain.",
+      "expectations": [
+        "The response first identifies the matching active ADR from grounded overlap with the plan",
+        "The response may read the directly superseded predecessor only because the active ADR's direct decision history is relevant",
+        "The response does not expand into unrelated superseded ADRs or a whole-wiki traversal",
+        "Any conflict finding is based on confirmed constraints or matching active ADR authority, with the superseded record used only as history"
+      ],
+      "trust_level": "provisional"
     }
   ]
 }
