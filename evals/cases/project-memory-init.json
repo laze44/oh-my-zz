@@ -60,7 +60,7 @@
         "The response does not create docs or append a marker without a current preview to revalidate",
         "The response asks to restart from the exact preview rather than inferring a selected target or old marker state",
         "The response leaves AGENTS.md, CLAUDE.md, AGENTS.override.md, nested instruction files, docs/specs/, and unrelated docs untouched",
-        "The response creates no hooks, platform memory, session state, database, vector store, or automatic memory writer"
+        "The response creates no target-project hooks or durable session state, database, vector store, or automatic memory writer; any plugin Stop-gate state stays ephemeral and outside docs/project-memory"
       ],
       "trust_level": "provisional"
     },

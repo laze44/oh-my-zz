@@ -30,6 +30,31 @@ Do not use this skill to synchronize an implemented change; use `project-archite
 | Existing valid v1 wiki plus explicit discovery enable/remove | Manage only the exact owned marker block; leave the wiki byte-for-byte unchanged. |
 | Ordinary initialization when the wiki already exists | Strict no-op. Report the user-managed root and make no discovery-configuration change. |
 
+## Runtime State and Stop Gate
+
+The wiki remains Markdown-only. The plugin may keep one ephemeral, session-scoped
+workflow state file outside the target project so its unified Stop gate can
+protect the multi-step run; never place that file under `docs/project-memory/`
+or treat it as a durable project-memory record.
+
+At the start of the run, initialize the state with the installed plugin's
+`scripts/initialize-project-memory-state.js` using workflow
+`project-memory-init`. Keep the state in `PREVIEW` while inspecting and
+constructing the exact result. Move it to `AWAITING_CONFIRMATION` only after
+showing the complete discovery diff. For a docs-only run, move directly to
+`REVALIDATE` because there is no instruction-file confirmation.
+
+After explicit confirmation, or immediately before a docs-only write, move to
+`REVALIDATE` with the protected-path fingerprint. Then move to `APPLY` only for
+the actual approved writes, `VERIFY` after the writes, and `DONE` after all
+checks pass. Move to `BLOCKED` for an ambiguity, stale preview, invalid schema,
+or unavailable authority. `AWAITING_CONFIRMATION` intentionally allows the
+task to stop while waiting for the user; active write and verification phases
+remain blocked by the Stop gate until their next action is recorded.
+
+If the host does not load or trust plugin hooks, perform the same state and
+completion checks manually and report that the runtime guard was unavailable.
+
 ## Managed Discovery Block
 
 The only discovery block this skill may install is the exact block below. It belongs at the end of a selected root instruction file after a blank line; never rewrite, reorder, normalize, or replace existing content.
@@ -69,7 +94,7 @@ It is a project-level instruction, not a guarantee for tools that do not load th
 
 ## Workflow
 
-1. Establish the target project root and classify the request as fresh docs-only initialization, fresh initialization plus discovery, explicit discovery enable/remove for an existing root, or an ordinary repeat initialization. Read the shared schema before planning a write.
+1. Establish the target project root and classify the request as fresh docs-only initialization, fresh initialization plus discovery, explicit discovery enable/remove for an existing root, or an ordinary repeat initialization. Read the shared schema before planning a write. Initialize the session-scoped `project-memory-init` state in `PREVIEW` before the protected inspection begins.
 2. Inspect `docs/project-memory/`, `docs/agents/project-memory.md`, and only the root instruction surfaces relevant to the requested platforms: `AGENTS.override.md`, `AGENTS.md`, and `CLAUDE.md`. Do not inspect or create nested instructions. Treat an existing root `AGENTS.override.md` as a possible precedence conflict: show it and require the user to select the effective Codex instruction surface instead of silently patching a different file.
 3. For a fresh initialization, require that both `docs/project-memory/` and `docs/agents/project-memory.md` are absent. If the root already exists and the user did not explicitly request discovery enable/remove, stop with the existing strict no-op. If the protocol exists without the root, stop with the existing partial-setup no-op. For explicit discovery enable, require a **fully valid v1 root** under the shared schema's structural validation: self-contained schema, every canonical path and required index section, and the exact reader protocol. Do not point ordinary agents at malformed or legacy user-managed memory. For explicit removal, require exactly one complete byte-for-byte matching owned block at the selected file's end.
 4. For discovery enable, inspect the selected root instruction file before proposing a patch. Report an idempotent no-op only when exactly one complete byte-for-byte matching owned block is at the file's end after its required blank line. If it has duplicate, partial, nested, moved, or modified discovery markers, or a hand-written project-memory directive outside the owned block, stop without merging or overwriting it. If a selected file does not exist, require separate explicit authorization to create that minimal root instruction file; do not create it merely because the wiki is being initialized.
@@ -86,8 +111,8 @@ It is a project-level instruction, not a guarantee for tools that do not load th
    ```
 
    Do not create `domain/CONTEXT.md`, decisions, research records, or real-architecture topic placeholders. The target `SCHEMA.md` must be a self-contained copy of the shared schema, including its Chinese-first writing-language policy; the reader protocol must use its Chinese-first template. Do not alter `docs/ideas/`, `docs/specs/`, or `docs/plans/`.
-7. Append or remove only the exact owned marker block that was previewed. Existing instruction content remains untouched; removal deletes only one complete matching block and no adjacent user text. If an instruction-file write cannot complete after a successful fresh docs initialization, report that discovery was not enabled and do not delete the valid new wiki as a rollback shortcut.
-8. Run the shared link, index, metadata, and optional-discovery checks. Report created or untouched paths, selected instruction files, whether a new task is needed, the discovery status, and that future verified architecture changes require an explicitly invoked `project-architecture-sync` review.
+7. After revalidation, move the state to `APPLY`, append or remove only the exact owned marker block that was previewed, and create only the canonical wiki paths. Existing instruction content remains untouched; removal deletes only one complete matching block and no adjacent user text. If an instruction-file write cannot complete after a successful fresh docs initialization, report that discovery was not enabled and do not delete the valid new wiki as a rollback shortcut.
+8. Move the state to `VERIFY`, run the shared link, index, metadata, and optional-discovery checks, then move it to `DONE` only after they pass. Report created or untouched paths, selected instruction files, whether a new task is needed, the discovery status, and that future verified architecture changes require an explicitly invoked `project-architecture-sync` review.
 
 ## Common Rationalizations
 
@@ -110,7 +135,7 @@ It is a project-level instruction, not a guarantee for tools that do not load th
 - Ignoring an override/preference conflict and claiming ordinary Codex agents will discover the wiki.
 - Adding project-specific content to `docs/agents/project-memory.md` or changing its exact v1 template.
 - Loading the whole wiki for clearly local work, or treating a specification, plan, chat, or draft as a durable `Sources` record.
-- Adding hooks, MCP configuration, platform memory, dependencies, databases, vector search, generated state, or automatic memory writes.
+- Adding hooks or runtime state to the target project, especially under `docs/project-memory/`; adding MCP configuration, platform memory, dependencies, databases, vector search, or automatic memory writes.
 
 ## Verification
 
@@ -125,4 +150,5 @@ Before declaring success, confirm:
 - [ ] Modified, duplicate, partial, hand-written, overridden-without-selection, malformed-wiki, and unauthorized-file-creation cases stopped without writes.
 - [ ] The reader protocol remains the exact v1 template with no project facts, and discovery directs selective `SCHEMA.md`/`INDEX.md` routing rather than full-wiki loading.
 - [ ] New wiki templates are Chinese-first for human-facing explanations; repository paths, code/API tokens, filenames, profile markers, and stable metadata keys remain exact English identifiers where required.
-- [ ] No secrets, hooks, MCP configuration, platform/session memory, runtime dependency, database, vector search, nested instruction file, or automatic project-memory write was introduced.
+- [ ] The ephemeral `project-memory-init` state stayed outside the target project, all Stop-gate transitions were recorded, and terminal `DONE` or `BLOCKED` state was reached.
+- [ ] No secrets, target-project hooks, MCP configuration, platform/session memory, runtime dependency, database, vector search, nested instruction file, or automatic project-memory write was introduced.

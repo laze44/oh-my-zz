@@ -1,6 +1,6 @@
 # Project-Memory Schema
 
-This reference defines the Markdown-only project-memory records that the two project-memory skills maintain in a **target project**. It is not a source of runtime state, a replacement for a project's specifications, or an integration with hooks, MCP, databases, vector search, or session logs. A user may explicitly ask `project-memory-init` to append its bounded discovery marker to selected root Claude/Codex instruction files; that static routing aid is not runtime memory, a hook, or a record of a session.
+This reference defines the Markdown-only project-memory records that the two project-memory skills maintain in a **target project**. It is not a source of runtime state, a replacement for a project's specifications, or an integration with MCP, databases, vector search, or session logs. The plugin may keep an ephemeral session-scoped Stop-gate state outside the target project, but that state is not part of this schema, must not be stored under `docs/project-memory/`, and must never become a record or `Sources` entry. A user may explicitly ask `project-memory-init` to append its bounded discovery marker to selected root Claude/Codex instruction files; that static routing aid is not runtime memory or a record of a session.
 
 ## Schema profile
 

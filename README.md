@@ -17,9 +17,9 @@ A focused plugin pack for Claude Code, Codex, and Kimi Code. It contains ten foc
 | [project-memory-init](skills/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
 | [project-architecture-sync](skills/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
 
-`project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other retained skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`. Its human-facing wiki content is Simplified-Chinese-first—especially architecture, ADR, domain, research, and operations explanations—while paths, code/API tokens, filenames, metadata keys, and other exact identifiers remain English where needed. When the user explicitly selects ordinary-agent discovery, initialization first previews and then appends only its managed block to selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` files; existing content is never rewritten. A normal repeat initialization of an existing root remains a no-op. Sync audits a completed implementation scope with code and test evidence; `docs/specs/` is optional context, not a prerequisite or durable source. Its review phase produces a zero-write proposal, and its apply phase revalidates the scope before changing only approved records; a supplied spec's `Implementation Alignment` is a separately approved item. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents.
+`project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other retained skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`. Its human-facing wiki content is Simplified-Chinese-first—especially architecture, ADR, domain, research, and operations explanations—while paths, code/API tokens, filenames, metadata keys, and other exact identifiers remain English where needed. When the user explicitly selects ordinary-agent discovery, initialization first previews and then appends only its managed block to selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` files; existing content is never rewritten. A normal repeat initialization of an existing root remains a no-op. Sync audits a completed implementation scope with code and test evidence; `docs/specs/` is optional context, not a prerequisite or durable source. Its review phase produces a zero-write proposal, and its apply phase revalidates the scope before changing only approved records; a supplied spec's `Implementation Alignment` is a separately approved item. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents. The plugin's unified Stop gate may keep ephemeral session state outside the target project to protect active review/apply phases; it never writes that state under `docs/project-memory/`.
 
-Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. A plan, specification, code diff, or completed implementation alone does not trigger this lookup. The gate never writes or starts a sync; after implementation, the user may explicitly invoke `project-architecture-sync` to review the scope and approve any proposed sync.
+Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. A plan, specification, code diff, or completed implementation alone does not trigger this lookup. The discovery gate never writes or starts a sync; after implementation, the user may explicitly invoke `project-architecture-sync` to review the scope and approve any proposed sync. The plugin Stop gate is separate: it only guards the active state transitions of explicitly started project-memory workflows.
 
 ## Claude Code
 
@@ -67,7 +67,7 @@ codex plugin add oh-my-zz@oh-my-zz
 
 Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill. Invoke `@plan-review` for an explicit main-agent plan review and `@code-review-and-fix` for its post-implementation loop; normal planning, coding, and plan execution do not start either workflow.
 
-`idea-to-spec-and-plan` and `plan-review` never request a reviewer or subagent. `plan-review` uses the current main agent to compare a saved plan with its sources and to review planned test scope, budgets, timeouts, and escalation rules. `brief-change-plan` likewise never requests a reviewer or subagent. The review-and-fix skill asks for a fresh read-only reviewer in every round. Its bundled Stop hook only prevents an active, session-scoped repair loop from ending before its recorded next action; it never starts reviewers or edits code. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the skill's state checks manually.
+`idea-to-spec-and-plan` and `plan-review` never request a reviewer or subagent. `plan-review` uses the current main agent to compare a saved plan with its sources and to review planned test scope, budgets, timeouts, and escalation rules. `brief-change-plan` likewise never requests a reviewer or subagent. The review-and-fix and project-memory workflows use the unified Stop gate only as a state guard: it never starts reviewers, edits code, writes project memory, or replaces the skill's approval checks. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the recorded state and completion checks manually.
 
 ## Kimi Code
 
@@ -98,7 +98,7 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ```text
 skills/                    Ten shared Claude Code, Codex, and Kimi Code skills
 agents/                    Claude Code read-only code reviewer
-hooks/                     Shared thin Stop gate configuration
+hooks/                     Unified Stop gate configuration and dispatcher
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests
 .codex-plugin/             Codex plugin manifest
@@ -107,7 +107,7 @@ kimi.plugin.json           Kimi Code plugin manifest
 kimi.marketplace.json      Kimi Code marketplace catalog
 references/                Checklists and project-memory schema used by retained skills
 evals/                     Trigger and behavioral eval cases
-scripts/                   Repository validators and eval runner
+scripts/                   Repository validators, workflow state helpers, and runtime tests
 ```
 
 ## Validation
@@ -121,6 +121,7 @@ node scripts/validate-commands.js
 node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
 node scripts/test-code-review-and-fix-runtime.js
+node scripts/test-project-memory-stop-gate-runtime.js
 node scripts/test-project-memory-contracts.js
 node scripts/test-plan-review-contracts.js
 ```

@@ -2,6 +2,16 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.10] - 2026-08-05
+
+### Added
+
+- Added session-scoped project-memory workflow state and a unified Stop gate that protects active initialization and architecture-synchronization phases without writing runtime state into the target project's Markdown wiki.
+
+### Changed
+
+- Preserved the existing `code-review-and-fix` Stop behavior while routing it through the same dispatcher and added deterministic runtime coverage for both workflows.
+
 ## [1.5.9] - 2026-07-24
 
 ### Changed

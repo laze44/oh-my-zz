@@ -15,7 +15,7 @@ This branch intentionally maintains a focused ten-skill pack for Claude Code and
 - `project-memory-init`
 - `project-architecture-sync`
 
-The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. They do not change or invoke the other retained skill workflows. Adding another skill or platform integration is a product-scope decision, not routine maintenance. Propose that change explicitly before implementation.
+The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. Their plugin-level Stop gate may use ephemeral session state outside the target project, but neither workflow adds target-project hooks or durable runtime records. They do not change or invoke the other retained skill workflows. Adding another skill or platform integration is a product-scope decision, not routine maintenance. Propose that change explicitly before implementation.
 
 ## Modifying a skill
 
@@ -42,6 +42,8 @@ node scripts/run-evals.js
 node scripts/validate-commands.js
 node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
+node scripts/test-code-review-and-fix-runtime.js
+node scripts/test-project-memory-stop-gate-runtime.js
 node scripts/test-project-memory-contracts.js
 node scripts/test-plan-review-contracts.js
 ```

@@ -79,6 +79,21 @@ function responseForState(state) {
   return hookBlock(`Code-review-and-fix is still active in ${state.phase} (repair cycle ${state.cycle}/${state.max_cycles}). Next action: ${state.next_action}`);
 }
 
+function evaluateStop({ options, input, cwd }) {
+  const match = readMatchingState(statePathCandidates({ options, input, cwd }), input);
+  if (!match) return { matched: false, response: hookAllow() };
+  if (match.error) {
+    return {
+      matched: true,
+      response: hookBlock(match.error),
+    };
+  }
+  return {
+    matched: true,
+    response: responseForState(match.state),
+  };
+}
+
 function main() {
   const options = parseArgs(process.argv.slice(2), {
     valueFlags: ['--state-dir', '--session-id', '--state-file'],
@@ -91,14 +106,20 @@ function main() {
 
   const input = parseHookInput(readStdin());
   const cwd = typeof input.cwd === 'string' && input.cwd.length > 0 ? input.cwd : process.cwd();
-  const match = readMatchingState(statePathCandidates({ options, input, cwd }), input);
-  const response = match ? responseForState(match.state) : hookAllow();
+  const response = evaluateStop({ options, input, cwd }).response;
   process.stdout.write(`${JSON.stringify(response)}\n`);
 }
 
-try {
-  main();
-} catch (error) {
-  // A stop gate must never turn a malformed hook invocation into a global lock.
-  process.stdout.write(`${JSON.stringify(hookAllow())}\n`);
+if (require.main === module) {
+  try {
+    main();
+  } catch (error) {
+    // A stop gate must never turn a malformed hook invocation into a global lock.
+    process.stdout.write(`${JSON.stringify(hookAllow())}\n`);
+  }
 }
+
+module.exports = {
+  evaluateStop,
+  responseForState,
+};

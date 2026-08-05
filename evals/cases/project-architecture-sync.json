@@ -65,7 +65,7 @@
       "expectations": [
         "The response rejects a missing or ambiguous concrete implementation scope rather than a missing specification alone",
         "The response rejects pre-implementation sync and rewriting requirements or pre-implementation design",
-        "The response rejects Codex or Claude platform memory, automated session capture, hooks, MCP, and database integrations"
+        "The response rejects target-project hooks, Codex or Claude platform memory, automated session capture, MCP, and database integrations while allowing only the plugin's ephemeral external Stop-gate state"
       ],
       "trust_level": "provisional"
     },

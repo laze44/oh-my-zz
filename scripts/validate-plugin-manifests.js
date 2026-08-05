@@ -190,9 +190,9 @@ assert(Array.isArray(stopHandlers) && stopHandlers.length === 1,
 const stopHook = stopHandlers?.[0]?.hooks?.[0];
 assert(stopHook?.type === 'command', 'Bundled Stop hook must be a command hook');
 assert(typeof stopHook?.command === 'string'
-  && stopHook.command.includes('skills/code-review-and-fix/hooks/stop-review-fix-gate.js')
+  && stopHook.command.includes('hooks/stop-workflow-gate.js')
   && stopHook.command.includes('PLUGIN_ROOT'),
-'Bundled Stop hook must invoke the code-review-and-fix gate through the plugin root');
+'Bundled Stop hook must invoke the unified workflow gate through the plugin root');
 assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
 
 console.log('Claude, Codex, and Kimi plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');

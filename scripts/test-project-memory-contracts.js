@@ -34,6 +34,10 @@ function hasEval(caseFile, id) {
 function main() {
   const init = read('skills/project-memory-init/SKILL.md');
   const sync = read('skills/project-architecture-sync/SKILL.md');
+  const state = read('scripts/project-memory-state.js');
+  const stateInit = read('scripts/initialize-project-memory-state.js');
+  const stateUpdate = read('scripts/update-project-memory-state.js');
+  const stopGate = read('scripts/project-memory-stop-gate.js');
   const planReview = read('skills/plan-review/SKILL.md');
   const schema = read('references/project-memory-schema.md');
   const readme = read('README.md');
@@ -76,6 +80,9 @@ function main() {
   ], 'discovery marker');
   assert.match(init, /A plan, specification, code diff, or\ncompleted implementation is not by itself a reason to consult the wiki/i);
   assert.match(init, /Completing code,\n   executing a plan, or moving from planning to implementation is not a sync\n   trigger/i);
+  assert.match(init, /Runtime State and Stop Gate/);
+  assert.match(init, /AWAITING_CONFIRMATION/);
+  assert.match(init, /scripts\/initialize-project-memory-state\.js/);
   assert.match(planReview, /reuse it rather than restarting the reader protocol/i);
 
   // The v1 reader protocol remains exact and generic. Discovery and retrieval
@@ -105,6 +112,8 @@ function main() {
   const structural = schema.slice(schema.indexOf('### V1 structural validation'), readerStart);
   assert.doesNotMatch(structural, /Retrieval cues/, 'retrieval cues must not become a v1 structural requirement');
   assert.match(schema, /Its presence or absence does not affect v1 structural validity/i);
+  assert.match(schema, /ephemeral session-scoped Stop-gate state outside the target project/i);
+  assert.match(schema, /must never become a record or `Sources` entry/i);
 
   // ADRs stay decision-focused rather than becoming implementation narratives.
   const decisionHeading = '\n### Decision and research records\n';
@@ -181,11 +190,27 @@ function main() {
   assert.match(sync, /within 120 words/i);
   assert.match(sync, /writing-language policy/i);
   assert.match(sync, /Chinese-first/i);
+  assert.match(sync, /Runtime State and Stop Gate/);
+  assert.match(sync, /AWAITING_APPROVAL/);
+  assert.match(sync, /scripts\/initialize-project-memory-state\.js/);
   assert.match(sync, /do not translate third-party evidence excerpts/i);
   assert.match(sync, /optional headings by default/i);
   assert.match(sync, /move the superseded entry from `INDEX\.md`'s Decision records `### Active` subsection to `### Superseded`/i);
   assert.match(sync, /Leaving a superseded ADR's `INDEX\.md` entry under `### Active`/i);
   assert.match(sync, /moved from `### Active` to `### Superseded` while its replacement was added under `### Active`/i);
+
+  // Runtime state is external and session-scoped; the Stop gate blocks active
+  // phases but deliberately allows explicit waits for user input.
+  assert.match(state, /project-memory-init/);
+  assert.match(state, /project-architecture-sync/);
+  assert.match(state, /AWAITING_CONFIRMATION/);
+  assert.match(state, /AWAITING_APPROVAL/);
+  assert.match(state, /os\.tmpdir\(\)/);
+  assert.doesNotMatch(state, /docs\/project-memory/);
+  assert.match(stateInit, /outside the target\nproject's docs\/project-memory/i);
+  assert.match(stateUpdate, /scope fingerprint is required/i);
+  assert.match(stopGate, /WAITING_PHASES/);
+  assert.match(readme, /test-project-memory-stop-gate-runtime\.js/);
 
   // Public project guidance must send contributors through the deterministic
   // contract test, and it must not regress the retained-skill inventory.
@@ -196,6 +221,7 @@ function main() {
     ['CONTRIBUTING.md', contributing],
   ]) {
     assert.match(text, /node scripts\/test-project-memory-contracts\.js/, `${label} must list the project-memory contract check`);
+    assert.match(text, /node scripts\/test-project-memory-stop-gate-runtime\.js/, `${label} must list the project-memory Stop-gate runtime check`);
   }
   assert.doesNotMatch(contributing, /eight-skill/i, 'contributing guidance must not advertise the stale skill count');
   assert.match(readme, /`?docs\/specs\/?`? is optional context, not a prerequisite/i);

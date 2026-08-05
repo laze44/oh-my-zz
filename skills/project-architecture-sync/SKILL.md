@@ -22,6 +22,30 @@ Read [the shared project-memory schema](../../references/project-memory-schema.m
 
 Do not use this skill for pre-implementation design, bulk cleanup, automatic session logging, an ordinary-agent discovery gate, or merely because a plan was created/executed or code changes are complete.
 
+## Runtime State and Stop Gate
+
+The target wiki remains Markdown-only and never stores runtime state. The plugin
+may keep one ephemeral, session-scoped state file outside the target project so
+the unified Stop gate can protect this multi-phase run; it is not a project-
+memory record and must never become a `Sources` entry.
+
+Initialize the state with the installed plugin's
+`scripts/initialize-project-memory-state.js` using workflow
+`project-architecture-sync` and keep it in `REVIEW` while building the
+zero-write proposal. Move it to `AWAITING_APPROVAL` only after presenting the
+exact itemized proposal. That waiting phase intentionally allows the task to
+stop for the user's response.
+
+After approval, move to `REVALIDATE` with the unchanged scope fingerprint, then
+to `APPLY` only for approved writes, `VERIFY` after the writes, and `DONE` after
+the target-schema checks pass. Move to `BLOCKED` for missing scope, stale
+evidence, malformed state, ambiguous ADR conflict, or missing authority. The
+Stop gate blocks active review, revalidation, apply, and verification phases;
+it does not block an explicit wait for user approval.
+
+If the host does not load or trust plugin hooks, perform the same state and
+completion checks manually and report that the runtime guard was unavailable.
+
 ## Preconditions
 
 Stop without writing when any condition fails:
@@ -35,7 +59,7 @@ Stop without writing when any condition fails:
 
 ### 1. Review and proposal — zero writes
 
-1. Validate the completed scope and record a transient scope fingerprint: resolved base/range; normalized paths; a digest of staged, unstaged, and in-scope untracked changes; the optional spec's normalized path and content identity; selected wiki/active-ADR states; and examined evidence. Keep the proposal only in the current conversation.
+1. Validate the completed scope and record a transient scope fingerprint: resolved base/range; normalized paths; a digest of staged, unstaged, and in-scope untracked changes; the optional spec's normalized path and content identity; selected wiki/active-ADR states; and examined evidence. Initialize the session-scoped `project-architecture-sync` state in `REVIEW` with that fingerprint. Keep the proposal only in the current conversation.
 2. Validate and read the reader protocol, target `SCHEMA.md`, and `INDEX.md`. Use matching-active-only retrieval: start from the index, optional retrieval cues, and scoped Markdown search for targeted retrieval rather than a full-wiki tour; select records matching the completed scope's subsystem, public contract, canonical term, configuration surface, path class, symbol, invariant, or decision topic:
 
    | Cue | Read when relevant |
@@ -57,7 +81,7 @@ Stop without writing when any condition fails:
 ### 3. Apply and verify
 
 6. Immediately before every write or finalizing an approved `no-impact` outcome, recompute the fingerprint and revalidate the schema, selected records, active ADRs, and evidence. Any change to its base/range, paths, content digest, optional-spec identity, wiki/ADR state, or evidence invalidates the proposal and returns to review.
-7. Apply only independently valid approved items:
+7. After revalidation, move the state to `APPLY` and apply only independently valid approved items:
 
    | Impact | Permitted change |
    | --- | --- |
@@ -68,7 +92,7 @@ Stop without writing when any condition fails:
    | `operations` | Append redacted facts/procedures to the relevant operations record. |
 
    Follow the target schema for templates, index updates, ADR filename/lifecycle/supersession, and redaction. When a replacement ADR supersedes an existing one, move the superseded entry from `INDEX.md`'s Decision records `### Active` subsection to `### Superseded` in the same update, and add the new record under `### Active`. Never use `real_arch` as a plan or source-tree tour, or domain context for implementation facts. Stop rather than guess an ADR predecessor or incomplete/conflicting evidence.
-8. Append one `## Implementation Alignment` only when an optional valid spec was supplied and its approval ID was explicitly approved. It cannot be a standalone write: it must either accompany its approved `no-impact` outcome or describe only memory/ADR items that succeeded. If partial approval changes its facts, outcomes, records, or sources, omit it or regenerate the exact draft from the actual outcome and obtain fresh separate approval. Preserve the original spec content. Record completion date, scope/evidence, impact/ADR outcomes, changed records and source links, profile result, and constraint status. Re-run the target schema's Required consistency checks and report approved/skipped IDs, changed paths, profile/no-op status, alignment or no-spec outcome, and conflicts.
+8. Append one `## Implementation Alignment` only when an optional valid spec was supplied and its approval ID was explicitly approved. It cannot be a standalone write: it must either accompany its approved `no-impact` outcome or describe only memory/ADR items that succeeded. If partial approval changes its facts, outcomes, records, or sources, omit it or regenerate the exact draft from the actual outcome and obtain fresh separate approval. Preserve the original spec content. Record completion date, scope/evidence, impact/ADR outcomes, changed records and source links, profile result, and constraint status. Move the state to `VERIFY`, re-run the target schema's Required consistency checks, report approved/skipped IDs, changed paths, profile/no-op status, alignment or no-spec outcome, and conflicts, then move it to `DONE` only after all checks pass.
 
 ## Common Rationalizations
 
@@ -88,7 +112,7 @@ Stop without writing when any condition fails:
 - Leaving a superseded ADR's `INDEX.md` entry under `### Active`, or duplicating/dropping a decision-records entry during supersession.
 - Creating a spec, changing original spec content, or appending an unapproved/second alignment.
 - Repairing/migrating a user-managed wiki or adding v1 records to a legacy root.
-- Recording secrets; mutating a discovery marker; or adding runtime/platform integrations, hooks, dependencies, or generated state.
+- Recording secrets; mutating a discovery marker; adding hooks or runtime state to the target project; or adding platform memory, MCP, databases, vector search, dependencies, logs, or generated project state.
 
 ## Verification
 
@@ -103,3 +127,4 @@ Before declaring success, confirm:
 - [ ] A superseded ADR's `INDEX.md` entry moved from `### Active` to `### Superseded` while its replacement was added under `### Active`, with no entry duplicated or dropped.
 - [ ] Target-schema templates, links, indexes, lifecycle, retrieval cues, and redaction checks pass.
 - [ ] Alignment was separately approved and appended once after the actual approved outcome, or no-spec runs left specifications unchanged.
+- [ ] The ephemeral `project-architecture-sync` state stayed outside the target project, all Stop-gate transitions were recorded, and terminal `DONE` or `BLOCKED` state was reached.
