@@ -10,7 +10,7 @@ const { spawnSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const INITIALIZE = path.join(ROOT, 'scripts', 'initialize-project-memory-state.js');
 const UPDATE = path.join(ROOT, 'scripts', 'update-project-memory-state.js');
-const REVIEW_INITIALIZE = path.join(ROOT, 'skills', 'code-review-and-fix', 'scripts', 'initialize-review-fix-state.js');
+const REVIEW_INITIALIZE = path.join(ROOT, 'skills', 'market', 'code-review-and-fix', 'scripts', 'initialize-review-fix-state.js');
 const STOP_GATE = path.join(ROOT, 'hooks', 'stop-workflow-gate.js');
 const { statePathFor } = require('./project-memory-state');
 

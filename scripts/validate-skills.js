@@ -2,7 +2,7 @@
 /**
  * validate-skills.js
  *
- * Validates every skill in skills/ against the rules in docs/skill-anatomy.md.
+ * Validates every skill in skills/market/ against the rules in docs/skill-anatomy.md.
  *
  * Checks (errors block CI):
  *   - SKILL.md exists in every skill directory
@@ -26,7 +26,7 @@ const path = require('path');
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
-const SKILLS_DIR = path.resolve(__dirname, '..', 'skills');
+const SKILLS_DIR = path.resolve(__dirname, '..', 'skills', 'market');
 
 const MAX_DESCRIPTION_LENGTH = 1024;
 
@@ -208,7 +208,7 @@ function validateSkill(dirName, knownSkills) {
 
 function main() {
   if (!fs.existsSync(SKILLS_DIR)) {
-    console.error(`ERROR: skills directory not found at ${SKILLS_DIR}`);
+    console.error(`ERROR: skills/market directory not found at ${SKILLS_DIR}`);
     process.exit(1);
   }
 

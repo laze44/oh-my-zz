@@ -11,7 +11,7 @@ Create the fixed `project-memory-llm-wiki-v1` layout in a target project exactly
 
 The result remains inspectable Markdown. New wiki explanations are Chinese-first: architecture, ADR, domain, operations, and research descriptions use Simplified Chinese, while paths, code tokens, metadata keys, and other exact identifiers stay in English when required. It creates project facts only under `docs/project-memory/`, creates the reader protocol at `docs/agents/project-memory.md` only during a fresh initialization, and may append one owned discovery block at the end of a user-selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` — nothing more (see Red Flags for what it must never add).
 
-Read [the shared project-memory schema](../../references/project-memory-schema.md) before taking action.
+Read [the bundled project-memory schema](references/project-memory-schema.md) before taking action.
 
 ## When to Use
 
@@ -37,7 +37,7 @@ workflow state file outside the target project so its unified Stop gate can
 protect the multi-step run; never place that file under `docs/project-memory/`
 or treat it as a durable project-memory record.
 
-At the start of the run, initialize the state with the installed plugin's
+At the start of the run, initialize the state with this skill's bundled
 `scripts/initialize-project-memory-state.js` using workflow
 `project-memory-init`. Keep the state in `PREVIEW` while inspecting and
 constructing the exact result. Move it to `AWAITING_CONFIRMATION` only after

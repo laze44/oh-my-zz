@@ -25,7 +25,7 @@ For a one-time, read-only merge-readiness review, use `code-review-and-quality` 
 Require `SPEC_PATH`, `PLAN_PATH`, `BASE_REF`, `MAX_CYCLES` (default `3`), and the host `SESSION_ID`. Review the complete `BASE..HEAD` scope, never only the last commit. Initialize the session-scoped record before requesting a reviewer:
 
 ```bash
-node skills/code-review-and-fix/scripts/initialize-review-fix-state.js \
+node skills/market/code-review-and-fix/scripts/initialize-review-fix-state.js \
   --spec "$SPEC_PATH" --plan "$PLAN_PATH" --base "$BASE_REF" \
   --max-cycles "$MAX_CYCLES" --session-id "$SESSION_ID"
 ```

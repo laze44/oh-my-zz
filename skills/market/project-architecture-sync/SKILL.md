@@ -13,7 +13,7 @@ This is an opt-in post-implementation workflow. Finishing code, executing a plan
 
 An optional completed `docs/specs/` Markdown file may focus review, but is never a durable `Sources` record. Append `## Implementation Alignment` only as its own separately approved item — see step 8. Without a spec, create or modify no specification.
 
-Read [the shared project-memory schema](../../references/project-memory-schema.md) before acting. It owns record authority, templates, lifecycle, redaction, and consistency details.
+Read [the bundled project-memory schema](references/project-memory-schema.md) before acting. It owns record authority, templates, lifecycle, redaction, and consistency details.
 
 ## When to Use
 
@@ -29,7 +29,7 @@ may keep one ephemeral, session-scoped state file outside the target project so
 the unified Stop gate can protect this multi-phase run; it is not a project-
 memory record and must never become a `Sources` entry.
 
-Initialize the state with the installed plugin's
+Initialize the state with this skill's bundled
 `scripts/initialize-project-memory-state.js` using workflow
 `project-architecture-sync` and keep it in `REVIEW` while building the
 zero-write proposal. Move it to `AWAITING_APPROVAL` only after presenting the

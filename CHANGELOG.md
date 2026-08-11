@@ -2,6 +2,16 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.5.11] - 2026-08-11
+
+### Added
+
+- Packaged the ten skills in the `skills/market/` catalog layout for installation through the `npx skills` CLI, including standalone project-memory resources.
+
+### Changed
+
+- Updated plugin manifests, runtime paths, documentation, and deterministic checks for the market catalog layout.
+
 ## [1.5.10] - 2026-08-05
 
 ### Added

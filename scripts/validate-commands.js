@@ -6,7 +6,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const COMMANDS_DIR = path.join(ROOT, '.claude', 'commands');
-const SKILLS_DIR = path.join(ROOT, 'skills');
+const SKILLS_DIR = path.join(ROOT, 'skills', 'market');
 
 const knownSkills = new Set(
   fs.readdirSync(SKILLS_DIR)

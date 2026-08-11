@@ -22,8 +22,8 @@ function hasEval(caseFile, id) {
 }
 
 function main() {
-  const review = read('skills/plan-review/SKILL.md');
-  const planner = read('skills/idea-to-spec-and-plan/SKILL.md');
+  const review = read('skills/market/plan-review/SKILL.md');
+  const planner = read('skills/market/idea-to-spec-and-plan/SKILL.md');
   const specCommand = read('.claude/commands/spec.md');
   const readme = read('README.md');
   const agents = read('AGENTS.md');

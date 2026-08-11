@@ -43,8 +43,8 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const actualSkills = fs.readdirSync(path.join(ROOT, 'skills'))
-  .filter((name) => fs.existsSync(path.join(ROOT, 'skills', name, 'SKILL.md')))
+const actualSkills = fs.readdirSync(path.join(ROOT, 'skills', 'market'))
+  .filter((name) => fs.existsSync(path.join(ROOT, 'skills', 'market', name, 'SKILL.md')))
   .sort();
 const actualClaudeCommands = fs.readdirSync(path.join(ROOT, '.claude', 'commands'))
   .filter((name) => name.endsWith('.md'))
@@ -52,7 +52,7 @@ const actualClaudeCommands = fs.readdirSync(path.join(ROOT, '.claude', 'commands
 
 assert(
   JSON.stringify(actualSkills) === JSON.stringify(EXPECTED_SKILLS),
-  `skills/ must contain exactly: ${EXPECTED_SKILLS.join(', ')}; found: ${actualSkills.join(', ')}`
+  `skills/market/ must contain exactly: ${EXPECTED_SKILLS.join(', ')}; found: ${actualSkills.join(', ')}`
 );
 assert(
   JSON.stringify(actualClaudeCommands) === JSON.stringify(EXPECTED_CLAUDE_COMMANDS),
@@ -78,7 +78,7 @@ assert(/brief.*plan/i.test(claudePlugin.description),
   'Claude plugin description must cover brief change plans');
 assert(/plan review/i.test(claudePlugin.description),
   'Claude plugin description must cover explicit plan review');
-assert(claudePlugin.skills === './skills', 'Claude plugin must load ./skills');
+assert(claudePlugin.skills === './skills/market', 'Claude plugin must load ./skills/market');
 assert(Array.isArray(claudePlugin.commands) && claudePlugin.commands.length === 1 &&
   claudePlugin.commands[0] === './.claude/commands',
   'Claude plugin must load only ./.claude/commands');
@@ -95,7 +95,7 @@ assert(/brief.*plan/i.test(claudeMarketplace.metadata.description),
   'Claude marketplace metadata must cover brief change plans');
 assert(/plan review/i.test(claudeMarketplace.metadata.description),
   'Claude marketplace metadata must cover explicit plan review');
-assert(codexPlugin.skills === './skills/', 'Codex plugin must load ./skills/');
+assert(codexPlugin.skills === './skills/market/', 'Codex plugin must load ./skills/market/');
 assert(codexPlugin.name === PLUGIN_NAME, `Codex plugin name must be ${PLUGIN_NAME}`);
 assert(typeof codexPlugin.version === 'string' && SEMVER_PATTERN.test(codexPlugin.version),
   'Codex plugin version must be strict SemVer');
@@ -126,7 +126,7 @@ assert(typeof kimiPlugin.version === 'string' && SEMVER_PATTERN.test(kimiPlugin.
   'Kimi plugin version must be strict SemVer');
 assert(kimiPlugin.version === claudePlugin.version,
   'Claude, Codex, and Kimi plugin versions must match');
-assert(kimiPlugin.skills === './skills/', 'Kimi plugin must load ./skills/');
+assert(kimiPlugin.skills === './skills/market/', 'Kimi plugin must load ./skills/market/');
 assert(kimiPlugin.hooks === undefined && kimiPlugin.commands === undefined,
   'Kimi plugin must not declare incompatible Claude or Codex runtime configuration');
 assert(/project-memory/i.test(kimiPlugin.description) && /architecture/i.test(kimiPlugin.description),

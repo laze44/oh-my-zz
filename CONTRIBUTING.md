@@ -28,7 +28,7 @@ The two project-memory skills are independent target-project memory workflows; i
 
 ## Plugin metadata
 
-Shared skill content lives in `skills/`. Claude Code metadata is under `.claude-plugin/`; Codex metadata is under `.codex-plugin/` and `.agents/plugins/`.
+Shared skill content lives in `skills/market/` so the Vercel `skills` CLI can discover the catalog layout. Claude Code metadata is under `.claude-plugin/`; Codex metadata is under `.codex-plugin/` and `.agents/plugins/`.
 
 When descriptions, paths, or supported capabilities change, update both plugin surfaces in the same change.
 

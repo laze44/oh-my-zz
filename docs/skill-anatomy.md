@@ -4,17 +4,20 @@ This document describes the structure and format of oh-my-zz skill files. Use th
 
 ## File Location
 
-Every skill lives in its own directory under `skills/`:
+Every skill lives in its own directory under the `market` catalog:
 
 ```
 skills/
-  skill-name/
-    SKILL.md           # Required: The skill definition
-    scripts/           # Optional: Runnable helpers used by the skill workflow
-    supporting-file.md # Optional: Reference material loaded on demand
+  market/
+    skill-name/
+      SKILL.md           # Required: The skill definition
+      scripts/           # Optional: Runnable helpers used by the skill workflow
+      supporting-file.md # Optional: Reference material loaded on demand
 ```
 
 `SKILL.md` is the only required file. Add `scripts/` only when the skill actually ships runnable helpers, and omit the directory entirely for markdown-only skills.
+
+The `market` category is intentional: the `npx skills` CLI discovers both flat `skills/<name>/SKILL.md` repositories and one-level catalog layouts such as `skills/market/<name>/SKILL.md`.
 
 ## SKILL.md Format
 
@@ -126,7 +129,7 @@ When a skill ships runnable helpers under `scripts/`, each script follows these 
 - Write status messages to stderr: `echo "Message" >&2`.
 - Write machine-readable output (JSON) to stdout.
 - Include a cleanup trap for temporary files.
-- Reference the script path as `skills/<skill-name>/scripts/<script>.sh` (repo-relative).
+- Reference the script path as `skills/market/<skill-name>/scripts/<script>.sh` (repo-relative).
 
 ## Writing Principles
 
@@ -142,7 +145,7 @@ When a skill ships runnable helpers under `scripts/`, each script follows these 
 - Skill directories: `lowercase-hyphen-separated`
 - Skill files: `SKILL.md` (always uppercase)
 - Supporting files: `lowercase-hyphen-separated.md`
-- References: stored in `references/` at the project root, not inside skill directories
+- Shared repository references may live in the root `references/`; resources required when a skill is installed standalone must live inside that skill directory.
 
 ## Cross-Skill References
 
@@ -159,7 +162,7 @@ Don't duplicate content between skills — reference and link instead.
 
 Required:
 
-- A `skills/<skill-name>/SKILL.md` file
+- A `skills/market/<skill-name>/SKILL.md` file
 - Valid YAML frontmatter with `name` and `description`
 - A description that includes both what the skill does and when to use it
 

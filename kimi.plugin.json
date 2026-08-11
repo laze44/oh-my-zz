@@ -1,6 +1,6 @@
 {
   "name": "oh-my-zz",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, brief change plans, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
   "keywords": [
     "skills",
@@ -18,7 +18,7 @@
   "author": "laze44",
   "homepage": "https://github.com/laze44/oh-my-zz",
   "license": "MIT",
-  "skills": "./skills/",
+  "skills": "./skills/market/",
   "interface": {
     "displayName": "Oh My ZZ",
     "shortDescription": "Ten focused workflows for grilled ideas, plans, reviews, project memory, and simplification.",

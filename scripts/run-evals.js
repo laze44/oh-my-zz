@@ -33,7 +33,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
-const SKILLS_DIR = path.join(ROOT, 'skills');
+const SKILLS_DIR = path.join(ROOT, 'skills', 'market');
 const CASES_DIR = path.join(ROOT, 'evals', 'cases');
 const FIXTURES_DIR = path.join(ROOT, 'evals', 'fixtures');
 const RESULTS_DIR = path.join(ROOT, 'evals', 'results');

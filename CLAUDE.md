@@ -15,12 +15,12 @@ This repository is a focused plugin pack for Claude Code and Codex.
 - `project-memory-init` — initialize the Markdown-only project-memory schema and, after confirmation, optionally append selective-discovery guidance to target root agent instructions
 - `project-architecture-sync` — review a completed implementation scope, draft target-project architecture-memory changes, and synchronize only approved items
 
-The two project-memory skills are independent: initialization owns fresh docs plus an explicitly confirmed marker-bounded discovery append, while synchronization owns review, approval, and verified fact updates. Their plugin-level Stop gate may use ephemeral session state outside the target project's `docs/project-memory/`; it never adds target-project hooks or durable memory records. They do not change or invoke the workflows of the other retained skills. Load the matching `skills/<name>/SKILL.md` before working on a task in that category. Do not route work to skills that are not in this list.
+The two project-memory skills are independent: initialization owns fresh docs plus an explicitly confirmed marker-bounded discovery append, while synchronization owns review, approval, and verified fact updates. Their plugin-level Stop gate may use ephemeral session state outside the target project's `docs/project-memory/`; it never adds target-project hooks or durable memory records. They do not change or invoke the workflows of the other retained skills. Load the matching `skills/market/<name>/SKILL.md` before working on a task in that category. Do not route work to skills that are not in this list.
 
 ## Structure
 
 ```text
-skills/              Shared skill content
+skills/market/       Shared skill content in the npx catalog layout
 .claude/commands/    /spec, /review, /review-fix, /code-simplify
 .claude-plugin/      Claude Code manifests
 .codex-plugin/       Codex manifest

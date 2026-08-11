@@ -32,18 +32,41 @@ function hasEval(caseFile, id) {
 }
 
 function main() {
-  const init = read('skills/project-memory-init/SKILL.md');
-  const sync = read('skills/project-architecture-sync/SKILL.md');
+  const init = read('skills/market/project-memory-init/SKILL.md');
+  const sync = read('skills/market/project-architecture-sync/SKILL.md');
   const state = read('scripts/project-memory-state.js');
   const stateInit = read('scripts/initialize-project-memory-state.js');
   const stateUpdate = read('scripts/update-project-memory-state.js');
   const stopGate = read('scripts/project-memory-stop-gate.js');
-  const planReview = read('skills/plan-review/SKILL.md');
+  const planReview = read('skills/market/plan-review/SKILL.md');
   const schema = read('references/project-memory-schema.md');
   const readme = read('README.md');
   const agents = read('AGENTS.md');
   const claude = read('CLAUDE.md');
   const contributing = read('CONTRIBUTING.md');
+
+  for (const skill of ['project-memory-init', 'project-architecture-sync']) {
+    assert.strictEqual(
+      read(`skills/market/${skill}/references/project-memory-schema.md`),
+      schema,
+      `${skill} must bundle the canonical project-memory schema for standalone npx installation`,
+    );
+    assert.strictEqual(
+      read(`skills/market/${skill}/scripts/project-memory-state.js`),
+      state,
+      `${skill} must bundle the canonical project-memory state helper`,
+    );
+    assert.strictEqual(
+      read(`skills/market/${skill}/scripts/initialize-project-memory-state.js`),
+      stateInit,
+      `${skill} must bundle the canonical project-memory initializer`,
+    );
+    assert.strictEqual(
+      read(`skills/market/${skill}/scripts/update-project-memory-state.js`),
+      stateUpdate,
+      `${skill} must bundle the canonical project-memory state updater`,
+    );
+  }
 
   // Discovery remains an optional, exact, user-confirmed append rather than a
   // replacement for root instructions or a new runtime integration.

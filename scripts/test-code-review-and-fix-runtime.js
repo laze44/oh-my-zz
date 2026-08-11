@@ -8,9 +8,9 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
-const INITIALIZE = path.join(ROOT, 'skills', 'code-review-and-fix', 'scripts', 'initialize-review-fix-state.js');
-const UPDATE = path.join(ROOT, 'skills', 'code-review-and-fix', 'scripts', 'update-review-fix-state.js');
-const STOP_GATE = path.join(ROOT, 'skills', 'code-review-and-fix', 'hooks', 'stop-review-fix-gate.js');
+const INITIALIZE = path.join(ROOT, 'skills', 'market', 'code-review-and-fix', 'scripts', 'initialize-review-fix-state.js');
+const UPDATE = path.join(ROOT, 'skills', 'market', 'code-review-and-fix', 'scripts', 'update-review-fix-state.js');
+const STOP_GATE = path.join(ROOT, 'skills', 'market', 'code-review-and-fix', 'hooks', 'stop-review-fix-gate.js');
 
 function invoke(script, args, { input } = {}) {
   return spawnSync(process.execPath, [script, ...args], {

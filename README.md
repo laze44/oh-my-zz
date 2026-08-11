@@ -1,25 +1,48 @@
 # oh-my-zz
 
-A focused plugin pack for Claude Code, Codex, and Kimi Code. It contains ten focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains ten focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
 
 ## Included skills
 
 | Skill | Purpose |
 | --- | --- |
-| [idea-refine](skills/idea-refine/SKILL.md) | Grill and refine an idea one decision at a time, then save a concise shared-understanding draft before specification or planning |
-| [idea-to-spec-and-plan](skills/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one complete implementation plan |
-| [plan-review](skills/plan-review/SKILL.md) | Explicitly review an existing plan against its idea, repository evidence, selective project-memory constraints, and test-execution contract; resolve findings before revising it |
-| [brief-change-plan](skills/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
-| [handoff](skills/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
-| [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
-| [code-review-and-fix](skills/code-review-and-fix/SKILL.md) | Explicitly review completed work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
-| [code-simplification](skills/code-simplification/SKILL.md) | Reduce complexity while preserving behavior |
-| [project-memory-init](skills/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
-| [project-architecture-sync](skills/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
+| [idea-refine](skills/market/idea-refine/SKILL.md) | Grill and refine an idea one decision at a time, then save a concise shared-understanding draft before specification or planning |
+| [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one complete implementation plan |
+| [plan-review](skills/market/plan-review/SKILL.md) | Explicitly review an existing plan against its idea, repository evidence, selective project-memory constraints, and test-execution contract; resolve findings before revising it |
+| [brief-change-plan](skills/market/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
+| [handoff](skills/market/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
+| [code-review-and-quality](skills/market/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
+| [code-review-and-fix](skills/market/code-review-and-fix/SKILL.md) | Explicitly review completed work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
+| [code-simplification](skills/market/code-simplification/SKILL.md) | Reduce complexity while preserving behavior |
+| [project-memory-init](skills/market/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
+| [project-architecture-sync](skills/market/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
 
 `project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other retained skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`. Its human-facing wiki content is Simplified-Chinese-first—especially architecture, ADR, domain, research, and operations explanations—while paths, code/API tokens, filenames, metadata keys, and other exact identifiers remain English where needed. When the user explicitly selects ordinary-agent discovery, initialization first previews and then appends only its managed block to selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` files; existing content is never rewritten. A normal repeat initialization of an existing root remains a no-op. Sync audits a completed implementation scope with code and test evidence; `docs/specs/` is optional context, not a prerequisite or durable source. Its review phase produces a zero-write proposal, and its apply phase revalidates the scope before changing only approved records; a supplied spec's `Implementation Alignment` is a separately approved item. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents. The plugin's unified Stop gate may keep ephemeral session state outside the target project to protect active review/apply phases; it never writes that state under `docs/project-memory/`.
 
 Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. A plan, specification, code diff, or completed implementation alone does not trigger this lookup. The discovery gate never writes or starts a sync; after implementation, the user may explicitly invoke `project-architecture-sync` to review the scope and approve any proposed sync. The plugin Stop gate is separate: it only guards the active state transitions of explicitly started project-memory workflows.
+
+## npx Skills
+
+The reusable skills are organized under `skills/market/`, the catalog layout recognized by the `skills` CLI. Install the whole collection from a project directory with:
+
+```bash
+npx skills add laze44/oh-my-zz --all
+```
+
+Install only selected skills with `--skill`, or target a specific agent:
+
+```bash
+npx skills add laze44/oh-my-zz --skill idea-refine
+npx skills add laze44/oh-my-zz --skill code-review-and-quality --agent codex --yes
+```
+
+The market subtree is also directly installable when browsing by category:
+
+```bash
+npx skills add https://github.com/laze44/oh-my-zz/tree/main/skills/market
+```
+
+Use `-g` for a user-level install. This path installs the portable `SKILL.md` workflows and their bundled skill files; the project-memory entries also carry their schema and state helpers for standalone installation. Claude commands, plugin hooks, and marketplace metadata remain available through the platform-specific plugin installation documented below.
 
 ## Claude Code
 
@@ -96,7 +119,7 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ## Repository layout
 
 ```text
-skills/                    Ten shared Claude Code, Codex, and Kimi Code skills
+skills/market/             Ten shared skills in the npx catalog layout
 agents/                    Claude Code read-only code reviewer
 hooks/                     Unified Stop gate configuration and dispatcher
 .claude/commands/          Claude Code convenience commands

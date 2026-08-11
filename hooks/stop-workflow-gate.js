@@ -7,8 +7,8 @@ const {
   parseArgs,
   parseHookInput,
   readStdin,
-} = require('../skills/code-review-and-fix/scripts/review-fix-state');
-const { evaluateStop: evaluateReviewFixStop } = require('../skills/code-review-and-fix/hooks/stop-review-fix-gate');
+} = require('../skills/market/code-review-and-fix/scripts/review-fix-state');
+const { evaluateStop: evaluateReviewFixStop } = require('../skills/market/code-review-and-fix/hooks/stop-review-fix-gate');
 const {
   evaluateProjectMemoryStop,
 } = require('../scripts/project-memory-stop-gate');

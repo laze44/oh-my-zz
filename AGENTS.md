@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file configures agents working on this repository. The reusable plugin content lives under `skills/`; do not copy this repository guidance into downstream projects.
+This file configures agents working on this repository. The reusable plugin content lives under `skills/market/`; do not copy this repository guidance into downstream projects.
 
 ## Scope
 
@@ -36,7 +36,7 @@ If a request matches a retained skill, read and follow its complete `SKILL.md` b
 
 ## Repository structure
 
-- `skills/` — shared Claude Code and Codex skill content
+- `skills/market/` — shared Claude Code and Codex skill content in the npx catalog layout
 - `.claude/commands/` — Claude Code command wrappers
 - `.claude-plugin/` — Claude Code manifests
 - `.codex-plugin/` and `.agents/plugins/` — Codex manifests
