@@ -2,6 +2,16 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.6.0] - 2026-08-12
+
+### Added
+
+- Added `parallel-plan-execution`, a cross-agent workflow that maps approved-plan dependencies and concurrently dispatches safely isolated implementation tasks.
+
+### Changed
+
+- Updated Claude Code, Codex, Kimi Code, and marketplace metadata for the eleven-skill catalog.
+
 ## [1.5.11] - 2026-08-11
 
 ### Added

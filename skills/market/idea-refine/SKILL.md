@@ -1,6 +1,6 @@
 ---
 name: idea-refine
-description: Runs a decision-tree grilling conversation that challenges and sharpens rough ideas into concise drafts. Use when a user presents, refines, or asks to grill an idea before specification or planning.
+description: Runs a decision-tree grilling conversation that clarifies rough product ideas before saving concise drafts. Use when a user presents, refines, or asks to grill an idea before specification or planning.
 ---
 
 # Idea Refine

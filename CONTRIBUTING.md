@@ -1,11 +1,12 @@
 # Contributing
 
-This branch intentionally maintains a focused ten-skill pack for Claude Code and Codex. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused eleven-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
 - `idea-refine`
 - `idea-to-spec-and-plan`
+- `parallel-plan-execution`
 - `plan-review`
 - `brief-change-plan`
 - `handoff`
