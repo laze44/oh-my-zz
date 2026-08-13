@@ -1,12 +1,14 @@
 {
   "name": "oh-my-zz",
-  "version": "1.5.11",
-  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, brief change plans, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
+  "version": "1.6.0",
+  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, safe parallel execution of independent approved-plan work, brief change plans, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
   "keywords": [
     "skills",
     "engineering",
     "ideas",
     "planning",
+    "parallel-execution",
+    "subagents",
     "plan-review",
     "design",
     "handoff",
@@ -21,8 +23,8 @@
   "skills": "./skills/market/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Ten focused workflows for grilled ideas, plans, reviews, project memory, and simplification.",
-    "longDescription": "A ten-skill engineering workflow pack for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, planning brief changes, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code.",
+    "shortDescription": "Eleven focused workflows for plans, parallel execution, reviews, memory, and simplification.",
+    "longDescription": "An eleven-skill engineering workflow pack for grilling and refining ideas, creating specification-and-plan bundles, executing safely independent approved-plan work in parallel, explicitly reviewing plans in the main agent, planning brief changes, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code.",
     "developerName": "laze44",
     "websiteURL": "https://github.com/laze44/oh-my-zz"
   }

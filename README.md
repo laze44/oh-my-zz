@@ -1,6 +1,6 @@
 # oh-my-zz
 
-A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains ten focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains eleven focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, executing independent plan work in parallel, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
 
 ## Included skills
 
@@ -8,6 +8,7 @@ A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and ot
 | --- | --- |
 | [idea-refine](skills/market/idea-refine/SKILL.md) | Grill and refine an idea one decision at a time, then save a concise shared-understanding draft before specification or planning |
 | [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one complete implementation plan |
+| [parallel-plan-execution](skills/market/parallel-plan-execution/SKILL.md) | Analyze an approved plan's dependencies and execute safely independent tasks concurrently through subagents |
 | [plan-review](skills/market/plan-review/SKILL.md) | Explicitly review an existing plan against its idea, repository evidence, selective project-memory constraints, and test-execution contract; resolve findings before revising it |
 | [brief-change-plan](skills/market/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
 | [handoff](skills/market/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
@@ -67,7 +68,7 @@ Claude Code exposes these convenience commands:
 - `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `plan-review`, `brief-change-plan`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
+Invoke `idea-refine`, `parallel-plan-execution`, `plan-review`, `brief-change-plan`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `parallel-plan-execution` only for an approved plan with safely independent work; it adapts to the host's available subagent and workspace mechanisms. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
 
 `/spec` creates a separate spec and one complete candidate plan from an idea. It never starts plan review automatically; explicitly invoke `plan-review` when review is wanted. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin bundles only the read-only `oh-my-zz:code-reviewer` subagent for the separate review-and-fix workflow. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
@@ -90,7 +91,7 @@ codex plugin add oh-my-zz@oh-my-zz
 
 Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill. Invoke `@plan-review` for an explicit main-agent plan review and `@code-review-and-fix` for its post-implementation loop; normal planning, coding, and plan execution do not start either workflow.
 
-`idea-to-spec-and-plan` and `plan-review` never request a reviewer or subagent. `plan-review` uses the current main agent to compare a saved plan with its sources and to review planned test scope, budgets, timeouts, and escalation rules. `brief-change-plan` likewise never requests a reviewer or subagent. The review-and-fix and project-memory workflows use the unified Stop gate only as a state guard: it never starts reviewers, edits code, writes project memory, or replaces the skill's approval checks. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the recorded state and completion checks manually.
+`idea-to-spec-and-plan` and `plan-review` never request a reviewer or subagent. `parallel-plan-execution` is the separate execution path for approved plans with safely independent work and adapts to the host's available subagent and workspace mechanisms. `plan-review` uses the current main agent to compare a saved plan with its sources and to review planned test scope, budgets, timeouts, and escalation rules. `brief-change-plan` likewise never requests a reviewer or subagent. The review-and-fix and project-memory workflows use the unified Stop gate only as a state guard: it never starts reviewers, edits code, writes project memory, or replaces the skill's approval checks. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the recorded state and completion checks manually.
 
 ## Kimi Code
 
@@ -119,7 +120,7 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ## Repository layout
 
 ```text
-skills/market/             Ten shared skills in the npx catalog layout
+skills/market/             Eleven shared skills in the npx catalog layout
 agents/                    Claude Code read-only code reviewer
 hooks/                     Unified Stop gate configuration and dispatcher
 .claude/commands/          Claude Code convenience commands
