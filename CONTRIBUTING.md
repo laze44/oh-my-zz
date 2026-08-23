@@ -12,7 +12,7 @@ This branch intentionally maintains a focused eleven-skill pack for Claude Code,
 - `handoff`
 - `code-review-and-quality`
 - `code-review-and-fix`
-- `code-simplification`
+- `project-memory-and-code-simplification`
 - `project-memory-init`
 - `project-architecture-sync`
 

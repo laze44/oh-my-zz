@@ -1,22 +1,9 @@
 ---
-description: Simplify code for clarity and maintainability — reduce complexity without changing behavior
+description: Simplify scoped code through evidence-backed root-cause changes
 ---
 
-Invoke the oh-my-zz:code-simplification skill.
+Invoke the oh-my-zz:project-memory-and-code-simplification skill.
 
-Simplify recently changed code (or the specified scope) while preserving exact behavior:
+Default this command to the requested or recently changed code scope. Establish consumers and the owning rule before removing or collapsing anything, replace incorrect logic at its source rather than adding a fallback, and run the narrowest relevant validation after each coherent change.
 
-1. Read CLAUDE.md and study project conventions
-2. Identify the target code — recent changes unless a broader scope is specified
-3. Understand the code's purpose, callers, edge cases, and test coverage before touching it
-4. Scan for simplification opportunities:
-   - Deep nesting → guard clauses or extracted helpers
-   - Long functions → split by responsibility
-   - Nested ternaries → if/else or switch
-   - Generic names → descriptive names
-   - Duplicated logic → shared functions
-   - Dead code → remove after confirming
-5. Apply each simplification incrementally — run tests after each change
-6. Verify all tests pass, the build succeeds, and the diff is clean
-
-If tests fail after a simplification, revert that change and reconsider. Use `code-review-and-quality` to review the result.
+For project-memory editing, invoke project-memory-and-code-simplification directly and state the docs/project-memory scope. Preserve verified facts and use project-architecture-sync for factual architecture-memory updates.

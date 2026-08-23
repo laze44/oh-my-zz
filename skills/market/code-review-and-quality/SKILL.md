@@ -15,7 +15,7 @@ Do not edit code, create a Repair Plan, redefine requirements, or merge. Return 
 
 Use for a branch, pull request, or complete diff that needs an `APPROVE`, `CHANGES_REQUESTED`, or `BLOCKED` decision.
 
-Do not use for a general quality pass, refactoring, implementation feedback, or repairs. Use `code-review-and-fix` for an approved-specification repair loop and `code-simplification` for behavior-preserving cleanup.
+Do not use for a general quality pass, refactoring, implementation feedback, or repairs. Use `code-review-and-fix` for an approved-specification repair loop and `project-memory-and-code-simplification` for evidence-backed code or project-memory simplification.
 
 ## Required Scope
 

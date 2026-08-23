@@ -14,7 +14,7 @@ This repository is a focused eleven-skill pack for Claude Code, Codex, OpenCode,
 - `handoff`
 - `code-review-and-quality`
 - `code-review-and-fix`
-- `code-simplification`
+- `project-memory-and-code-simplification`
 - `project-memory-init`
 - `project-architecture-sync`
 
@@ -30,7 +30,7 @@ This repository is a focused eleven-skill pack for Claude Code, Codex, OpenCode,
 - Current conversation transfer to a fresh agent session → `handoff`
 - Pre-merge branch or pull-request readiness review → `code-review-and-quality`
 - Explicitly requested independent review, repair, and re-review of a completed approved implementation → `code-review-and-fix`
-- Behavior-preserving cleanup → `code-simplification`
+- Evidence-backed code simplification or project-memory editorial consolidation → `project-memory-and-code-simplification`
 - Initialize the Markdown-only project-memory schema and optionally configure selective ordinary-agent discovery → `project-memory-init`
 - Review a completed implementation scope, propose architecture-memory changes, and synchronize only approved items → `project-architecture-sync`
 

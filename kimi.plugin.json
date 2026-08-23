@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "1.6.0",
-  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, safe parallel execution of independent approved-plan work, brief change plans, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and simplification.",
+  "version": "2.0.0",
+  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, safe parallel execution of independent approved-plan work, brief change plans, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and root-cause simplification of code and project-memory documentation.",
   "keywords": [
     "skills",
     "engineering",
@@ -15,7 +15,8 @@
     "project-memory",
     "architecture",
     "review",
-    "simplification"
+    "simplification",
+    "root-cause-simplification"
   ],
   "author": "laze44",
   "homepage": "https://github.com/laze44/oh-my-zz",
@@ -23,8 +24,8 @@
   "skills": "./skills/market/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Eleven focused workflows for plans, parallel execution, reviews, memory, and simplification.",
-    "longDescription": "An eleven-skill engineering workflow pack for grilling and refining ideas, creating specification-and-plan bundles, executing safely independent approved-plan work in parallel, explicitly reviewing plans in the main agent, planning brief changes, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code.",
+    "shortDescription": "Eleven focused workflows for plans, parallel execution, reviews, memory, and root-cause simplification.",
+    "longDescription": "An eleven-skill engineering workflow pack for grilling and refining ideas, creating specification-and-plan bundles, executing safely independent approved-plan work in parallel, explicitly reviewing plans in the main agent, planning brief changes, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code and project-memory documentation.",
     "developerName": "laze44",
     "websiteURL": "https://github.com/laze44/oh-my-zz"
   }
