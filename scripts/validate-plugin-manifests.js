@@ -9,13 +9,13 @@ const EXPECTED_SKILLS = [
   'brief-change-plan',
   'code-review-and-fix',
   'code-review-and-quality',
-  'code-simplification',
   'handoff',
   'idea-refine',
   'idea-to-spec-and-plan',
   'parallel-plan-execution',
   'plan-review',
   'project-architecture-sync',
+  'project-memory-and-code-simplification',
   'project-memory-init',
 ];
 const EXPECTED_CLAUDE_COMMANDS = [

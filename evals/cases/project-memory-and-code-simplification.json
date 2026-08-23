@@ -1,0 +1,59 @@
+{
+  "skill_name": "project-memory-and-code-simplification",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Simplify this working module: it has duplicate state, unused config paths, and a growing stack of exception branches.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Clean up docs/project-memory: consolidate repeated architecture facts into their correct records and rewrite the prose directly.",
+        "top_k": 3
+      },
+      {
+        "prompt": "Rewrite this project-memory page to remove double negatives and patch notes while preserving its sources and contract.",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Initialize docs/project-memory for this new repository and enable selective agent discovery.",
+        "owner": "project-memory-init"
+      },
+      {
+        "prompt": "Review our completed implementation and propose approved architecture-memory updates from the changed code.",
+        "owner": "project-architecture-sync"
+      },
+      {
+        "prompt": "Review this pull request before merge.",
+        "owner": "code-review-and-quality"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Simplify a configuration module with duplicated defaults, an unused option, and a fallback branch that masks an incorrect predicate.",
+      "expected_output": "An evidence-backed simplification that identifies consumers, replaces the owning predicate or representation directly, removes obsolete surface area, and validates the preserved or explicitly corrected behavior.",
+      "expectations": [
+        "The response distinguishes live consumers from tests, documentation, and dynamic entry points before deletion.",
+        "The response replaces the causal rule instead of adding another fallback or exception.",
+        "The response preserves behavior unless an approved correction defines the new contract.",
+        "The response names targeted validation evidence."
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "prompt": "Trim docs/project-memory/architecture/current.md and a related real-architecture topic. The same fact appears in both, the current page adds a late caveat, and one sentence says it is not uncommon for synchronization not to happen.",
+      "expected_output": "A scoped editorial consolidation that reads the target schema, keeps the verified fact and Sources in the authoritative record, removes duplicate or patch prose, rewrites the double negative affirmatively, and defers any factual uncertainty to project-architecture-sync.",
+      "expectations": [
+        "The response treats the target SCHEMA.md and record ownership as authoritative.",
+        "The response rewrites the canonical passage directly rather than adding a new caveat.",
+        "The response converts the double negative into a direct affirmative proposition.",
+        "The response preserves metadata, Sources, links, indexes, and verified facts."
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

@@ -2,6 +2,20 @@
 
 All notable releases follow Semantic Versioning.
 
+## [2.0.0] - 2026-08-23
+
+### Added
+
+- Added `project-memory-and-code-simplification`, an evidence-backed workflow for simplifying working code and project-memory documentation through direct root-cause fixes.
+
+### Removed
+
+- Removed `code-simplification`; use `project-memory-and-code-simplification` instead.
+
+### Changed
+
+- Kept `/code-simplify` as a compatibility command and routed it to the replacement skill.
+
 ## [1.6.0] - 2026-08-12
 
 ### Added

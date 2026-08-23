@@ -1,6 +1,6 @@
 # oh-my-zz
 
-A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains eleven focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, executing independent plan work in parallel, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains eleven focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, executing independent plan work in parallel, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code and project-memory documentation.
 
 ## Included skills
 
@@ -14,7 +14,7 @@ A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and ot
 | [handoff](skills/market/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
 | [code-review-and-quality](skills/market/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
 | [code-review-and-fix](skills/market/code-review-and-fix/SKILL.md) | Explicitly review completed work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
-| [code-simplification](skills/market/code-simplification/SKILL.md) | Reduce complexity while preserving behavior |
+| [project-memory-and-code-simplification](skills/market/project-memory-and-code-simplification/SKILL.md) | Simplify code and project-memory documentation through evidence-backed root-cause changes |
 | [project-memory-init](skills/market/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
 | [project-architecture-sync](skills/market/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
 
@@ -68,7 +68,7 @@ Claude Code exposes these convenience commands:
 - `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `parallel-plan-execution`, `plan-review`, `brief-change-plan`, `handoff`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `parallel-plan-execution` only for an approved plan with safely independent work; it adapts to the host's available subagent and workspace mechanisms. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory skills intentionally have no Claude convenience commands.
+Invoke `idea-refine`, `parallel-plan-execution`, `plan-review`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `parallel-plan-execution` only for an approved plan with safely independent work; it adapts to the host's available subagent and workspace mechanisms. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory initialization and synchronization workflows intentionally have no dedicated Claude convenience commands.
 
 `/spec` creates a separate spec and one complete candidate plan from an idea. It never starts plan review automatically; explicitly invoke `plan-review` when review is wanted. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin bundles only the read-only `oh-my-zz:code-reviewer` subagent for the separate review-and-fix workflow. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
