@@ -7,6 +7,7 @@ This repository is a focused plugin pack for Claude Code and Codex.
 - `idea-refine` — grill and clarify intent one decision at a time, then save a concise idea draft
 - `idea-to-spec-and-plan` — turn a clarified idea into a specification and one complete implementation plan
 - `plan-review` — explicitly review an existing plan in the main agent, resolve material findings, and revise only that plan
+- `systems-paper-writing` — plan, draft, and revise systems, networking, and computer architecture papers around an evidence spine
 - `brief-change-plan` — create a dated, concise change plan without code or independent review
 - `handoff` — compact the current conversation into a redacted temporary handoff document for a fresh agent session
 - `code-review-and-quality` — make a read-only pre-merge readiness decision for a branch or pull request

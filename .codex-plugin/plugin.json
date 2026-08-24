@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "2.0.0",
-  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, safe parallel execution of independent approved-plan work, brief dated change plans, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, and root-cause simplification of code and project-memory documentation.",
+  "version": "1.6.1",
+  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, safe parallel execution of independent approved-plan work, brief dated change plans, secure session handoffs, bounded contract-driven review-and-fix, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization, pre-merge review decisions, root-cause simplification of code and project-memory documentation, and evidence-grounded systems paper writing.",
   "author": {
     "name": "laze44",
     "url": "https://github.com/laze44"
@@ -12,7 +12,7 @@
   "skills": "./skills/market/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Plans, safe parallel execution, plan review, brief plans, handoffs, project memory discovery, proposal-first architecture sync, reviews, and root-cause simplification.",
+    "shortDescription": "Plans, safe parallel execution, plan review, brief plans, handoffs, project memory discovery, proposal-first architecture sync, reviews, root-cause simplification, and systems paper writing.",
     "category": "Productivity"
   }
 }

@@ -1,6 +1,6 @@
 # Contributing
 
-This branch intentionally maintains a focused eleven-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused twelve-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
@@ -15,8 +15,9 @@ This branch intentionally maintains a focused eleven-skill pack for Claude Code,
 - `project-memory-and-code-simplification`
 - `project-memory-init`
 - `project-architecture-sync`
+- `systems-paper-writing`
 
-The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. Their plugin-level Stop gate may use ephemeral session state outside the target project, but neither workflow adds target-project hooks or durable runtime records. They do not change or invoke the other retained skill workflows. Adding another skill or platform integration is a product-scope decision, not routine maintenance. Propose that change explicitly before implementation.
+The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. Their plugin-level Stop gate may use ephemeral session state outside the target project, but neither workflow adds target-project hooks or durable runtime records. They do not change or invoke the other retained skill workflows. Further skill or platform additions remain product-scope decisions, not routine maintenance; propose them explicitly before implementation.
 
 ## Modifying a skill
 

@@ -4,7 +4,7 @@ This file configures agents working on this repository. The reusable plugin cont
 
 ## Scope
 
-This repository is a focused eleven-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. It intentionally contains only:
+This repository is a focused twelve-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. It intentionally contains only:
 
 - `idea-refine`
 - `idea-to-spec-and-plan`
@@ -17,8 +17,9 @@ This repository is a focused eleven-skill pack for Claude Code, Codex, OpenCode,
 - `project-memory-and-code-simplification`
 - `project-memory-init`
 - `project-architecture-sync`
+- `systems-paper-writing`
 
-`idea-to-spec-and-plan` owns the single idea-to-spec-and-plan path; its milestones organize one complete plan rather than spawning subplans. `parallel-plan-execution` owns parallel execution of an approved plan: it dispatches every safely independent task in a dependency wave through the host's native subagent capability, preserves exclusive write ownership, and leaves integration with the main agent. `plan-review` is explicitly user-invoked, runs in the main agent without a subagent, checks an existing plan against its idea, selective memory constraints, and test-execution contract, then revises only that plan after user decisions. `brief-change-plan` creates dated, bounded change-plan artifacts without code or independent review. `project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Both workflows may use the plugin's ephemeral session-scoped Stop-gate state outside the target project; that state never becomes project memory. Neither workflow changes or invokes the other retained skills. `code-review-and-fix` is an explicitly user-invoked, bounded contract-preserving repair workflow for completed work: it consumes an approved specification and plan, never starts while code is modified or a plan is executed, and never invokes or replaces `idea-to-spec-and-plan`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
+`idea-to-spec-and-plan` owns the single idea-to-spec-and-plan path; its milestones organize one complete plan rather than spawning subplans. `parallel-plan-execution` owns parallel execution of an approved plan: it dispatches every safely independent task in a dependency wave through the host's native subagent capability, preserves exclusive write ownership, and leaves integration with the main agent. `plan-review` is explicitly user-invoked, runs in the main agent without a subagent, checks an existing plan against its idea, selective memory constraints, and test-execution contract, then revises only that plan after user decisions. `systems-paper-writing` owns evidence-grounded planning, drafting, and revision for systems, networking, and computer architecture papers; it does not perform peer review. `brief-change-plan` creates dated, bounded change-plan artifacts without code or independent review. `project-memory-init` and `project-architecture-sync` are independent target-project memory workflows. Initialization creates the Markdown wiki and, only after an explicit reviewed confirmation, may append its managed discovery block to selected root agent instructions; synchronization reviews a completed implementation scope, waits for approval, and then records verified facts. Both workflows may use the plugin's ephemeral session-scoped Stop-gate state outside the target project; that state never becomes project memory. Neither workflow changes or invokes the other retained skills. `code-review-and-fix` is an explicitly user-invoked, bounded contract-preserving repair workflow for completed work: it consumes an approved specification and plan, never starts while code is modified or a plan is executed, and never invokes or replaces `idea-to-spec-and-plan`. `handoff` is an explicitly user-invoked, temporary-session transfer workflow and does not create durable project records. Do not add other lifecycle skills or platform integrations without an explicit scope decision.
 
 ## Intent mapping
 
@@ -26,6 +27,7 @@ This repository is a focused eleven-skill pack for Claude Code, Codex, OpenCode,
 - Clarified idea requiring a specification and implementation plan → `idea-to-spec-and-plan`
 - Approved plan with safely independent implementation work → `parallel-plan-execution`
 - Explicit request to check or revise an existing plan before implementation → `plan-review`
+- Paper planning, drafting, translation, or evidence-preserving revision → `systems-paper-writing`
 - Brief, quick, patch, correction, or repair plan without independent review → `brief-change-plan`
 - Current conversation transfer to a fresh agent session → `handoff`
 - Pre-merge branch or pull-request readiness review → `code-review-and-quality`

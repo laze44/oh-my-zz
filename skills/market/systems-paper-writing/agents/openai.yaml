@@ -1,0 +1,4 @@
+interface:
+  display_name: "Systems Paper Writing"
+  short_description: "Plan, draft, and revise systems papers"
+  default_prompt: "Use $systems-paper-writing to plan, draft, or revise a systems research paper."

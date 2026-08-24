@@ -1,6 +1,6 @@
 # oh-my-zz
 
-A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains eleven focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, executing independent plan work in parallel, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, and simplifying code and project-memory documentation.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains twelve focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, executing independent plan work in parallel, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, simplifying code and project-memory documentation, and writing evidence-grounded systems papers.
 
 ## Included skills
 
@@ -10,6 +10,7 @@ A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and ot
 | [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one complete implementation plan |
 | [parallel-plan-execution](skills/market/parallel-plan-execution/SKILL.md) | Analyze an approved plan's dependencies and execute safely independent tasks concurrently through subagents |
 | [plan-review](skills/market/plan-review/SKILL.md) | Explicitly review an existing plan against its idea, repository evidence, selective project-memory constraints, and test-execution contract; resolve findings before revising it |
+| [systems-paper-writing](skills/market/systems-paper-writing/SKILL.md) | Plan, draft, translate, and revise systems, networking, and computer architecture papers while preserving an evidence spine |
 | [brief-change-plan](skills/market/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
 | [handoff](skills/market/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
 | [code-review-and-quality](skills/market/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
@@ -68,7 +69,7 @@ Claude Code exposes these convenience commands:
 - `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `parallel-plan-execution`, `plan-review`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `parallel-plan-execution` only for an approved plan with safely independent work; it adapts to the host's available subagent and workspace mechanisms. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory initialization and synchronization workflows intentionally have no dedicated Claude convenience commands.
+Invoke `idea-refine`, `parallel-plan-execution`, `plan-review`, `systems-paper-writing`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `parallel-plan-execution` only for an approved plan with safely independent work; it adapts to the host's available subagent and workspace mechanisms. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory initialization and synchronization workflows intentionally have no dedicated Claude convenience commands.
 
 `/spec` creates a separate spec and one complete candidate plan from an idea. It never starts plan review automatically; explicitly invoke `plan-review` when review is wanted. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin bundles only the read-only `oh-my-zz:code-reviewer` subagent for the separate review-and-fix workflow. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
 
@@ -115,12 +116,12 @@ You can also browse the included third-party marketplace catalog with:
 /plugins marketplace https://raw.githubusercontent.com/laze44/oh-my-zz/main/kimi.marketplace.json
 ```
 
-After installation, start a new session or run `/reload`. Invoke a workflow explicitly with `/skill:<name>`, for example `/skill:idea-refine`, or describe the task and let Kimi Code select the matching skill. The Kimi plugin intentionally exposes only the shared skills; it does not load Claude/Codex-specific command or hook configuration.
+After installation, start a new session or run `/reload`. Invoke a workflow explicitly with `/skill:<name>`, for example `/skill:idea-refine` or `/skill:systems-paper-writing`, or describe the task and let Kimi Code select the matching skill. The Kimi plugin intentionally exposes only the shared skills; it does not load Claude/Codex-specific command or hook configuration.
 
 ## Repository layout
 
 ```text
-skills/market/             Eleven shared skills in the npx catalog layout
+skills/market/             Twelve shared skills in the npx catalog layout
 agents/                    Claude Code read-only code reviewer
 hooks/                     Unified Stop gate configuration and dispatcher
 .claude/commands/          Claude Code convenience commands

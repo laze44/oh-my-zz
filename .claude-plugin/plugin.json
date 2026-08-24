@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "2.0.0",
-  "description": "A focused engineering skill pack for grilling and refining ideas one decision at a time, creating specification-and-plan bundles, providing explicit main-agent plan review, executing safely independent approved-plan work in parallel, making brief dated change plans, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization, making pre-merge review decisions, and simplifying code and project-memory documentation through root-cause changes.",
+  "version": "1.6.1",
+  "description": "A focused engineering skill pack for grilling and refining ideas one decision at a time, creating specification-and-plan bundles, providing explicit main-agent plan review, executing safely independent approved-plan work in parallel, making brief dated change plans, handing off work between agent sessions, independently reviewing and repairing approved implementations, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization, making pre-merge review decisions, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers.",
   "author": {
     "name": "laze44"
   },

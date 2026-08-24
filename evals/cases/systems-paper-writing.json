@@ -1,0 +1,43 @@
+{
+  "skill_name": "systems-paper-writing",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Plan the evidence spine, contributions, and section blueprint for this computer architecture paper from verified experiment artifacts",
+        "top_k": 3
+      },
+      {
+        "prompt": "Draft the evaluation section of a systems paper using the repository's measured results, figures, and baselines",
+        "top_k": 3
+      },
+      {
+        "prompt": "Translate this Chinese networking paper paragraph into English while preserving its claims, numbers, citations, and technical meaning",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review this branch before merge and issue a readiness verdict",
+        "owner": "code-review-and-quality"
+      },
+      {
+        "prompt": "Turn this rough product idea into an implementation-ready specification and plan",
+        "owner": "idea-to-spec-and-plan"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Plan a computer architecture paper from the supplied implementation notes and experiment artifacts. Build the problem-gap-insight-mechanism-evidence-implication spine, map contributions to evaluation questions and figures, and mark unsupported claims as gaps.",
+      "expected_output": "A paper blueprint with a traceable evidence spine, contribution and section mapping, claim-evidence-figure coverage, and explicit open evidence gaps; no invented results or peer-review judgment.",
+      "expectations": [
+        "The response identifies the target architecture field, requested planning artifact, available evidence, and unresolved gaps.",
+        "Every proposed contribution maps to evidence, a paper section, an evaluation question, and a figure or table when applicable.",
+        "The response distinguishes implemented, measured, proposed, and unknown claims instead of inventing results or citations.",
+        "The response does not emit reviewer scores, novelty judgments, or accept/reject recommendations."
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

@@ -2,6 +2,12 @@
 
 All notable releases follow Semantic Versioning.
 
+## [1.6.1] - 2026-08-24
+
+### Added
+
+- Added `systems-paper-writing`, an evidence-grounded workflow for planning, drafting, translating, and revising systems, networking, and computer architecture papers.
+
 ## [2.0.0] - 2026-08-23
 
 ### Added
