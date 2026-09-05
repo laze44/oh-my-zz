@@ -38,6 +38,8 @@ Require a concrete code path, project-memory path, or both. Do not infer a repos
 
 Read the applicable repository instructions, neighboring code, tests, and documentation conventions. For project-memory work, read the target project’s docs/project-memory/SCHEMA.md, INDEX.md, and only the records relevant to the requested scope. Treat the target schema as the authority for record ownership, metadata, indexes, sources, language, and historical-record rules.
 
+For code work, resolve unfamiliar project concepts from the wiki and code before asking the user, and read global and relevant real_arch hard rules. Preserve their exact approved meaning, scope, and authority during editorial cleanup. A changed obligation requires a separately reviewed hard-rule draft through the target memory policy; code behavior alone cannot override it. Do not turn simplification or completed implementation into an automatic factual wiki sync.
+
 Classify each requested change as one of the following:
 
 - Behavior-preserving code simplification.

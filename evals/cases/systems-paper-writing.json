@@ -17,8 +17,7 @@
     ],
     "negative": [
       {
-        "prompt": "Review this branch before merge and issue a readiness verdict",
-        "owner": "code-review-and-quality"
+        "prompt": "Review this branch before merge and issue a readiness verdict"
       },
       {
         "prompt": "Turn this rough product idea into an implementation-ready specification and plan",

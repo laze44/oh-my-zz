@@ -1,4 +1,0 @@
-interface:
-  display_name: "Parallel Plan Execution"
-  short_description: "Execute independent plan work in parallel"
-  default_prompt: "Use $parallel-plan-execution to execute this approved plan concurrently."

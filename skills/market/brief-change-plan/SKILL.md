@@ -30,6 +30,7 @@ Do not use this skill for a PRD, a full task breakdown, dependency or parallel-w
 ### 1. Confirm the brief-plan boundary
 
 1. Identify the requested change and inspect only enough local evidence to name a credible approach and acceptance proof.
+   If project memory exists, use its index to understand unfamiliar concepts before asking the user, and read applicable global and real_arch hard rules. If a bounded rule change is necessary, show its exact text and scope one at a time for separate approval; preserve the approved wording, target, and old-rule baseline as prose in `范围`. Put rule revalidation and application before dependent implementation in `方案`. Planning writes only the plan; overall plan approval does not approve a hard rule and ordinary wiki facts wait for manual post-implementation sync.
 2. Treat a missing material decision as a risk, not an excuse to invent a design.
 3. Stop with a concise escalation note instead of writing a misleading brief plan when the work needs a PRD, a full task breakdown, data migration, security review, public compatibility decision, or cross-module architecture decision. Do not silently escalate into the formal workflow.
 

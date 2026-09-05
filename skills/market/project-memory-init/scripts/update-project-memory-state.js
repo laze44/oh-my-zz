@@ -9,6 +9,7 @@ const {
   parseArgs,
   parseApprovedIds,
   readState,
+  reviewItemFrom,
   requireOption,
   safeSessionId,
   sessionIdFromEnvironment,
@@ -21,13 +22,16 @@ const {
 function printHelp() {
   console.log(`Usage:
   node ${path.basename(__filename)} --phase PHASE [--workflow WORKFLOW] [--session-id ID]
-    [--next-action TEXT] [--reason TEXT] [--fingerprint TEXT] [--approved-ids ID1,ID2]
+    [--next-action TEXT] [--reason TEXT] [--fingerprint TEXT] [--approved-ids ID]
+    [--item-id ID --item-kind fact|hard-rule|adr|alignment --draft-file PATH]
     [--state-dir DIR] [--state-file PATH]
   node ${path.basename(__filename)} --cancel [--workflow WORKFLOW] [--session-id ID]
 
 Transitions are schema-validated. A revalidation or apply transition must keep
-the stored scope fingerprint unchanged. Applying a discovery or sync proposal
-requires at least one explicit approval id.`);
+the stored scope fingerprint unchanged. Sync reviews one item at a time and
+requires its unchanged draft file and exact approval id before applying.
+Returning to REVIEW clears the prior item and its approval. A no-impact review
+can finish in DONE without approval or writes.`);
 }
 
 function approvalRequired(state, nextPhase) {
@@ -41,6 +45,7 @@ function main() {
     valueFlags: [
       '--phase', '--workflow', '--session-id', '--state-dir', '--state-file',
       '--next-action', '--reason', '--fingerprint', '--approved-ids',
+      '--item-id', '--item-kind', '--draft-file',
     ],
     booleanFlags: ['--cancel', '--help'],
   });
@@ -63,6 +68,60 @@ function main() {
   const nextPhase = options['--cancel'] ? 'CANCELLED' : requireOption(options, '--phase');
   assertTransition(state.phase, nextPhase);
 
+  const isSync = state.workflow === 'project-architecture-sync';
+  const approvedIds = parseApprovedIds(option(options, '--approved-ids'));
+  const draftFile = option(options, '--draft-file');
+  const itemId = option(options, '--item-id');
+  const itemKind = option(options, '--item-kind');
+  if (!isSync && (draftFile || itemId || itemKind)) {
+    throw usageError('Review item options are only valid for project-architecture-sync.');
+  }
+  if (isSync) {
+    if (nextPhase === 'REVIEW') {
+      if (approvedIds || draftFile || itemId || itemKind) {
+        throw usageError('Return to REVIEW without approval or item options, then present the next draft.');
+      }
+      state.review_item = null;
+      state.approved_ids = [];
+      state.scope_fingerprint = null;
+    } else if (['AWAITING_APPROVAL', 'REVALIDATE', 'APPLY'].includes(nextPhase)) {
+      if (!draftFile) throw usageError(`An exact --draft-file is required before ${nextPhase}.`);
+      if (!state.review_item) {
+        if (state.phase !== 'REVIEW' || !itemId || !itemKind) {
+          throw usageError('Bind --item-id, --item-kind, and --draft-file from REVIEW first.');
+        }
+        state.review_item = reviewItemFrom({ id: itemId, kind: itemKind, draftFile });
+      } else {
+        const current = state.review_item;
+        const candidate = reviewItemFrom({
+          id: itemId || current.id,
+          kind: itemKind || current.kind,
+          draftFile,
+        });
+        if (candidate.id !== current.id || candidate.kind !== current.kind
+          || candidate.draft_fingerprint !== current.draft_fingerprint) {
+          throw usageError('Review draft changed; return to REVIEW and obtain approval for the new exact unit.');
+        }
+      }
+      if (state.mode === 'hard-rule' && state.review_item.kind !== 'hard-rule') {
+        throw usageError('hard-rule mode permits only hard-rule items, not ordinary facts or alignment.');
+      }
+      if (nextPhase === 'AWAITING_APPROVAL' && approvedIds) {
+        throw usageError('Record approval only after the user decides on the displayed draft.');
+      }
+      if (approvedIds) state.approved_ids = approvedIds;
+      if (['REVALIDATE', 'APPLY'].includes(nextPhase)
+        && (state.approved_ids.length !== 1 || state.approved_ids[0] !== state.review_item.id)) {
+        throw usageError('Exactly one explicit approval id matching the current review item is required.');
+      }
+    } else if (approvedIds || draftFile || itemId || itemKind) {
+      throw usageError('Approval and draft options are valid only when reviewing or applying the current unit.');
+    }
+    if (nextPhase === 'DONE' && state.phase === 'REVIEW' && !option(options, '--reason')) {
+      throw usageError('A no-write REVIEW -> DONE outcome requires --reason.');
+    }
+  }
+
   const nextFingerprint = Object.prototype.hasOwnProperty.call(options, '--fingerprint')
     ? options['--fingerprint']
     : null;
@@ -76,8 +135,7 @@ function main() {
   }
   if (nextFingerprint !== null) state.scope_fingerprint = nextFingerprint;
 
-  const approvedIds = parseApprovedIds(option(options, '--approved-ids'));
-  if (approvedIds) state.approved_ids = approvedIds;
+  if (!isSync && approvedIds) state.approved_ids = approvedIds;
   if (approvalRequired(state, nextPhase) && state.approved_ids.length === 0) {
     throw usageError(`Cannot enter APPLY: ${state.workflow} requires at least one explicit approval id.`);
   }
@@ -94,6 +152,8 @@ function main() {
     ? options['--reason']
     : (nextPhase === 'CANCELLED' ? 'Cancelled by the user or controller.' : null);
   state.updated_at = new Date().toISOString();
+  const nextErrors = stateValidationErrors(state);
+  if (nextErrors.length) throw usageError(`Updated state is invalid: ${nextErrors.join('; ')}`);
   writeStateAtomic(statePath, state);
 
   process.stdout.write(`${JSON.stringify({
@@ -103,6 +163,7 @@ function main() {
     phase: state.phase,
     next_action: state.next_action,
     approved_ids: state.approved_ids,
+    review_item: state.review_item,
   })}\n`);
 }
 

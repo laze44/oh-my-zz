@@ -23,9 +23,6 @@ jobs:
       - name: Run skill evals (trigger + routing)
         run: node scripts/run-evals.js
 
-      - name: Run plan-review contract checks
-        run: node scripts/test-plan-review-contracts.js
-
   validate-commands:
     name: Validate Claude command metadata
     runs-on: ubuntu-latest
@@ -41,16 +38,13 @@ jobs:
         run: node scripts/validate-commands.js
 
   validate-metadata:
-    name: Validate plugin manifests and agents
+    name: Validate plugin manifests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
 
       - name: Validate Claude and Codex metadata
         run: node scripts/validate-plugin-manifests.js
-
-      - name: Validate Claude reviewer agents
-        run: node scripts/validate-agents.js
 
   validate:
     name: Validate plugin structure

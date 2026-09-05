@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {aggregate} from './src/engine.js';
+const size = Number(process.argv[2] || 1000);
+const records = Array.from({length: size}, (_, i) => ({id: String(i % Math.ceil(size / 2)), value: i}));
+const expected = [...new Map(records.map(row => [row.id, row])).values()];
+const start = performance.now();
+const result = aggregate(records);
+const elapsed = performance.now() - start;
+assert.deepEqual(result, expected);
+console.log(JSON.stringify({size, elapsedMs: elapsed}));

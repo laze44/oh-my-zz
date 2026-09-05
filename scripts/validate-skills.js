@@ -11,7 +11,7 @@
  *   - directory name is lowercase-hyphen-separated (skill-anatomy.md: Naming Conventions)
  *   - description does not exceed 1024 characters
  *   - description includes a 'when to use' trigger (skill-anatomy.md: Required)
- *   - required sections are present
+ *   - instruction body is non-empty; required sections apply unless exempted below
  *
  * Checks (warnings, do not block CI):
  *   - cross-skill references point to known skills
@@ -54,7 +54,17 @@ const REQUIRED_SECTIONS = [
 // Exemptions live HERE, not in skill frontmatter, so contributors
 // cannot bypass the validator by editing their own skill file.
 // Every entry must have a documented reason.
-const SECTION_EXEMPT_SKILLS = {};
+const SECTION_EXEMPT_SKILLS = {
+  // This skill intentionally uses concise principles instead of repeated workflow,
+  // rationalization and checklist sections. Outcomes are covered by its behavioral
+  // evals; frontmatter, non-empty instructions and reference checks still apply.
+  'idea-to-spec-and-plan': 'Flexible planning instructions without a prescribed section layout.',
+  // Memory entrypoints keep each authority/approval rule once and delegate
+  // templates and state mechanics to bundled references. Contract and runtime
+  // checks preserve those guarantees without requiring repetitive headings.
+  'project-memory-init': 'Concise setup workflow with a canonical discovery block.',
+  'project-architecture-sync': 'Concise mode and approval workflow with bundled policy/runtime references.',
+};
 
 // Regex patterns that indicate an explicit cross-skill reference.
 // Only these patterns trigger the dead-reference warning — generic
@@ -139,6 +149,9 @@ function validateSkill(dirName, knownSkills) {
     errors.push('Missing or malformed YAML frontmatter (expected --- block at top of file)');
     return { errors, warnings, exempt };
   }
+
+  const body = content.replace(/^---[ \t]*\r?\n[\s\S]*?\r?\n---[ \t]*\r?\n/, '');
+  if (!body.trim()) errors.push('Skill instruction body must not be empty');
 
   if (!fm.name) {
     errors.push("Frontmatter missing required field: 'name'");

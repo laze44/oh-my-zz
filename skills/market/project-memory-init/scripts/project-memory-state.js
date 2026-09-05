@@ -8,6 +8,11 @@ const path = require('path');
 
 const SCHEMA_VERSION = 1;
 const WORKFLOWS = new Set(['project-memory-init', 'project-architecture-sync']);
+const MODES = {
+  'project-memory-init': new Set(['docs-only', 'discovery', 'policy-upgrade']),
+  'project-architecture-sync': new Set(['sync', 'hard-rule']),
+};
+const ITEM_KINDS = new Set(['fact', 'hard-rule', 'adr', 'alignment']);
 const INITIAL_PHASES = new Set(['PREVIEW', 'REVIEW']);
 const ACTIVE_PHASES = new Set(['PREVIEW', 'REVIEW', 'REVALIDATE', 'APPLY', 'VERIFY']);
 const WAITING_PHASES = new Set(['AWAITING_CONFIRMATION', 'AWAITING_APPROVAL']);
@@ -21,7 +26,7 @@ const PHASES = new Set([
 
 const TRANSITIONS = {
   PREVIEW: new Set(['AWAITING_CONFIRMATION', 'REVALIDATE', 'BLOCKED', 'CANCELLED']),
-  REVIEW: new Set(['AWAITING_APPROVAL', 'REVALIDATE', 'BLOCKED', 'CANCELLED']),
+  REVIEW: new Set(['AWAITING_APPROVAL', 'REVALIDATE', 'DONE', 'BLOCKED', 'CANCELLED']),
   AWAITING_CONFIRMATION: new Set(['PREVIEW', 'REVALIDATE', 'BLOCKED', 'CANCELLED']),
   AWAITING_APPROVAL: new Set(['REVIEW', 'REVALIDATE', 'BLOCKED', 'CANCELLED']),
   REVALIDATE: new Set(['PREVIEW', 'REVIEW', 'APPLY', 'BLOCKED', 'CANCELLED']),
@@ -31,9 +36,9 @@ const TRANSITIONS = {
 
 const DEFAULT_NEXT_ACTION = {
   PREVIEW: 'Complete the exact preview before requesting confirmation or applying any initialization change.',
-  REVIEW: 'Complete the zero-write proposal before requesting approval or applying any synchronization change.',
+  REVIEW: 'Prepare the next exact change unit, or finish a no-impact review without writing.',
   AWAITING_CONFIRMATION: 'Wait for the user confirmation of the exact initialization preview.',
-  AWAITING_APPROVAL: 'Wait for the user approval IDs for the exact synchronization proposal.',
+  AWAITING_APPROVAL: 'Wait for the user decision on the single displayed draft; keep later drafts queued.',
   REVALIDATE: 'Recompute the protected-path and scope checks immediately before applying the approved result.',
   APPLY: 'Apply only the approved project-memory changes.',
   VERIFY: 'Run the target schema consistency checks and record the verification result.',
@@ -207,6 +212,17 @@ function parseApprovedIds(value) {
   return value.split(',').map((item) => item.trim()).filter(Boolean);
 }
 
+function reviewItemFrom({ id, kind, draftFile }) {
+  if (!ITEM_KINDS.has(kind)) throw usageError(`Unsupported item kind: ${kind}`);
+  const draft = fs.readFileSync(draftFile);
+  if (!draft.toString('utf8').trim()) throw usageError('The review draft must be non-empty.');
+  return {
+    id: nonEmptyText(id, 'item id', 160),
+    kind,
+    draft_fingerprint: crypto.createHash('sha256').update(draft).digest('hex'),
+  };
+}
+
 function stateValidationErrors(state) {
   const errors = [];
   if (!state || typeof state !== 'object' || Array.isArray(state)) return ['state must be a JSON object'];
@@ -218,12 +234,35 @@ function stateValidationErrors(state) {
     errors.push('session_id is invalid');
   }
   if (!PHASES.has(state.phase)) errors.push(`unknown phase: ${state.phase}`);
-  if (typeof state.mode !== 'string' || state.mode.trim().length === 0) errors.push('mode must be non-empty');
+  if ((state.workflow === 'project-memory-init' && ['REVIEW', 'AWAITING_APPROVAL'].includes(state.phase))
+    || (state.workflow === 'project-architecture-sync' && ['PREVIEW', 'AWAITING_CONFIRMATION'].includes(state.phase))) {
+    errors.push(`phase ${state.phase} is not valid for ${state.workflow}`);
+  }
+  if (!WORKFLOWS.has(state.workflow) || !MODES[state.workflow].has(state.mode)) {
+    errors.push(`unsupported mode: ${state.mode}`);
+  }
   if (typeof state.next_action !== 'string' || state.next_action.trim().length === 0) {
     errors.push('next_action must be non-empty');
   }
   if (!Array.isArray(state.approved_ids) || state.approved_ids.some((id) => typeof id !== 'string' || id.length === 0)) {
     errors.push('approved_ids must be an array of non-empty strings');
+  }
+  const item = state.review_item;
+  if (item !== null && item !== undefined) {
+    if (typeof item !== 'object' || Array.isArray(item)
+      || typeof item.id !== 'string' || !item.id.trim()
+      || !ITEM_KINDS.has(item.kind)
+      || typeof item.draft_fingerprint !== 'string' || !/^[a-f0-9]{64}$/.test(item.draft_fingerprint)) {
+      errors.push('review_item must identify one exact draft and its kind');
+    }
+    if (state.workflow !== 'project-architecture-sync') errors.push('only synchronization has review items');
+    if (state.mode === 'hard-rule' && item.kind !== 'hard-rule') errors.push('hard-rule mode permits only hard-rule items');
+  }
+  if (state.workflow === 'project-architecture-sync' && Array.isArray(state.approved_ids)) {
+    if (state.approved_ids.length > 1
+      || (state.approved_ids.length === 1 && state.approved_ids[0] !== item?.id)) {
+      errors.push('approval must identify only the current review item');
+    }
   }
   if (state.scope_fingerprint !== null && typeof state.scope_fingerprint !== 'string') {
     errors.push('scope_fingerprint must be a string or null');
@@ -263,7 +302,11 @@ function createInitialState({
   approvedIds = [],
 }) {
   if (!WORKFLOWS.has(workflow)) throw usageError(`Unsupported workflow: ${workflow}`);
-  if (!INITIAL_PHASES.has(phase)) throw usageError(`Initial phase must be PREVIEW or REVIEW: ${phase}`);
+  if (phase !== defaultPhaseFor(workflow)) throw usageError(`Initial phase for ${workflow} must be ${defaultPhaseFor(workflow)}.`);
+  if (!MODES[workflow].has(mode || defaultModeFor(workflow))) throw usageError(`Unsupported mode: ${mode}`);
+  if (workflow === 'project-architecture-sync' && approvedIds.length > 0) {
+    throw usageError('Bind an exact review item before recording approval.');
+  }
   const now = new Date().toISOString();
   return {
     schema_version: SCHEMA_VERSION,
@@ -272,6 +315,7 @@ function createInitialState({
     mode: nonEmptyText(mode || defaultModeFor(workflow), 'mode', 80),
     phase,
     approved_ids: [...approvedIds],
+    review_item: null,
     scope_fingerprint: fingerprint === null ? null : nonEmptyText(fingerprint, 'scope fingerprint', 512),
     next_action: nonEmptyText(nextAction, 'next action'),
     reason: null,
@@ -284,6 +328,8 @@ module.exports = {
   ACTIVE_PHASES,
   DEFAULT_NEXT_ACTION,
   INITIAL_PHASES,
+  ITEM_KINDS,
+  MODES,
   PHASES,
   TERMINAL_PHASES,
   TRANSITIONS,
@@ -302,6 +348,7 @@ module.exports = {
   parseApprovedIds,
   projectKey,
   readState,
+  reviewItemFrom,
   requireOption,
   safeSessionId,
   sessionIdFromEnvironment,

@@ -13,6 +13,14 @@
       {
         "prompt": "Synchronize architecture memory after I approve the proposal for docs/specs/billing-export.md",
         "top_k": 3
+      },
+      {
+        "prompt": "I declare this architecture invariant a hard rule. Draft the project-memory rule for my approval before updating the wiki",
+        "top_k": 3
+      },
+      {
+        "prompt": "Apply the separately approved hard-rule changes from this authorized plan before implementation",
+        "top_k": 3
       }
     ],
     "negative": [
@@ -37,24 +45,24 @@
     {
       "id": 1,
       "prompt": "The implementation is complete. Review the current worktree relative to HEAD for project-memory impact. No docs/specs file exists. Current code and targeted tests show a changed cross-module export contract; generate drafts only and do not write files.",
-      "expected_output": "A no-spec, zero-write review that fingerprints the scope, selectively reads relevant memory, and presents exact proposed records and evidence.",
+      "expected_output": "A no-spec, zero-write review that fingerprints the scope and shows only the first complete change unit for approval.",
       "expectations": [
-        "The response accepts the concrete current-worktree-versus-HEAD scope without requiring a docs/specs path",
-        "The response reads and validates the schema, index, reader protocol, and only records relevant to the export contract",
-        "The response reports a reproducible scope fingerprint with baseline, normalized paths, staged/unstaged/untracked content state, selected wiki/ADR state, impact classification, sources, excluded records, and precise itemized Markdown drafts",
-        "The response makes no project-memory or specification write during review"
+        "Requires the concrete completed scope and verifies factual claims with code/tests",
+        "Retrieves relevant memory rather than the whole wiki",
+        "Shows one exact draft with a short reason and evidence, leaving later drafts queued",
+        "Writes no wiki or specification during review"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 2,
-      "prompt": "Apply approved proposal items A-current and C-real-architecture from the current conversation. Reject B-operations. The implementation scope, schema, selected records, active ADRs, and tests are unchanged.",
-      "expected_output": "A partial approved apply that writes only the independent approved items after revalidation.",
+      "prompt": "A-current was individually shown and approved, C-real-architecture was later individually shown and approved with its own exact text and baselines. B-operations was rejected. Apply the independently valid approved units; the evidence is unchanged.",
+      "expected_output": "Sequential approved application with per-unit revalidation and no rejected write.",
       "expectations": [
-        "The response requires a current-conversation proposal with explicit approved IDs",
-        "The response recomputes the scope fingerprint, including staged/unstaged/untracked content and selected wiki/ADR state, and revalidates the schema, selected records, active ADRs, and evidence before writing",
-        "The response writes only A-current and C-real-architecture and their required indexes or cues",
-        "The response leaves rejected B-operations and every unapproved item unchanged"
+        "The response verifies the exact separate approvals for A and C rather than interpreting a batch ID list as approval",
+        "Each unit is revalidated and applied separately",
+        "The agent updates its expected baseline after its own successful writes",
+        "B and any dependent unapproved content remain untouched"
       ],
       "trust_level": "provisional"
     },
@@ -95,12 +103,12 @@
     {
       "id": 6,
       "prompt": "Review a current-worktree scope that changes a hard-to-reverse routing constraint to active-active multi-region routing. Durable code, tests, and provider documentation establish the trade-off. It also needs a redacted operations update. Do not write yet.",
-      "expected_output": "A zero-write proposal that can combine architecture, operations, a governed ADR draft, and a separately confirmed constraint draft.",
+      "expected_output": "A zero-write proposal that identifies rule authority separately and shows one change unit at a time.",
       "expectations": [
-        "The response classifies the complete applicable impact set separately from the ADR outcome",
-        "The response drafts an ADR only after all hard-to-reverse, surprising, trade-off, and durable rationale gates pass",
-        "The response displays the exact constraints.md edit and requires separate explicit confirmation in addition to proposal approval",
-        "The response redacts credentials, tokens, keys, and other secrets from the operations draft"
+        "The response identifies relevant constraint and ADR conflicts before proposing factual normalization",
+        "Code and tests do not automatically establish user approval for a hard rule",
+        "A changed hard rule is shown as its own exact scope/text approval unit before dependent records",
+        "Operations and unrelated ADR drafts remain queued"
       ],
       "trust_level": "provisional"
     },
@@ -129,13 +137,15 @@
     {
       "id": 9,
       "prompt": "Review a completed scope that changes only a routine local cache implementation detail. It is easy to reverse, has no public contract or stable vocabulary impact, and all relevant tests pass.",
-      "expected_output": "A targeted no-impact proposal that avoids unrelated wiki reads and does not manufacture an ADR.",
+      "expected_output": "A no-impact report with no approval request or wiki write.",
       "expectations": [
-        "The response uses the scope cues to skip unrelated domain, operations, and ADR records",
-        "The response reports broad no-impact with a separate no-ADR outcome",
-        "The response produces no architecture-memory draft or automatic write"
+        "The response consults only relevant rules and evidence needed to assess impact",
+        "It does not manufacture an ADR or factual update",
+        "A no-impact conclusion does not receive an approval ID or prompt",
+        "A separately requested spec alignment would still need its own draft and approval"
       ],
-      "trust_level": "provisional"
+      "trust_level": "provisional",
+      "scenario": "no-impact"
     },
     {
       "id": 10,
@@ -194,12 +204,13 @@
     },
     {
       "id": 15,
-      "prompt": "The current proposal concludes no-impact for optional docs/specs/local-cache.md and includes an Alignment item. I explicitly approve the no-impact conclusion and that Alignment item after the fingerprint revalidation passes.",
-      "expected_output": "A no-impact apply that writes no project-memory record and appends exactly one approved Implementation Alignment.",
+      "prompt": "The completed scope has no memory impact. I separately reviewed and approved the exact Implementation Alignment draft for docs/specs/local-cache.md. Evidence and spec still match.",
+      "expected_output": "A no-impact outcome with exactly one approved Implementation Alignment and no wiki write.",
       "expectations": [
-        "The response keeps no-impact separate from the independently approved Alignment item",
-        "The response writes no current-architecture, real-architecture, domain-language, operations, or ADR record",
-        "The response appends exactly one alignment only after the approved no-impact outcome completes"
+        "The no-impact conclusion requires no separate approval",
+        "The response revalidates the exact separately approved alignment and its evidence",
+        "The response preserves the original spec and appends only the approved section",
+        "No project-memory record is written"
       ],
       "trust_level": "provisional"
     },
@@ -241,25 +252,25 @@
     {
       "id": 19,
       "prompt": "Review a completed implementation scope that changes current architecture and operations, but durable evidence shows no hard-to-reverse decision, no surprising trade-off, and no active ADR conflict. Draft only.",
-      "expected_output": "A zero-write proposal that records current/operations impact while classifying no-ADR independently from broad impact.",
+      "expected_output": "A zero-write review classifying current/operations impact and no-ADR independently, showing only one draft.",
       "expectations": [
-        "The response classifies the broad impact set as current-architecture and operations rather than no-impact",
-        "The response records the ADR outcome as no-ADR independently from that broad impact classification",
-        "The response does not manufacture an ADR merely because architecture-memory records are needed",
-        "The response presents exact drafts and approval IDs without writing files during review"
+        "Broad impact includes current-architecture and operations",
+        "ADR outcome is no-ADR independently from that broad impact",
+        "No ADR is manufactured",
+        "Only the first eligible exact draft is shown; later complete drafts stay queued"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 20,
-      "prompt": "Review a completed implementation scope that appears to replace two active ADRs at once. The user says to approve both replacement ADR drafts together if tests pass.",
-      "expected_output": "A serial single-ADR approval queue, not a batch supersession.",
+      "prompt": "A completed scope replaces two independent active ADRs. Please review the updates for approval.",
+      "expected_output": "One complete ADR change unit at a time with explicit user decisions and per-unit revalidation.",
       "expectations": [
-        "The response presents only one unambiguous replacement ADR change unit for approval at a time",
-        "The response keeps the second replacement queued until the first has a terminal user outcome",
-        "The response stops instead of guessing if the first supersession target is ambiguous",
-        "The response preserves final fingerprint, schema, selected-record, active-ADR, and evidence revalidation before any queued ADR apply",
-        "The response does not allow conflict-dependent records or Implementation Alignment to proceed until the queued ADR succeeds"
+        "Only one unambiguous replacement unit is displayed at a time",
+        "The second full draft waits for the first user decision",
+        "The predecessor is not guessed if ambiguous",
+        "Each approved unit is revalidated and applied with its lifecycle/index links atomically",
+        "Dependent factual records remain untouched until the needed authority change succeeds"
       ],
       "trust_level": "provisional"
     },
@@ -273,6 +284,134 @@
         "The response preserves final revalidation before attempting the atomic supersession unit",
         "The response leaves conflict-dependent records and Implementation Alignment untouched after the supersession unit fails",
         "The response reports the failed atomic supersession unit and returns to review rather than partially applying the stale draft"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 22,
+      "scenario": "conversation-rule",
+      "prompt": "这是一条硬性规定：同一会话的导出产物不得原地覆盖。项目有有效的新 memory policy。先给我草稿，代码还没有改。",
+      "expected_output": "A rule-only draft and explicit approval wait, without requiring completed code.",
+      "expectations": [
+        "The agent treats the explicit declaration as a drafting trigger and does not ask whether it is hard again",
+        "It checks the concept and existing relevant rules before asking project-content questions",
+        "It shows exact rule text, scope, target and any known implementation gap",
+        "No wiki or implementation is changed before approval",
+        "It does not ask for a completed diff or a permanent chat source"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 23,
+      "scenario": "inferred-rule",
+      "prompt": "Sync the completed exporter change. Tests show a single worker currently writes output, but I have never required single-worker execution.",
+      "expected_output": "An implemented fact may be proposed; a hard rule is only a candidate requiring separate user authority.",
+      "expectations": [
+        "The response does not promote a code choice into an approved obligation",
+        "Any proposed hard rule is clearly labeled as a candidate",
+        "The response can preserve useful verified design without making a hard rule"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 24,
+      "scenario": "serial-facts",
+      "prompt": "A manual sync changes the domain definition, real_arch behavior and runbook, with no ADR needed. I want to review the wiki edits.",
+      "expected_output": "One complete ordinary wiki change unit is displayed, with the rest queued.",
+      "expectations": [
+        "The response shows one exact semantic change with a short reason",
+        "Required index edits belong to that unit rather than extra mechanical approvals",
+        "After rejection or deferral, dependent items are omitted while independent items can continue",
+        "Revised text requires fresh approval"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 25,
+      "scenario": "planned-rule",
+      "prompt": "Execution is now authorized. The plan contains separately approved exact hard-rule R1 text, its target and unchanged old-rule baseline. Update R1 first, then implement the requested change.",
+      "expected_output": "The executor revalidates and writes the already-approved rule before dependent code without reasking for the same approval.",
+      "expectations": [
+        "The response verifies separate rule approval rather than relying on overall plan approval",
+        "The exact rule is revalidated and applied before dependent implementation",
+        "A rule-only sync does not update ordinary design facts",
+        "Unchanged verifiable approval is reused without another confirmation prompt"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 26,
+      "scenario": "facts-lag-code",
+      "prompt": "The completed code implements streaming export, while the old wiki describes buffering. A future approved plan also proposes resumable export which has not been implemented. Manually sync the verified design.",
+      "expected_output": "A concise streaming-design correction without recording resumable export as an implemented fact.",
+      "expectations": [
+        "The response verifies current code and proposes replacing stale canonical prose",
+        "Unimplemented plan behavior stays outside ordinary wiki facts",
+        "The agent does not revert correct code to match stale wiki prose",
+        "The page uses design concepts rather than file/line inventories and retains minimal evidence"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 27,
+      "scenario": "rule-conflict",
+      "prompt": "The code violates an existing user-approved hard rule. Sync the current implementation facts; I have not approved changing the rule.",
+      "expected_output": "A conflict report preserving rule authority and withholding conflict-dependent normalization.",
+      "expectations": [
+        "The response does not weaken or remove the rule merely because code behaves differently",
+        "It identifies the conflicting requirement and implementation evidence",
+        "Independent verified updates may still be reviewed separately",
+        "Any proposed rule change needs exact separate approval"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 28,
+      "scenario": "rule-only-approval",
+      "prompt": "I approve the exact rule draft just shown in conversation. Its scope and old-rule baseline are unchanged. Apply it now; the implementation will be done later.",
+      "expected_output": "A direct approved hard-rule update plus necessary index links, with no factual or code edits.",
+      "expectations": [
+        "The rule has a stable ID, exact approved scope/text, and a dated user-approval annotation",
+        "The record does not claim the code already satisfies the rule",
+        "Approval itself is normative authority; no permanent plan, saved chat or ADR is required",
+        "Only the rule and necessary navigation/lifecycle links change"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 29,
+      "scenario": "plan-approval-is-not-rule-approval",
+      "prompt": "The overall implementation plan is approved, but it contains a proposed relaxation of R1 that was never individually shown or approved. Start execution.",
+      "expected_output": "The missing exact rule approval is obtained before rule writes or dependent code execution.",
+      "expectations": [
+        "The response does not infer individual rule approval from the plan status",
+        "It displays only the relevant rule change for approval",
+        "Unapproved rule changes and dependent implementation do not start",
+        "It does not automatically sync ordinary facts"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 30,
+      "scenario": "interrupted-execution",
+      "prompt": "The approved rule was updated first, but execution was cancelled before code satisfied it. Report the result.",
+      "expected_output": "An accurate partial outcome identifying the changed rule and remaining implementation gap.",
+      "expectations": [
+        "The response does not mark the design implemented or synchronize ordinary wiki facts",
+        "It does not automatically revert the user-approved rule",
+        "It reports the gap without starting unrelated work"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 31,
+      "scenario": "old-policy-rule",
+      "prompt": "The user declares a hard rule, but the target wiki is a valid earlier v1 policy with the old reader and no facts-and-hard-rules marker.",
+      "expected_output": "A rule draft may be discussed, while persistence requires a separately reviewed policy upgrade.",
+      "expectations": [
+        "The response does not silently replace the target schema or reader",
+        "It explains the concrete policy incompatibility",
+        "It can continue non-writing work without requiring completed implementation evidence"
       ],
       "trust_level": "provisional"
     }

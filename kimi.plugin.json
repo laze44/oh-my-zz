@@ -1,20 +1,16 @@
 {
   "name": "oh-my-zz",
-  "version": "1.6.1",
-  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, specification-and-plan bundles, explicit main-agent plan review, safe parallel execution of independent approved-plan work, brief change plans, secure session handoffs, bounded contract-driven review-and-fix, opt-in project-memory discovery, proposal-first architecture synchronization, pre-merge review decisions, and root-cause simplification of code and project-memory documentation, plus evidence-grounded systems paper writing.",
+  "version": "2.0.0",
+  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, implementation plans with inline requirements and optional specs, brief change plans, secure session handoffs, opt-in project-memory discovery, proposal-first architecture synchronization and separately approved hard-rule maintenance, and root-cause simplification of code and project-memory documentation, plus evidence-grounded systems paper writing.",
   "keywords": [
     "skills",
     "engineering",
     "ideas",
     "planning",
-    "parallel-execution",
-    "subagents",
-    "plan-review",
     "design",
     "handoff",
     "project-memory",
     "architecture",
-    "review",
     "simplification",
     "root-cause-simplification",
     "systems",
@@ -26,8 +22,8 @@
   "skills": "./skills/market/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Twelve focused workflows for plans, parallel execution, reviews, memory, root-cause simplification, and systems paper writing.",
-    "longDescription": "A twelve-skill engineering workflow pack for grilling and refining ideas, creating specification-and-plan bundles, executing safely independent approved-plan work in parallel, explicitly reviewing plans in the main agent, planning brief changes, handing off sessions, reviewing and repairing completed implementations, maintaining project memory, reviewing merge readiness, and simplifying code and project-memory documentation, plus writing evidence-grounded systems papers.",
+    "shortDescription": "Eight focused workflows for plans, memory, root-cause simplification, and systems paper writing.",
+    "longDescription": "An eight-skill engineering workflow pack for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, planning brief changes, handing off sessions, maintaining project memory, and simplifying code and project-memory documentation, plus writing evidence-grounded systems papers.",
     "developerName": "laze44",
     "websiteURL": "https://github.com/laze44/oh-my-zz"
   }

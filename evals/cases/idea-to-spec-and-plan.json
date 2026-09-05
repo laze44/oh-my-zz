@@ -13,6 +13,14 @@
       {
         "prompt": "We have clarified the feature idea; now create the requirements, success criteria, and execution plan",
         "top_k": 3
+      },
+      {
+        "prompt": "Turn this clarified idea into a candidate implementation plan with inline requirements and optional task files",
+        "top_k": 3
+      },
+      {
+        "prompt": "Create an execution-ready main plan with dependencies, parallel work boundaries, and runtime budgets",
+        "top_k": 3
       }
     ],
     "negative": [
@@ -23,40 +31,317 @@
       {
         "prompt": "Write a short dated plan for this known login patch without code or independent review",
         "owner": "brief-change-plan"
-      },
-      {
-        "prompt": "Review this saved implementation plan against its source specification before we execute it",
-        "owner": "plan-review"
       }
     ]
   },
   "evals": [
     {
       "id": 1,
-      "prompt": "Use the approved idea for usage-based billing to produce a specification and candidate plan before implementation. The idea explains the goal but does not say how completion should be proven.",
-      "expected_output": "A two-artifact workflow that establishes completion evidence, saves a baselined spec with canonical acceptance criteria, and creates a traceable candidate plan with a test execution contract; plan review remains an explicit separate next step.",
+      "prompt": "In planning-sample, plan replacing the aggregation engine with a faster Map-based implementation, preserving existing results. Limit implementation and validation to a provisional 30-minute execution budget. I do not need a separate requirements document. Save the candidate; do not implement it.",
+      "expected_output": "One concise main candidate plan with inline requirements, grounded focused proof, and bounded performance comparison.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
       "expectations": [
-        "Material repository context is inspected rather than commands or conventions being invented",
-        "The agent proposes a small number of outcome-based verification candidates and asks what evidence is sufficient",
-        "Success criteria contain an observable outcome, proof method, and explicit pass condition",
-        "Acceptance criteria, success criteria, and repository-specific plan verification remain distinct",
-        "The spec owns stable acceptance-criteria IDs and the plan maps every ID to verifiable tasks without redefining it",
-        "Milestones group the one complete plan rather than creating additional planning artifacts",
-        "Code-changing tasks have a reviewable test execution contract with grounded scope, budget, escalation, timeout behavior, and evidence requirements",
-        "The workflow states that plan review is optional and explicit rather than dispatching a reviewer or subagent",
-        "The candidate is not marked reviewed merely because it was generated",
-        "No implementation code is produced"
+        "The agent inspects the real fixture sources and commands without running a benchmark or editing implementation files",
+        "The default output is one main plan with inline requirements; no separate spec or tiny per-task files are created",
+        "Required output semantics, completion evidence and a pass condition are explicit without inventing a committed speedup target",
+        "The proposal preserves last-value-wins behavior and insertion order and does not add unrelated features",
+        "The plan uses a comparable small old/new workload before considering any archival-size run and labels evidence limitations",
+        "Time estimates are provisional rather than invented measurements; validation, retries and implementation fit the shared budget",
+        "The main plan includes execution-time delegation and bounded repair policies, but does not dispatch workers or begin implementation",
+        "The candidate is presented for approval and is not marked FINAL without approval",
+        "Sampling counts and statistical win ratios are not invented as acceptance gates; measurement details stay proportionate and tunable",
+        "The main plan avoids repeating policies, requirements, and test recipes across sections"
       ],
       "trust_level": "provisional"
     },
     {
       "id": 2,
-      "prompt": "Create the spec and plan from this idea draft, but it does not say whether existing clients must remain compatible.",
-      "expected_output": "A focused clarification workflow that treats compatibility as a material blocker and does not create a candidate plan until it is resolved.",
+      "prompt": "In planning-sample, plan a faster aggregation engine. Existing clients might or might not need the current ordering and duplicate behavior; I have not decided whether those can change.",
+      "expected_output": "A focused compatibility question before baselining an implementation plan.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
       "expectations": [
-        "The agent asks one focused compatibility question rather than inventing a requirement",
-        "The agent does not baseline a spec or create a plan while the material gap remains",
-        "The response distinguishes a material decision from a non-material assumption"
+        "The agent identifies the material observable-behavior decision and asks one focused question",
+        "The agent does not invent compatibility requirements or baseline a candidate with the unresolved decision",
+        "It does not ask for internal test framework or implementation choices"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "prompt": "In planning-sample, plan one release with Map-based aggregation preserving duplicate semantics, optional JSONL output keeping CSV as default, and min/max metrics with null for empty input. All features must be reachable through run(), whose existing call stays valid. Use a main file and separate workstream files suitable for later subagent implementation. The provisional implementation and validation budget is 60 minutes. Defer plugin registries, persistent caching, remote uploads and dashboards from our brainstorm. Save a candidate only.",
+      "expected_output": "One entry point with coherent task fragments, minimal requirements, and runtime delegation policy.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The main plan lists every fragment and the authoritative requirements source and does not require the user to pass each fragment separately",
+        "Tasks cover required engine, formatting, metrics and integration work while brainstorming extras remain deferred",
+        "Main-file scheduling summaries identify dependencies and write boundaries without needing every task detail",
+        "Fragments reference the common contract and policy without copying them or requiring unrelated fragment reads",
+        "Independent modules are candidate parallel work; shared interfaces and cli.js integration have a coherent owner and dependencies",
+        "The coordinator chooses agent count and grouping at runtime based on work and resources rather than a fixed one-agent-per-file assignment",
+        "Task boundaries and integration responsibility make safe delegation possible without prescribing a worker lifecycle or status-file schema",
+        "Budget accounts for implementation, local checks, integration, retries and contention; an exhausted allocation does not reset on delegation",
+        "Design and implementation include proportionate complexity removal without mandatory full ablation experiments",
+        "No reviewer, worker, implementation or execution framework is started while producing the candidate",
+        "Elapsed-time and worker-effort budgets are distinguished rather than silently imposing a summed-worker-minutes cap"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 4,
+      "prompt": "In planning-sample, use the approved docs/specs/jsonl.md Revision 7 to plan just the optional JSONL export. Preserve that document and its approval, and save a candidate implementation plan.",
+      "expected_output": "A compact candidate that references the existing approved spec without copying or rewriting it.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The supplied approved specification and its revision are reused as behavioral authority",
+        "The plan covers both specified acceptance criteria and appropriate integration evidence",
+        "The existing spec is not edited and no duplicate requirements document is created",
+        "The candidate remains separate from authorization to implement"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 5,
+      "prompt": "In planning-sample, plan the engine replacement and an independent addition of min/max metrics. Ordinary implementation defects should be fixed without asking me. Validation sometimes fails, and archival benchmarks may time out. Use a provisional 40-minute execution budget.",
+      "expected_output": "An execution policy with local diagnosis, dependency-aware continuation, bounded retries and truthful completion.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The artifact directs in-scope failures to diagnosis and repair instead of immediate user escalation",
+        "A blocked task prevents dependent work but leaves other ready tasks executable",
+        "Costly verification starts with a short representative workload and useful stopping conditions; provisional estimates are progress checkpoints rather than invented kill deadlines",
+        "Ordinary execution problems remain autonomous within the agreed scope and cumulative budget",
+        "Ordinary slow runs get local diagnosis; necessary unusually costly execution is surfaced with evidence and options before committing the cost, respecting existing authorization",
+        "Failed required proof is not marked complete, silently skipped or converted to optional work",
+        "Ordinary repairs can continue while diagnosis makes progress within budget; an arbitrary one-failure stop is not imposed"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 6,
+      "prompt": "In planning-sample, plan replacing aggregation. Completion requires measured speedup on the entire 500000-record archival workload with equivalent results, but I can allocate only ten minutes total and there is no current comparable baseline. I cannot change either constraint without a discussion.",
+      "expected_output": "A material budget-versus-proof conflict surfaced before approval rather than an invented success path.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent identifies that historical full-run duration conflicts with the explicit time cap",
+        "It does not run the archival benchmark or replace the required full-scale proof with a small sample",
+        "It asks for the necessary scope, evidence or budget decision and does not finalize an infeasible plan"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 7,
+      "prompt": "In planning-sample, plan the engine replacement with the minimum design that preserves behavior. A brainstorming note suggests an EngineFactory, a plugin registry and configurable backend routing for future systems, but none is a current requirement.",
+      "expected_output": "A focused replacement with lightweight design and implementation simplification checks.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "Speculative abstraction and configuration do not become required design or separate implementation tasks",
+        "Design includes a proportionate check for unnecessary complexity without a mandatory abstraction inventory",
+        "Implementation completion allows a reversible removal or bypass of doubtful complexity with minimal relevant evidence",
+        "Necessary behavior and compatibility are retained; no mandatory full ablation matrix is introduced"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 8,
+      "prompt": "In planning-sample, create a main plan and task fragments for engine replacement plus min/max metrics, but execution will be on a host with no subagent tools. Preserve the current public behavior except the requested metric additions.",
+      "expected_output": "A complete split plan that can execute serially without delegation tools.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The main plan contains a dependency-respecting serial fallback without inventing a swarm API or executor",
+        "The task files remain useful work boundaries without requiring a worker per file",
+        "Final integration and necessary verification remain required even when execution is serial"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 9,
+      "prompt": "In planning-sample, plan replacing the aggregation engine with a Map while preserving existing behavior. Use a few short paragraphs, without tables, task IDs, a fixed section layout or a separate spec. Keep implementation and validation within a provisional 30-minute elapsed budget. Save the candidate only.",
+      "expected_output": "A usable concise plan in the requested prose format, with clear boundaries and evidence but no imposed template.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The saved plan follows the requested prose format without adding mandatory tables, task IDs or template sections",
+        "The intended output semantics, necessary change and credible completion evidence remain understandable",
+        "The plan respects the execution budget and does not start a full baseline or implementation",
+        "The artifact concisely carries applicable delegation, autonomous repair and simplification principles without a detailed worker protocol",
+        "The candidate and approval scope are identifiable without a separate requirements file or redundant metadata tables"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 10,
+      "scenario": "hard-rule-lifecycle",
+      "prompt": "The project has a user-approved hard rule. The requested change needs to relax it, and the overall plan has not separately approved that exact rule change.",
+      "expected_output": "Applicable rules are read and the exact changed requirement gets separate approval before dependent execution.",
+      "expectations": [
+        "Unfamiliar project concepts are retrieved from wiki/code before questions",
+        "Overall plan approval does not approve the hard-rule change",
+        "Planning preserves exact approved rule text and its old-rule baseline without writing ordinary wiki facts",
+        "Execution applies separately approved rules first; facts wait for manual sync"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 11,
+      "prompt": "In planning-sample, plan a faster aggregation engine preserving existing results. I want quick experimental feedback while the implementation is being corrected, followed by larger validation where needed. I have not set a runtime budget. Save a candidate only.",
+      "expected_output": "A saved execution policy that iterates on short representative experiments and expands validation based on evidence without inventing hard deadlines.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent grounds the plan in fixture code and commands without running implementation experiments or editing source",
+        "The saved plan starts with a small representative experiment that retains ordering, duplicate behavior and the aggregation path being optimized",
+        "Short runtime is achieved primarily by controlling workload or scope, without inventing per-task hard time caps",
+        "The executor is directed to diagnose, revise and recheck observed problems on short experiments before moving to expensive validation",
+        "Scale increases are justified by correctness and time/resource growth evidence; a tiny passing sample is not assumed to prove full-scale behavior",
+        "Retries and optimization address observed problems or add useful evidence rather than satisfying a fixed number of attempts",
+        "Long runs require a concrete verification purpose and a cost assessment; the archival baseline is not automatically mandatory"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 12,
+      "prompt": "In planning-sample, plan the engine replacement and independent min/max metrics. Earlier runtime estimates are provisional. During execution a check may exceed its estimate while still producing results, and the command tool may return control while the process is still running. Include how the executor should handle these cases. Save a candidate only.",
+      "expected_output": "An execution policy that checks process progress, handles slow runs locally and reports any stopped attempt without silently abandoning the task.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The saved plan distinguishes provisional estimates, tool wait expiry and actual hard limits; the first two alone do not require killing the process or ending the task",
+        "A slow run triggers inspection of progress or bottlenecks and may continue when useful progress and remaining cost justify it",
+        "Observed in-scope bottlenecks can be optimized autonomously and checked on short representative experiments without weakening required behavior",
+        "The executor reports material findings, changes and validation results rather than silently retrying or immediately asking about every estimate overrun",
+        "A stopped attempt retains available evidence and reports its reason, incomplete work and next action; independent ready work continues",
+        "The planner does not run benchmarks or start implementation"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 13,
+      "prompt": "In planning-sample, plan the aggregation replacement. Completion requires measured speedup and equivalent results on the entire 500000-record archival workload. Small inputs are useful during development. There is no comparable current baseline or fixed overall time cap, but I want to decide whether to spend hours on necessary measurements. Save a candidate only.",
+      "expected_output": "A staged validation plan that preserves required full-scale proof and makes costly execution a reviewable decision before spending hours.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The plan uses short representative experiments for diagnosis and repair, then increases scale to assess runtime growth before the required full run",
+        "Historical hours-long runs are identified as a known cost concern without inventing a precise current duration or using linear extrapolation as guaranteed evidence",
+        "Before committing unusually costly execution, the executor must present the purpose, available evidence, remaining cost and uncertainty, and options for the user's decision",
+        "The full-workload comparison remains required; small samples or an unmeasured speedup do not silently replace it",
+        "If full proof is deferred or unavailable, the executor must report incomplete validation rather than claim completion",
+        "No archival benchmark, implementation or worker is started during planning"
       ],
       "trust_level": "provisional"
     }
