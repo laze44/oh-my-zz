@@ -7,13 +7,9 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const EXPECTED_SKILLS = [
   'brief-change-plan',
-  'code-review-and-fix',
-  'code-review-and-quality',
   'handoff',
   'idea-refine',
   'idea-to-spec-and-plan',
-  'parallel-plan-execution',
-  'plan-review',
   'project-architecture-sync',
   'project-memory-and-code-simplification',
   'project-memory-init',
@@ -21,8 +17,6 @@ const EXPECTED_SKILLS = [
 ];
 const EXPECTED_CLAUDE_COMMANDS = [
   'code-simplify.md',
-  'review-fix.md',
-  'review.md',
   'spec.md',
 ];
 const HOOKS_PATH = 'hooks/hooks.json';
@@ -78,8 +72,6 @@ assert(/discovery/i.test(claudePlugin.description) && /approved architecture syn
   'Claude plugin description must cover opt-in discovery and explicitly approved architecture synchronization');
 assert(/brief.*plan/i.test(claudePlugin.description),
   'Claude plugin description must cover brief change plans');
-assert(/plan review/i.test(claudePlugin.description),
-  'Claude plugin description must cover explicit plan review');
 assert(claudePlugin.skills === './skills/market', 'Claude plugin must load ./skills/market');
 assert(Array.isArray(claudePlugin.commands) && claudePlugin.commands.length === 1 &&
   claudePlugin.commands[0] === './.claude/commands',
@@ -95,8 +87,6 @@ assert(/discovery/i.test(claudeMarketplace.metadata.description) && /proposal-fi
   'Claude marketplace metadata must cover opt-in discovery and proposal-first synchronization');
 assert(/brief.*plan/i.test(claudeMarketplace.metadata.description),
   'Claude marketplace metadata must cover brief change plans');
-assert(/plan review/i.test(claudeMarketplace.metadata.description),
-  'Claude marketplace metadata must cover explicit plan review');
 assert(codexPlugin.skills === './skills/market/', 'Codex plugin must load ./skills/market/');
 assert(codexPlugin.name === PLUGIN_NAME, `Codex plugin name must be ${PLUGIN_NAME}`);
 assert(typeof codexPlugin.version === 'string' && SEMVER_PATTERN.test(codexPlugin.version),
@@ -111,16 +101,12 @@ assert(/discovery/i.test(codexPlugin.description) && /proposal/i.test(codexPlugi
   'Codex plugin description must cover opt-in discovery and proposal-first synchronization');
 assert(/brief.*plan/i.test(codexPlugin.description),
   'Codex plugin description must cover brief change plans');
-assert(/plan review/i.test(codexPlugin.description),
-  'Codex plugin description must cover explicit plan review');
 assert(/project memory/i.test(codexPlugin.interface?.shortDescription) && /architecture/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover project memory and architecture records');
 assert(/discovery/i.test(codexPlugin.interface?.shortDescription) && /proposal/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover opt-in discovery and proposal-first synchronization');
 assert(/brief.*plan/i.test(codexPlugin.interface?.shortDescription),
   'Codex plugin short description must cover brief plans');
-assert(/plan review/i.test(codexPlugin.interface?.shortDescription),
-  'Codex plugin short description must cover explicit plan review');
 assert(codexPlugin.homepage === REPOSITORY && codexPlugin.repository === REPOSITORY,
   'Codex plugin homepage and repository must point at the canonical GitHub repository');
 assert(kimiPlugin.name === PLUGIN_NAME, `Kimi plugin name must be ${PLUGIN_NAME}`);
@@ -137,8 +123,6 @@ assert(/discovery/i.test(kimiPlugin.description) && /proposal/i.test(kimiPlugin.
   'Kimi plugin description must cover opt-in discovery and proposal-first synchronization');
 assert(/brief.*plan/i.test(kimiPlugin.description),
   'Kimi plugin description must cover brief change plans');
-assert(/plan review/i.test(kimiPlugin.description),
-  'Kimi plugin description must cover explicit plan review');
 assert(kimiPlugin.homepage === REPOSITORY && kimiPlugin.license === 'MIT',
   'Kimi plugin homepage and license must match the canonical plugin metadata');
 assert(kimiPlugin.interface?.displayName === 'Oh My ZZ'
@@ -149,12 +133,10 @@ assert(kimiPlugin.interface?.websiteURL === REPOSITORY,
   'Kimi plugin website must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
-assert(/Twelve focused engineering skills/.test(claudeMarketplace.plugins[0].description),
-  'Claude marketplace must describe the twelve-skill scope');
+assert(/Eight focused engineering skills/.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe the eight-skill scope');
 assert(/brief.*plan/i.test(claudeMarketplace.plugins[0].description),
   'Claude marketplace must describe brief change plans');
-assert(/plan review/i.test(claudeMarketplace.plugins[0].description),
-  'Claude marketplace must describe explicit plan review');
 assert(/discovery/i.test(claudeMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(claudeMarketplace.plugins[0].description),
   'Claude marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(Array.isArray(codexMarketplace.plugins) && codexMarketplace.plugins.length === 1,
@@ -166,12 +148,10 @@ assert(claudeMarketplace.plugins[0].source?.repo === REPOSITORY_SLUG,
 assert(codexMarketplace.name === PLUGIN_NAME, `Codex marketplace name must be ${PLUGIN_NAME}`);
 assert(codexMarketplace.plugins[0].name === PLUGIN_NAME,
   `Codex marketplace plugin name must be ${PLUGIN_NAME}`);
-assert(/Twelve focused engineering skills/.test(codexMarketplace.plugins[0].description),
-  'Codex marketplace must describe the twelve-skill scope');
+assert(/Eight focused engineering skills/.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe the eight-skill scope');
 assert(/brief.*plan/i.test(codexMarketplace.plugins[0].description),
   'Codex marketplace must describe brief change plans');
-assert(/plan review/i.test(codexMarketplace.plugins[0].description),
-  'Codex marketplace must describe explicit plan review');
 assert(/discovery/i.test(codexMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(codexMarketplace.plugins[0].description),
   'Codex marketplace must describe discovery and explicitly approved architecture synchronization');
 assert(codexMarketplace.plugins[0].source?.path === './',
@@ -194,7 +174,7 @@ assert(stopHook?.type === 'command', 'Bundled Stop hook must be a command hook')
 assert(typeof stopHook?.command === 'string'
   && stopHook.command.includes('hooks/stop-workflow-gate.js')
   && stopHook.command.includes('PLUGIN_ROOT'),
-'Bundled Stop hook must invoke the unified workflow gate through the plugin root');
+'Bundled Stop hook must invoke the project-memory workflow gate through the plugin root');
 assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
 
-console.log('Claude, Codex, and Kimi plugin manifests, twelve-skill scope, Claude command configuration, and bundled Stop gate validated.');
+console.log('Claude, Codex, and Kimi plugin manifests, eight-skill scope, Claude command configuration, and bundled Stop gate validated.');

@@ -16,7 +16,7 @@ Act as a constructive challenger, not a transcription service or automatic suppo
 - A user has a promising direction but wants a sharper, simpler, or more coherent version.
 - A user wants to capture the refined idea before specification, planning, or implementation.
 
-Use the relevant downstream workflow for specifications, architecture, implementation analysis, task breakdowns, plan review, or code.
+Use the relevant downstream workflow for specifications, architecture, implementation analysis, task breakdowns, or code.
 
 ## Scope
 

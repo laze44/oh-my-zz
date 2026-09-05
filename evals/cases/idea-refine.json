@@ -21,8 +21,7 @@
     ],
     "negative": [
       {
-        "prompt": "Review this pull request for correctness and maintainability",
-        "owner": "code-review-and-quality"
+        "prompt": "Review this pull request for correctness and maintainability"
       },
       {
         "prompt": "Turn this approved specification into an ordered task list"

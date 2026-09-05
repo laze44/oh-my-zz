@@ -17,11 +17,12 @@
     ],
     "negative": [
       {
-        "prompt": "Turn this PRD into a durable task breakdown with dependencies and an independent plan review"
+        "prompt": "Turn this product idea into a specification and a complete implementation plan with dependencies",
+        "owner": "idea-to-spec-and-plan"
       },
       {
-        "prompt": "Run an independent code review and repair loop against this approved specification and implementation plan",
-        "owner": "code-review-and-fix"
+        "prompt": "Simplify the existing code and project-memory documentation through evidence-backed root-cause changes",
+        "owner": "project-memory-and-code-simplification"
       }
     ]
   },
@@ -38,6 +39,31 @@
         "风险 gives a mitigation, evidence-to-obtain, or formal-planning escalation condition",
         "Every acceptance criterion includes observable proof such as a targeted test, command, or inspection",
         "The artifact contains no implementation code, pseudocode, diff, CANDIDATE or FINAL status, reviewer, or subagent record"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "scenario": "hard-rule-lifecycle",
+      "prompt": "The project has a user-approved hard rule. The requested change needs to relax it, and the overall plan has not separately approved that exact rule change.",
+      "expected_output": "Applicable rules are read and the exact changed requirement gets separate approval before dependent execution.",
+      "expectations": [
+        "Unfamiliar project concepts are retrieved from wiki/code before questions",
+        "Overall plan approval does not approve the hard-rule change",
+        "Planning preserves exact approved rule text and its old-rule baseline without writing ordinary wiki facts",
+        "Execution applies separately approved rules first; facts wait for manual sync"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "scenario": "review-execution-outside-scope",
+      "prompt": "Run an independent code review and repair loop against this approved specification and implementation plan",
+      "expected_output": "The agent recognizes that review and repair execution is outside this planning skill's scope and does not substitute a dated change plan for the requested work.",
+      "expectations": [
+        "The agent recognizes that the request is for review and repair execution rather than a brief plan",
+        "The agent does not create a brief change-plan artifact for this request",
+        "The agent does not dispatch a reviewer or claim completed review or repairs through this planning skill"
       ],
       "trust_level": "provisional"
     }

@@ -22,13 +22,15 @@ const {
 function printHelp() {
   console.log(`Usage:
   node ${path.basename(__filename)} --workflow project-memory-init|project-architecture-sync [--session-id ID]
-    [--mode MODE] [--phase PREVIEW|REVIEW] [--fingerprint TEXT] [--approved-ids ID1,ID2]
+    [--mode docs-only|discovery|policy-upgrade|sync|hard-rule]
+    [--phase PREVIEW|REVIEW] [--fingerprint TEXT]
     [--state-dir DIR] [--state-file PATH]
 
 Creates a session-scoped project-memory workflow state file outside the target
 project's docs/project-memory/ tree. The session id defaults to
 OH_MY_ZZ_PROJECT_MEMORY_SESSION_ID, CODEX_SESSION_ID, CODEX_THREAD_ID, or
-CLAUDE_SESSION_ID.`);
+CLAUDE_SESSION_ID. Initialization starts in PREVIEW; synchronization and direct
+hard-rule maintenance start in REVIEW without any approval.`);
 }
 
 function main() {

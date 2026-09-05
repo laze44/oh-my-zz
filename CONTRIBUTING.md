@@ -1,23 +1,19 @@
 # Contributing
 
-This branch intentionally maintains a focused twelve-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused eight-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
 - `idea-refine`
 - `idea-to-spec-and-plan`
-- `parallel-plan-execution`
-- `plan-review`
 - `brief-change-plan`
 - `handoff`
-- `code-review-and-quality`
-- `code-review-and-fix`
 - `project-memory-and-code-simplification`
 - `project-memory-init`
 - `project-architecture-sync`
 - `systems-paper-writing`
 
-The two project-memory skills are independent target-project memory workflows; initialization may append its exact discovery marker only after explicit confirmation, while synchronization reviews and applies verified changes only after user approval. Their plugin-level Stop gate may use ephemeral session state outside the target project, but neither workflow adds target-project hooks or durable runtime records. They do not change or invoke the other retained skill workflows. Further skill or platform additions remain product-scope decisions, not routine maintenance; propose them explicitly before implementation.
+The project-memory workflows separate ordinary verified facts from user-approved hard rules. Initialization owns fresh setup and explicit policy/discovery upgrades with exact configuration previews. Synchronization reviews one draft at a time: ordinary factual sync requires a completed scope and manual user request; hard rules may be separately approved during conversation or planning and applied before implementation. Planning skills and later authorized execution must preserve that ordering and must not automatically synchronize ordinary facts. Maintain the canonical schema/runtime references and their standalone bundled copies together. The external Stop gate binds one approval to one exact draft; it never authenticates user consent or writes project facts itself. Further skill or platform additions remain product-scope decisions, not routine maintenance; propose them explicitly before implementation.
 
 ## Modifying a skill
 
@@ -42,12 +38,9 @@ Run:
 node scripts/validate-skills.js
 node scripts/run-evals.js
 node scripts/validate-commands.js
-node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
-node scripts/test-code-review-and-fix-runtime.js
 node scripts/test-project-memory-stop-gate-runtime.js
 node scripts/test-project-memory-contracts.js
-node scripts/test-plan-review-contracts.js
 ```
 
 All checks must pass, and the final diff must not contain references to removed skills or unsupported platforms.

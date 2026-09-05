@@ -13,6 +13,10 @@
       {
         "prompt": "Enable the managed project-memory discovery block for our existing valid v1 wiki without rewriting AGENTS.md",
         "top_k": 3
+      },
+      {
+        "prompt": "Upgrade the project-memory maintenance policy and replace our old managed discovery instructions after preview approval",
+        "top_k": 3
       }
     ],
     "negative": [
@@ -77,12 +81,11 @@
     },
     {
       "id": 5,
-      "prompt": "For an existing valid v1 wiki, enable discovery in root CLAUDE.md. The file already contains the exact complete project-memory-discovery v1 marker at its end after the required blank line.",
-      "expected_output": "An idempotent discovery-enable no-op that preserves the existing marker and wiki.",
+      "prompt": "For an existing valid v1 wiki with the facts-and-hard-rules-v2 policy and current reader, enable discovery in root CLAUDE.md. It already contains the exact complete project-memory-discovery v2 marker at its end.",
+      "expected_output": "An idempotent discovery no-op preserving the existing policy, current marker, and wiki.",
       "expectations": [
-        "The response validates the full v1 structural schema, canonical paths and index sections, and exact reader protocol before enabling discovery against an existing root",
-        "The response recognizes one byte-for-byte matching complete marker at the end of the file as an idempotent no-op",
-        "The response does not duplicate, rewrite, or move the marker or any user-owned CLAUDE.md content"
+        "The response leaves the exact current v2 block and target wiki unchanged",
+        "The response does not append a second discovery block or run a fact sync"
       ],
       "trust_level": "provisional"
     },
@@ -132,14 +135,15 @@
     },
     {
       "id": 10,
-      "prompt": "While configuring discovery, explain how the installed gate treats a later local test-only assertion update with no public behavior or architectural uncertainty.",
-      "expected_output": "A routing explanation that says this later local task may skip wiki consultation and never writes memory automatically.",
+      "prompt": "Explain how the installed discovery block treats a local test-only assertion edit, where a relevant topic has a hard rule about error ordering.",
+      "expected_output": "A concise explanation that applicable hard rules must be consulted before code/test changes, while unrelated wiki traversal and automatic sync are unnecessary.",
       "expectations": [
-        "The installed gate distinguishes clearly local or test-only work from architecture-relevant work",
-        "The response does not require loading the entire wiki for the local change",
-        "The response does not automatically invoke or write project-architecture-sync"
+        "The agent reads or reuses applicable global and topic hard rules before choosing the test change",
+        "The agent does not skip a relevant rule solely because a change is local or test-only",
+        "The agent does not automatically synchronize facts after editing tests"
       ],
-      "trust_level": "provisional"
+      "trust_level": "provisional",
+      "scenario": "local-hard-rule"
     },
     {
       "id": 11,
@@ -171,6 +175,45 @@
         "The response re-reads the selected file before applying the marker",
         "The response does not append against the changed file state",
         "The response produces a new exact preview rather than merging user changes"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 14,
+      "scenario": "unknown-concept",
+      "prompt": "An ordinary agent using the installed discovery block is asked to change the project’s harvest window. The term is unfamiliar and defined in the wiki; implementation details may have changed.",
+      "expected_output": "The agent retrieves the project definition before asking the user and verifies implementation details when necessary.",
+      "expectations": [
+        "The discovery guidance begins concept retrieval at INDEX.md or scoped wiki search",
+        "The agent checks code/tests or existing docs if wiki information is missing or stale",
+        "It asks the user only about unresolved information material to execution",
+        "It does not require a full SCHEMA.md read or full-wiki import for ordinary lookup"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 15,
+      "scenario": "policy-upgrade",
+      "prompt": "Explicitly upgrade our valid older v1 wiki policy and its exact old AGENTS.md discovery block. The wiki has a historical real_arch page marked not-started. Show the exact changes before writing.",
+      "expected_output": "A reviewed configuration-only upgrade that preserves historical topic content and does not promote it to implemented fact.",
+      "expectations": [
+        "The response previews the new schema/reader and replacement of the exact owned v1 block with the concise v2 block",
+        "The response waits for approval of that concrete configuration diff",
+        "The response preserves user-owned root instructions and substantive memory pages byte-for-byte",
+        "Historical not-started content remains unverified context, not automatically a hard rule or a current fact",
+        "An ordinary repeat initialization would not perform this upgrade"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 16,
+      "scenario": "policy-customization",
+      "prompt": "Upgrade a valid v1 wiki to the new policy. Its self-contained schema contains a project-specific naming policy compatible with the new authority model.",
+      "expected_output": "A focused policy upgrade preserving compatible custom schema content.",
+      "expectations": [
+        "The draft retains compatible project-specific schema additions",
+        "A conflicting customization is surfaced as a concrete decision instead of silently discarded",
+        "No factual page is synchronized as a side effect"
       ],
       "trust_level": "provisional"
     }

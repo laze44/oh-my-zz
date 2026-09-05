@@ -1,27 +1,37 @@
 # oh-my-zz
 
-A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains twelve focused workflows for grilling and refining ideas, creating specification-and-plan bundles, explicitly reviewing plans in the main agent, executing independent plan work in parallel, making brief dated change plans, handing work to a fresh agent session, independently reviewing and repairing approved implementations, preserving project memory, making pre-merge decisions, simplifying code and project-memory documentation, and writing evidence-grounded systems papers.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains eight focused workflows for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing work to a fresh agent session, preserving project memory, simplifying code and project-memory documentation, and writing evidence-grounded systems papers.
 
 ## Included skills
 
 | Skill | Purpose |
 | --- | --- |
 | [idea-refine](skills/market/idea-refine/SKILL.md) | Grill and refine an idea one decision at a time, then save a concise shared-understanding draft before specification or planning |
-| [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a specification and one complete implementation plan |
-| [parallel-plan-execution](skills/market/parallel-plan-execution/SKILL.md) | Analyze an approved plan's dependencies and execute safely independent tasks concurrently through subagents |
-| [plan-review](skills/market/plan-review/SKILL.md) | Explicitly review an existing plan against its idea, repository evidence, selective project-memory constraints, and test-execution contract; resolve findings before revising it |
+| [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Turn a clarified idea into a main plan with inline requirements, optional spec, and task fragments as needed |
 | [systems-paper-writing](skills/market/systems-paper-writing/SKILL.md) | Plan, draft, translate, and revise systems, networking, and computer architecture papers while preserving an evidence spine |
 | [brief-change-plan](skills/market/brief-change-plan/SKILL.md) | Write a dated, concise change plan with approach, scope, risks, and acceptance criteria—without code or independent review |
 | [handoff](skills/market/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
-| [code-review-and-quality](skills/market/code-review-and-quality/SKILL.md) | Make a read-only five-axis decision on whether a branch or pull request is ready to merge |
-| [code-review-and-fix](skills/market/code-review-and-fix/SKILL.md) | Explicitly review completed work against an approved spec and plan, adjudicate repairability, apply verified local repairs, and re-review within a bounded loop |
 | [project-memory-and-code-simplification](skills/market/project-memory-and-code-simplification/SKILL.md) | Simplify code and project-memory documentation through evidence-backed root-cause changes |
-| [project-memory-init](skills/market/project-memory-init/SKILL.md) | Initialize a target project's Markdown-only LLM-wiki and, after confirmation, optionally append a bounded discovery gate to selected root agent instructions |
-| [project-architecture-sync](skills/market/project-architecture-sync/SKILL.md) | Review a completed implementation scope, draft verified architecture-memory changes, and synchronize only explicitly approved items |
+| [project-memory-init](skills/market/project-memory-init/SKILL.md) | Initialize a Markdown wiki, configure concise agent discovery, or explicitly upgrade its fact/hard-rule policy |
+| [project-architecture-sync](skills/market/project-architecture-sync/SKILL.md) | Manually sync verified architecture facts or maintain user-declared/plan-approved hard rules, one approved draft at a time |
 
-`project-memory-init` and `project-architecture-sync` are independent workflows: they do not change or invoke the other retained skill workflows. Fresh initialization creates the target project's self-contained `project-memory-llm-wiki-v1` schema under `docs/project-memory/` plus its one reader contract at `docs/agents/project-memory.md`. Its human-facing wiki content is Simplified-Chinese-first—especially architecture, ADR, domain, research, and operations explanations—while paths, code/API tokens, filenames, metadata keys, and other exact identifiers remain English where needed. When the user explicitly selects ordinary-agent discovery, initialization first previews and then appends only its managed block to selected root `AGENTS.md`, `AGENTS.override.md`, or `CLAUDE.md` files; existing content is never rewritten. A normal repeat initialization of an existing root remains a no-op. Sync audits a completed implementation scope with code and test evidence; `docs/specs/` is optional context, not a prerequisite or durable source. Its review phase produces a zero-write proposal, and its apply phase revalidates the scope before changing only approved records; a supplied spec's `Implementation Alignment` is a separately approved item. In v1 it maintains verified architecture, durable shared vocabulary, and governed ADRs; legacy schemas retain only their permitted non-governed synchronization and report the user-managed upgrade requirement. Plans, ideas, chats, and local design drafts can scope a sync, but durable project-memory records cite implementation, tests, active ADRs, or stable external references rather than temporary task documents. The plugin's unified Stop gate may keep ephemeral session state outside the target project to protect active review/apply phases; it never writes that state under `docs/project-memory/`.
+Project memory distinguishes **implemented facts** from **user-approved hard rules**. Ordinary wiki pages explain concepts, responsibilities, behavior, and design boundaries concisely. They may lag code; they never present a future design as implemented. Keep the smallest sufficient evidence links outside the prose, without requiring line numbers, function inventories, or a source-tree tour. Chinese-first explanations preserve exact code/API tokens and identifiers.
 
-Ordinary agents consult memory selectively, not on every task. The installed root discovery gate directs architecture-relevant, cross-module, contract, term, constraint, ADR, configuration, operations, or uncertain work through the reader protocol, schema, index, and only matching records. Clearly local or verified behavior-preserving work may skip it. A plan, specification, code diff, or completed implementation alone does not trigger this lookup. The discovery gate never writes or starts a sync; after implementation, the user may explicitly invoke `project-architecture-sync` to review the scope and approve any proposed sync. The plugin Stop gate is separate: it only guards the active state transitions of explicitly started project-memory workflows.
+Ordinary agents use the wiki index to understand unfamiliar project concepts before asking the user, checking code/tests when information is incomplete or stale. Before planning or changing code, they read global hard rules in `architecture/constraints.md` and relevant topic rules in `architecture/real_arch/`. Approved rules constrain changes; code establishes current implementation behavior. Neither overrides the other silently when they conflict.
+
+| Entry point | Approval and update timing |
+| --- | --- |
+| User manually requests sync | Review completed code, show one exact fact/rule/ADR draft at a time, and apply only approved units after revalidation. |
+| Planning needs a hard-rule change | Obtain separate approval of each exact rule, preserve its wording and old-rule baseline in the plan, and apply it first when execution is authorized. |
+| User declares a hard rule in conversation | Prepare its draft immediately, show the exact scope/text and conflicts, and write the rule only after approval. Completed code is not required. |
+
+Overall plan approval does not approve a hard rule. A declaration triggers drafting, not unreviewed persistence. Rule-only writes cover the approved rule and necessary navigation/lifecycle links; they do not update ordinary facts or imply implementation compliance. Earlier verifiable approval for unchanged exact text need not be requested again. Code completion never automatically starts fact synchronization. No-impact reviews finish without approval; an optional spec alignment still needs its own draft and approval.
+
+`project-memory-init` creates the self-contained `project-memory-llm-wiki-v1` layout under `docs/project-memory/` and its reader at `docs/agents/project-memory.md`. The new `project-memory-facts-and-hard-rules-v2` policy keeps that layout and adds the authority/timing rules above. Its optional root discovery block is four concise bullets. A normal repeat initialization remains a no-op. Existing v1 projects can explicitly request a policy/discovery upgrade: initialization previews the schema, reader, and selected exact managed root-block changes, then writes after approval while preserving substantive records and unrelated instructions. Historical `partial`/`not-started` designs remain unverified context. Legacy or malformed schemas are not silently migrated or repaired.
+
+`project-architecture-sync` supports `sync` and `hard-rule` modes. In fact sync, `docs/specs/` is optional context, not a prerequisite or durable source; a supplied spec's Implementation Alignment is separately approved. Hard rules retain their dated user approval and need no saved chat, permanent plan, or new ADR merely to establish authority. Ordinary facts still need durable evidence. Planning skills and later authorized execution share these boundaries without starting a factual sync automatically.
+
+The plugin Stop gate uses temporary session state outside the target project. It binds the current review item to its ID, kind, and exact draft hash, rejects changed/batch approvals, and clears approval when returning to review. It allows explicit user waits and never starts work or authenticates approval itself. The agent remains responsible for actual user approval and file-write scope. Portable skill installations bundle the same schema and state helpers. See [runtime usage](references/project-memory-runtime.md).
 
 ## npx Skills
 
@@ -35,7 +45,7 @@ Install only selected skills with `--skill`, or target a specific agent:
 
 ```bash
 npx skills add laze44/oh-my-zz --skill idea-refine
-npx skills add laze44/oh-my-zz --skill code-review-and-quality --agent codex --yes
+npx skills add laze44/oh-my-zz --skill idea-to-spec-and-plan --agent codex --yes
 ```
 
 The market subtree is also directly installable when browsing by category:
@@ -65,13 +75,11 @@ claude plugin install oh-my-zz@oh-my-zz
 Claude Code exposes these convenience commands:
 
 - `/spec`
-- `/review`
-- `/review-fix`
 - `/code-simplify`
 
-Invoke `idea-refine`, `parallel-plan-execution`, `plan-review`, `systems-paper-writing`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, `project-architecture-sync`, or `code-review-and-fix` directly by naming the skill in your request. Use `parallel-plan-execution` only for an approved plan with safely independent work; it adapts to the host's available subagent and workspace mechanisms. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `brief-change-plan` for a dated short plan with no code or independent review. `plan-review`, `handoff`, and `code-review-and-fix` are intentionally user-invoked; the project-memory initialization and synchronization workflows intentionally have no dedicated Claude convenience commands.
+Invoke `idea-refine`, `systems-paper-writing`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` is intentionally user-invoked; the project-memory initialization and maintenance workflows intentionally have no dedicated Claude convenience commands.
 
-`/spec` creates a separate spec and one complete candidate plan from an idea. It never starts plan review automatically; explicitly invoke `plan-review` when review is wanted. The plan may group work into milestones, but no standalone or milestone-specific planning workflow exists. The plugin bundles only the read-only `oh-my-zz:code-reviewer` subagent for the separate review-and-fix workflow. `/review` is a read-only pre-merge decision and requires the source branch, target branch, and complete merge range. `/review-fix` is the explicit entry point for a completed implementation with an approved specification and plan; it does not run during normal implementation, invoke planning, silently change the contract, or replace `/review` for a merge-readiness decision.
+`/spec` creates one candidate main plan from an idea or supplied spec. Requirements live in the main plan by default; a separate spec is optional and existing valid specs are reused. Larger plans may link task fragments under one approval scope. The main file records dependencies, ownership, focused verification, cost estimates and actual limits, autonomous failure handling, and a policy to delegate suitable independent work during execution. Short representative experiments support diagnosis and repair before progressively larger validation. Estimates act as progress checkpoints; necessary unusually costly runs get advance feedback, and stopped attempts report their reason and remaining work. The executor chooses worker count and scheduling; small or coupled tasks may run serially. Planning writes documents only.
 
 ## Codex
 
@@ -90,9 +98,9 @@ codex plugin marketplace add /path/to/oh-my-zz
 codex plugin add oh-my-zz@oh-my-zz
 ```
 
-Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill. Invoke `@plan-review` for an explicit main-agent plan review and `@code-review-and-fix` for its post-implementation loop; normal planning, coding, and plan execution do not start either workflow.
+Start a new Codex task after installation. Invoke a skill with `@`, for example `@idea-to-spec-and-plan`, or describe the task and let Codex select the matching skill.
 
-`idea-to-spec-and-plan` and `plan-review` never request a reviewer or subagent. `parallel-plan-execution` is the separate execution path for approved plans with safely independent work and adapts to the host's available subagent and workspace mechanisms. `plan-review` uses the current main agent to compare a saved plan with its sources and to review planned test scope, budgets, timeouts, and escalation rules. `brief-change-plan` likewise never requests a reviewer or subagent. The review-and-fix and project-memory workflows use the unified Stop gate only as a state guard: it never starts reviewers, edits code, writes project memory, or replaces the skill's approval checks. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the recorded state and completion checks manually.
+`idea-to-spec-and-plan` does not dispatch a reviewer or subagent while planning. It writes an explicit delegation policy for later authorized execution, with runtime grouping and scheduling. `brief-change-plan` likewise never requests a reviewer or subagent. The project-memory workflows use the Stop gate only as a state guard: it never starts reviewers, edits code, writes project memory, or replaces the skill's approval checks. Plugin hooks must be reviewed and trusted after installation (use `/hooks`); without trust, follow the recorded state and completion checks manually.
 
 ## Kimi Code
 
@@ -121,16 +129,15 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ## Repository layout
 
 ```text
-skills/market/             Twelve shared skills in the npx catalog layout
-agents/                    Claude Code read-only code reviewer
-hooks/                     Unified Stop gate configuration and dispatcher
+skills/market/             Eight shared skills in the npx catalog layout
+hooks/                     Project-memory Stop gate configuration and entry point
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests
 .codex-plugin/             Codex plugin manifest
 .agents/plugins/           Codex marketplace entry
 kimi.plugin.json           Kimi Code plugin manifest
 kimi.marketplace.json      Kimi Code marketplace catalog
-references/                Checklists and project-memory schema used by retained skills
+references/                Project-memory schema used by retained skills
 evals/                     Trigger and behavioral eval cases
 scripts/                   Repository validators, workflow state helpers, and runtime tests
 ```
@@ -143,12 +150,9 @@ Run all local deterministic checks:
 node scripts/validate-skills.js
 node scripts/run-evals.js
 node scripts/validate-commands.js
-node scripts/validate-agents.js
 node scripts/validate-plugin-manifests.js
-node scripts/test-code-review-and-fix-runtime.js
 node scripts/test-project-memory-stop-gate-runtime.js
 node scripts/test-project-memory-contracts.js
-node scripts/test-plan-review-contracts.js
 ```
 
 The skills are Markdown-first and have no runtime package dependencies.

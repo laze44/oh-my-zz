@@ -25,8 +25,7 @@
         "owner": "project-architecture-sync"
       },
       {
-        "prompt": "Review this pull request before merge.",
-        "owner": "code-review-and-quality"
+        "prompt": "Review this pull request before merge."
       }
     ]
   },

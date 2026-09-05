@@ -1,0 +1,1 @@
+{"name":"planning-sample","private":true,"type":"module","scripts":{"test":"node --test test/system.test.js","bench:small":"node bench.js 1000","bench:full":"node bench.js 500000"}}
