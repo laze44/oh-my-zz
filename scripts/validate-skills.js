@@ -59,6 +59,7 @@ const SECTION_EXEMPT_SKILLS = {
   // rationalization and checklist sections. Outcomes are covered by its behavioral
   // evals; frontmatter, non-empty instructions and reference checks still apply.
   'idea-to-spec-and-plan': 'Flexible planning instructions without a prescribed section layout.',
+  'brief-change-plan': 'Concise outcome planning without repeated templates, rationalizations, and checklists.',
   // Memory entrypoints keep each authority/approval rule once and delegate
   // templates and state mechanics to bundled references. Contract and runtime
   // checks preserve those guarantees without requiring repetitive headings.

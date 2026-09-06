@@ -60,7 +60,8 @@
         "The main plan includes execution-time delegation and bounded repair policies, but does not dispatch workers or begin implementation",
         "The candidate is presented for approval and is not marked FINAL without approval",
         "Sampling counts and statistical win ratios are not invented as acceptance gates; measurement details stay proportionate and tunable",
-        "The main plan avoids repeating policies, requirements, and test recipes across sections"
+        "The main plan avoids repeating policies, requirements, and test recipes across sections",
+        "One final outcome task owns both the replacement and its required proof; internal implementation phases are not separate user acceptance checkpoints"
       ],
       "trust_level": "provisional"
     },
@@ -80,7 +81,7 @@
         "planning-sample/test/system.test.js"
       ],
       "expectations": [
-        "The agent identifies the material observable-behavior decision and asks one focused question",
+        "The agent identifies the material observable-behavior decision, explains its consequence, recommends a framing, and asks one focused question",
         "The agent does not invent compatibility requirements or baseline a candidate with the unresolved decision",
         "It does not ask for internal test framework or implementation choices"
       ],
@@ -103,7 +104,7 @@
       ],
       "expectations": [
         "The main plan lists every fragment and the authoritative requirements source and does not require the user to pass each fragment separately",
-        "Tasks cover required engine, formatting, metrics and integration work while brainstorming extras remain deferred",
+        "One or two final outcome tasks cover the required engine, formatting, metrics and integration results while brainstorming extras remain deferred",
         "Main-file scheduling summaries identify dependencies and write boundaries without needing every task detail",
         "Fragments reference the common contract and policy without copying them or requiring unrelated fragment reads",
         "Independent modules are candidate parallel work; shared interfaces and cli.js integration have a coherent owner and dependencies",
@@ -112,7 +113,8 @@
         "Budget accounts for implementation, local checks, integration, retries and contention; an exhausted allocation does not reset on delegation",
         "Design and implementation include proportionate complexity removal without mandatory full ablation experiments",
         "No reviewer, worker, implementation or execution framework is started while producing the candidate",
-        "Elapsed-time and worker-effort budgets are distinguished rather than silently imposing a summed-worker-minutes cap"
+        "Elapsed-time and worker-effort budgets are distinguished rather than silently imposing a summed-worker-minutes cap",
+        "Workstream fragments remain internal execution context under the common final outcomes; they do not create separate completion contracts or user approval pauses"
       ],
       "trust_level": "provisional"
     },
@@ -342,6 +344,132 @@
         "The full-workload comparison remains required; small samples or an unmeasured speedup do not silently replace it",
         "If full proof is deferred or unavailable, the executor must report incomplete validation rather than claim completion",
         "No archival benchmark, implementation or worker is started during planning"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 14,
+      "scenario": "collapse-phase-tasks",
+      "prompt": "In planning-sample, plan replacing the aggregation engine with a faster Map implementation while preserving the entire current public record contract. An earlier draft had separate tasks for freezing behavior, inspecting engine.js, designing the Map, editing the loop, changing tests, measuring performance, and final regression. Those were tentative implementation steps, not separately requested deliverables. Save a concise candidate that the executor can carry through without returning to me after every step.",
+      "expected_output": "A candidate centered on the verified engine replacement, retaining behavior and credible performance evidence without exposing the old phases as separate completion tasks.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The final task describes a working verified replacement rather than a code-edit phase followed by a separate testing task",
+        "Ordering, duplicate semantics and supported public inputs remain covered despite collapsing the old breakdown",
+        "The executor can revise its internal steps and repair ordinary failures without seeking approval at each milestone",
+        "The plan identifies sufficient correctness and comparable performance evidence without accepting the existing single fixture as complete proof",
+        "Implementation choices and suggested checks do not become an exhaustive mandatory sequence",
+        "Only planning artifacts are written; no implementation, benchmarks, workers or reviewers are started"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 15,
+      "scenario": "contradictory-known-failure-gate",
+      "prompt": "In planning-sample, create a candidate engine replacement plan. My earlier draft says that an existing CSV quoting failure may remain because fixing it is outside this change. It also says every test, including that quoting check, must pass before final integration can be accepted. I have not decided which condition should take precedence. Preserve current aggregation behavior.",
+      "expected_output": "One focused completion-boundary question with a recommendation before treating the contradictory acceptance contract as settled.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent identifies the conflict between the permitted failure and the unconditional all-tests pass condition",
+        "It asks one question about the completion boundary with a recommendation instead of asking the user to design tests or implementation steps",
+        "It does not silently remove a required gate, expand the task to fix CSV, or declare the contract settled",
+        "It distinguishes the supplied claim of an existing failure from verified baseline or regression evidence"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 16,
+      "scenario": "legitimate-test-updates",
+      "prompt": "In planning-sample, plan renaming the public output metric count to recordCount. This intentionally replaces the old field without an alias; I approve that compatibility change. Preserve the metric value, aggregation ordering, duplicate handling and CSV output. Existing tests asserting count must change. Save a candidate only, and make the final result verifiable without treating outdated tests as immutable.",
+      "expected_output": "One outcome task with legitimate expectation updates and evidence for the approved field replacement and preserved behavior.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent reuses the explicit compatibility decision without asking the user to approve it again",
+        "The plan permits replacing obsolete count expectations while requiring correct recordCount values and absence of the old field",
+        "Preserved ordering, duplicate handling and CSV behavior retain meaningful checks rather than being removed to obtain a green test run",
+        "Completion requires the actual public result and sufficient evidence, not only passing edited tests",
+        "The agent does not invent unrelated acceptance gates or implement the rename during planning"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 17,
+      "scenario": "required-system-workflow",
+      "prompt": "In planning-sample, create a candidate implementation plan for replacing the aggregation lookup with a Map while preserving public behavior. The production run() path must retain aggregate, format, and metrics as distinct stages, with formatting and metrics consuming the aggregated records. Do not fuse or bypass these stages or move their responsibilities into run(), even if output tests still pass. There is no project-memory wiki. I have already chosen this workflow constraint. Do not implement.",
+      "expected_output": "One final replacement outcome with the required system workflow captured as a constraint, credible production-path evidence, and freedom to organize development work.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent inspects the production entry point and carries the user-required stage boundaries and aggregated-input contracts into the saved plan",
+        "The required system workflow is a constraint on the final outcome rather than a separate task or user checkpoint for every stage",
+        "Evidence establishes the real production path and stage contracts; final output equality or existing smoke tests alone are not treated as proof of compliance",
+        "Development edits, debugging and internal work items may be reorganized, but required stages may not be bypassed, merged or have their responsibilities moved without specific authorization",
+        "The explicit user constraint is retained without asking for its approval again or requiring a new durable wiki or hard-rule entry",
+        "Only planning artifacts are created, with no implementation, benchmarks, workers or reviewers"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 18,
+      "scenario": "incidental-order-is-not-a-hard-rule",
+      "prompt": "In planning-sample, create a candidate implementation plan to make the small run() function easier to read using named intermediate results. Preserve its existing public behavior. Formatting and metrics are pure, and I permit either evaluation order once the aggregated records are available; no particular order between those two is required. Keep this bounded, do not create project memory, and do not implement.",
+      "expected_output": "A bounded plan preserving real data dependencies and behavior without freezing an incidental source-code order or adding architectural gates.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/bench.js",
+        "planning-sample/docs/specs/jsonl.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent grounds the plan in the current run() implementation and preserves formatting and metrics over the aggregated result",
+        "The observed format-before-metrics source order does not become a mandatory workflow constraint or permanent hard rule",
+        "The agent respects the explicit freedom to choose either evaluation order without asking for another approval or inventing a workflow conflict",
+        "Verification remains proportionate to the requested readability change and preserved behavior rather than introducing a full pipeline audit",
+        "The plan retains one final bounded outcome without expanding into architecture redesign, separate phase tasks, or project-memory writes"
       ],
       "trust_level": "provisional"
     }

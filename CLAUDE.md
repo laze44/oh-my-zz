@@ -5,9 +5,9 @@ This repository is a focused plugin pack for Claude Code and Codex.
 ## Retained skills
 
 - `idea-refine` — grill and clarify intent one decision at a time, then save a concise idea draft
-- `idea-to-spec-and-plan` — turn a clarified idea into a main implementation plan with inline requirements, optional spec, and task fragments as needed
+- `idea-to-spec-and-plan` — clarify completion decisions and plan one or two final outcomes from one entry point, with inline requirements, an optional spec, and supporting fragments as needed
 - `systems-paper-writing` — plan, draft, and revise systems, networking, and computer architecture papers around an evidence spine
-- `brief-change-plan` — create a dated, concise change plan without code or independent review
+- `brief-change-plan` — clarify final outcomes and save a concise dated change plan with evidence and constraints, without fixed sections, code, or independent review
 - `handoff` — compact the current conversation into a redacted temporary handoff document for a fresh agent session
 - `project-memory-and-code-simplification` — simplify code and project-memory documentation through evidence-backed root-cause changes
 - `project-memory-init` — initialize or explicitly upgrade Markdown project-memory policy and concise agent discovery

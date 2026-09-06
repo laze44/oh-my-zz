@@ -1,104 +1,42 @@
 ---
 name: brief-change-plan
-description: Creates a dated concise change plan with approach, scope, risks, and acceptance criteria. Use when a brief patch, bug fix, or repair needs no code or independent review.
+description: Clarifies final outcomes and saves a dated concise change plan with scope, constraints, and acceptance evidence. Use when a brief patch, bug fix, or repair needs planning without code or independent review.
 ---
 
 # Brief Change Plan
 
-## Overview
+## Purpose
 
-Create one concise, dated Markdown plan for a bounded change. Keep its contract deliberately lighter than formal planning: ground it with only the necessary read-only inspection, write no implementation code, and do not use a reviewer or subagent.
+Create one concise, dated Markdown plan for a bounded change. Define one final outcome task by default, or two when the user needs independently assessable outcomes. Leave organization of development work to the executor. Planning changes only the plan artifact and does not run implementation experiments, write code, dispatch subagents, or request independent review.
 
-## When to Use
+If the work needs substantial architecture, migration, security, public-compatibility, or parallel-work planning, explain why `idea-to-spec-and-plan` is appropriate; do not automatically invoke it. Do not substitute a brief plan for requested implementation or review.
 
-- Use when the user asks for a short, quick, patch, repair, correction, or change plan and does not need independent review.
-- Use when the intended change is already sufficiently bounded to express its approach, scope, risks, and observable acceptance criteria concisely.
+## Ground and Grill the Endpoint
 
-Do not use this skill for a PRD, a full task breakdown, dependency or parallel-work planning, or work with material migration, security, public-compatibility, or cross-module architecture risk. If that need becomes apparent, explain why the user needs an idea-to-spec-and-plan workflow; do not automatically invoke `idea-to-spec-and-plan` or a reviewer.
+Read only the requirements, project guidance, and relevant code, diff, issue, or tests needed to avoid inventing facts. Use project memory to retrieve unfamiliar concepts before questions, verify uncertain facts against code/tests, and read applicable global and real_arch hard rules.
 
-## Boundaries
+Identify required system stages, order, responsibilities, input/output contracts, and validation or production paths relevant to the change. Record constraints grounded in user requirements, architecture contracts, or correctness dependencies with their source or rationale; a durable wiki rule is not a prerequisite. Do not turn every observed code sequence into a mandatory order or permanent hard rule. Clarify material uncertainty about what must remain.
 
-- Create or revise a plan artifact only; do not edit implementation code, tests, configuration, or documentation outside that artifact.
-- Read only the requirements, project guidance, and smallest relevant code, diff, issue, or test surface needed to avoid inventing the plan.
-- Do not spawn a subagent, request independent review, create a `CANDIDATE` or `FINAL` status, or write a review record.
-- A title is allowed. The body must contain exactly these four headings: `方案`, `范围`, `风险`, and `验收标准`.
-- Allow module names, paths, symbols, and validation commands when supported by evidence. Do not include code blocks, pseudocode, diffs, function bodies, or line-by-line implementation instructions.
-- Keep each section to the information needed to act: normally two to five bullets. Put an assumption in `范围` and an unresolved concern in `风险`; do not add extra sections.
+If a hard rule must change, show its exact old/new text, scope, reason, and target one rule at a time for separate approval. Preserve the approved wording, approval status, target, and old-rule baseline in the plan; put revalidation and application before dependent implementation. Overall plan approval does not approve a hard rule. Planning never updates ordinary wiki facts; those wait for manual sync.
 
-## Workflow
+Propose the final result and identify only unresolved decisions that change whether it counts as complete: supported scope, required behavior or system workflow, acceptable existing limitations, or conflicting evidence and resource requirements. Ask one focused question at a time, explain its consequence, recommend an answer, and wait. Use existing answers; do not ask the user to design implementation steps or tests, or impose a questionnaire or question count. A clear endpoint needs no extra confirmation.
 
-### 1. Confirm the brief-plan boundary
+Resolve material ambiguity before treating the final tasks as settled. A permitted existing failure must be explicit and distinguishable from a regression; it cannot also be an unconditional pass prerequisite. Do not hide an unresolved completion decision in a generic risk bullet.
 
-1. Identify the requested change and inspect only enough local evidence to name a credible approach and acceptance proof.
-   If project memory exists, use its index to understand unfamiliar concepts before asking the user, and read applicable global and real_arch hard rules. If a bounded rule change is necessary, show its exact text and scope one at a time for separate approval; preserve the approved wording, target, and old-rule baseline as prose in `范围`. Put rule revalidation and application before dependent implementation in `方案`. Planning writes only the plan; overall plan approval does not approve a hard rule and ordinary wiki facts wait for manual post-implementation sync.
-2. Treat a missing material decision as a risk, not an excuse to invent a design.
-3. Stop with a concise escalation note instead of writing a misleading brief plan when the work needs a PRD, a full task breakdown, data migration, security review, public compatibility decision, or cross-module architecture decision. Do not silently escalate into the formal workflow.
+## Write the Final Tasks
 
-### 2. Choose the dated plan path
+For each final task, state the observable outcome, supported scope, necessary constraints, and sufficient completion evidence. Keep shared conditions in one place. Include relevant exclusions and material risks or assumptions with their mitigation or evidence needed. A brief approach may name grounded paths, symbols, or validation commands when useful.
 
-Choose the destination in this order:
+System workflow requirements are constraints on the final outcome, not phase tasks or per-stage user checkpoints. Where applicable, use a targeted check, path inspection, or trace to establish that the actual production entry point follows the required stages, ordering, and contracts; matching final outputs alone is insufficient. Keep this evidence focused on the affected workflow.
 
-1. A file or directory explicitly supplied by the user.
-2. The repository's established plan directory.
-3. `docs/plans/`.
+Use the user's language and a compact layout appropriate to the request. No fixed headings, tables, task IDs, or bullet counts are required. Avoid code, pseudocode, diffs, line-by-line instructions, phase tasks, and separate implementation-versus-testing tasks. Do not create task fragments, approval statuses such as `CANDIDATE` or `FINAL`, or review records.
 
-Name a new file `YYYY-MM-DD-<short-kebab-topic>-plan.md`, where `YYYY-MM-DD` is the execution environment's local ISO date. Never infer the date from the conversation. If that exact new-file name already exists, append `-02`, then `-03`, and so on before `.md`; never overwrite it. When the user explicitly asks to revise an existing plan, preserve that file's original name and drafting date.
+Make completion mean that all final outcomes, required evidence, and constraints are satisfied. Passing selected tests or finishing internal steps alone is insufficient. Include relevant safeguards against narrowing supported inputs, target-example special cases, weakened expectations, skipped proof, or self-confirming evidence. Tests may follow approved behavior changes; they must not redefine success merely to pass. Do not add unrelated validation gates.
 
-### 3. Write the plan
+Carry a short execution rule into the plan: once implementation is authorized, ordinary in-scope failures trigger diagnosis, repair, and continued useful work without per-step user decisions. Development work items may change; outcomes and required proof may not silently change. This autonomy does not authorize bypassing, reordering, or merging required system stages, moving their required responsibilities elsewhere, or weakening their contracts, even if outputs match or tests pass. Those changes need specific authorization and separate approval when a hard rule changes. Respect explicit resource limits, distinguish estimates from hard stops, and escalate only a material contract or authorization change or an essential unavailable decision/resource. Missing required proof keeps the work incomplete.
 
-Use this exact artifact shape. Write bullets in the user's language, but retain the four required headings.
+## Save and Hand Off
 
-```markdown
-# <short change title>
+Use the user's supplied destination, otherwise the repository's established plan directory, otherwise `docs/plans/`. Name a new file `YYYY-MM-DD-<short-kebab-topic>-plan.md` using the execution environment's local date, not a date inferred from conversation. If that new-file name exists, append `-02`, then `-03`, and so on before `.md`; never overwrite it. For an explicitly requested revision, preserve the existing filename and original drafting date.
 
-## 方案
-- <high-level approach and the relevant component, path, or symbol when known>
-
-## 范围
-- 包含：<what this plan changes>
-- 不包含：<what it deliberately leaves unchanged>
-
-## 风险
-- <material risk> — <mitigation, evidence to obtain, or condition that requires formal planning>
-
-## 验收标准
-- <observable result> — 证据：<targeted test, command, inspection, or other check>
-```
-
-Use `- 无已知风险` only after the limited inspection finds no material risk. Every acceptance criterion must describe a result that can be observed or checked; independent review is not an acceptance criterion.
-
-### 4. Hand off concisely
-
-Return the created or revised plan path and any formal-planning escalation reason. Do not attach code, run an independent review, or claim implementation has been completed.
-
-## Common Rationalizations
-
-| Rationalization | Correction |
-| --- | --- |
-| “A short plan can skip acceptance criteria.” | Keep concise criteria, but each one still needs observable proof. |
-| “No review means no validation.” | Put the smallest meaningful proof in `验收标准`; review and verification are different contracts. |
-| “A code snippet makes the approach clearer.” | Name the component or behavior instead; code would turn this plan into implementation guidance. |
-| “This looks risky, so start formal planning automatically.” | Explain the escalation and let the user choose the formal workflow. |
-
-## Red Flags
-
-- The artifact contains a heading other than the title plus `方案`, `范围`, `风险`, and `验收标准`.
-- The plan includes source code, pseudocode, a diff, or a sequence of implementation commands.
-- A reviewer, subagent, `CANDIDATE`, `FINAL`, or review record appears.
-- Scope has no explicit inclusion and exclusion.
-- Risks omit mitigation, evidence to obtain, or a formal-planning escalation condition.
-- Acceptance criteria cannot be proven with a named check or observable result.
-- A new plan silently overwrites an existing dated file.
-
-## Verification
-
-Before presenting the result, confirm:
-
-- [ ] The request fits a bounded brief change rather than formal planning.
-- [ ] Only the plan artifact changed.
-- [ ] The filename uses the local `YYYY-MM-DD` drafting date and did not overwrite another plan.
-- [ ] The artifact has only the title and four required headings.
-- [ ] No implementation code, pseudocode, diff, subagent, or independent review was used.
-- [ ] `范围` states both included and excluded work.
-- [ ] Every risk has a mitigation or explicit escalation condition.
-- [ ] Every acceptance criterion names observable proof.
+Before delivery, check that the final tasks cover the bounded request, their evidence and constraints agree, and only the plan artifact changed. Return the path and any unresolved material decision. Saving a plan does not authorize implementation or claim it is complete.

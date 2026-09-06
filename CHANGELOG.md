@@ -4,6 +4,20 @@ All notable releases follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-09-06
+
+### Changed
+
+- Centered `idea-to-spec-and-plan` and `brief-change-plan` on one or two final outcome tasks with required evidence and constraints. Both skills clarify material completion decisions one question at a time, with a recommendation, without repeating settled decisions.
+- Simplified `brief-change-plan` by removing its fixed four-section template, phase breakdowns, and repeated checklists while preserving dated artifacts, bounded scope, and project-memory hard-rule handling.
+- Kept internal development work flexible and ordinary failures subject to autonomous diagnosis and repair. Required results and proof cannot be weakened to obtain passing tests, and explicitly permitted existing failures cannot also be unconditional pass gates.
+- Distinguished development work order from required system workflows. Necessary stages, ordering, responsibilities, and input/output contracts remain plan constraints backed by proportionate production-path evidence; incidental code order does not become a permanent hard rule.
+- Updated planning documentation and the `/spec` wrapper, and synchronized Claude Code, Codex, and Kimi Code plugin versions at 2.1.0.
+
+### Added
+
+- Added behavioral scenario definitions covering final outcome tasks, completion ambiguity, known-failure gate conflicts, legitimate test updates, required system workflows, and incidental ordering. Updated brief-plan layout expectations and retained deterministic metadata validation without requiring repetitive skill headings.
+
 ## [2.0.0] - 2026-09-05
 
 ### Added

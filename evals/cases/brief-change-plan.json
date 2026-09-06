@@ -29,16 +29,26 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Create a brief plan for a known login retry bug. Save a dated Markdown file, do not write code, do not request an independent review, and keep the plan to approach, scope, risks, and acceptance criteria.",
-      "expected_output": "One dated Markdown change-plan artifact with only a title and the four required Chinese sections, grounded acceptance proof, no implementation code, and no review workflow.",
+      "scenario": "clear-outcome-flexible-layout",
+      "prompt": "In planning-sample, create a brief dated plan to replace the aggregation lookup with a Map while preserving insertion order, last-value-wins duplicates, input records, and existing public output. Save it as a few short paragraphs without tables or fixed section headings. Do not implement or request independent review.",
+      "expected_output": "One concise dated plan with a final replacement outcome, observable proof and relevant constraints in the requested prose layout.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
       "expectations": [
-        "The agent writes one dated Markdown plan under docs/plans/ when the user supplies no destination",
-        "The filename begins with the execution environment's local YYYY-MM-DD date and does not overwrite an existing plan",
-        "The artifact contains only a title and the headings 方案, 范围, 风险, and 验收标准",
-        "范围 explicitly distinguishes included and excluded work",
-        "风险 gives a mitigation, evidence-to-obtain, or formal-planning escalation condition",
-        "Every acceptance criterion includes observable proof such as a targeted test, command, or inspection",
-        "The artifact contains no implementation code, pseudocode, diff, CANDIDATE or FINAL status, reviewer, or subagent record"
+        "The agent writes one dated Markdown plan under docs/plans/ without repeating decisions already supplied",
+        "The filename uses the execution environment's local YYYY-MM-DD date and does not overwrite an existing plan",
+        "The artifact respects the requested short prose format without imposing four Chinese sections, a task table or a phase breakdown",
+        "One final outcome includes the replacement and its necessary proof, with preserved behavior and relevant exclusions explicit",
+        "Evidence checks observable ordering, duplicate and public output behavior; it does not rely only on assertions produced by the modified engine",
+        "The plan directs ordinary in-scope failures to diagnosis and repair without per-step user decisions or weakened completion criteria",
+        "Only the plan is changed; no code, pseudocode, diff, formal approval status, reviewer or subagent workflow is introduced"
       ],
       "trust_level": "provisional"
     },
@@ -64,6 +74,121 @@
         "The agent recognizes that the request is for review and repair execution rather than a brief plan",
         "The agent does not create a brief change-plan artifact for this request",
         "The agent does not dispatch a reviewer or claim completed review or repairs through this planning skill"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 4,
+      "scenario": "ambiguous-final-outcome",
+      "prompt": "In planning-sample, create a brief dated repair plan for duplicate IDs. I want to replace last-value-wins behavior but have not decided whether the first value should win or duplicate values should be summed. Preserve insertion order and all other public behavior. Do not implement.",
+      "expected_output": "A focused question resolving the duplicate-value outcome, with a recommendation, before a settled repair plan is saved.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent retrieves current behavior from the relevant source or test before asking about the unresolved outcome",
+        "It proposes the outcome distinction, explains its consequence, recommends a direction and asks only one question",
+        "It does not invent duplicate semantics, bury the missing decision in a risk bullet or ask the user for an implementation breakdown",
+        "This bounded semantic choice is clarified within the brief workflow without automatically invoking formal planning",
+        "No implementation or settled plan is produced before the required answer"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 5,
+      "scenario": "permitted-existing-failure",
+      "prompt": "In planning-sample, make a brief plan for replacing the aggregation lookup with a Map while preserving current behavior. CSV quoting is a known separate limitation and is explicitly excluded from this repair; I accept that it may remain. Completion requires a working replacement and no new regression in preserved behavior. Keep the scope bounded and do not implement.",
+      "expected_output": "A concise final outcome with meaningful replacement evidence and a truthful, non-blocking treatment of the explicitly permitted CSV limitation.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent proceeds without asking the user again whether the explicitly excluded limitation must be fixed",
+        "The final task includes required replacement correctness evidence and preserves supported input behavior",
+        "The plan does not make the permitted CSV limitation an unconditional pass prerequisite or silently add its repair to scope",
+        "Evidence must distinguish the permitted limitation from a new regression; unexplained failures cannot simply be labeled pre-existing",
+        "Ordinary implementation failures still require repair and missing required proof prevents completion"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 6,
+      "scenario": "contradictory-completion-gate",
+      "prompt": "In planning-sample, write a brief engine-repair plan from my notes: preserve aggregation behavior; an existing CSV quoting failure may remain; every check including the quoting check must pass before this repair counts as complete. I have not chosen which of the last two requirements governs.",
+      "expected_output": "One material completion question rather than a short plan that preserves contradictory acceptance gates.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent identifies the conflicting final completion conditions and explains why the distinction matters",
+        "It recommends a framing and asks one question instead of silently waiving proof or expanding scope",
+        "The conflict is not treated as a harmless assumption or generic risk in an otherwise settled plan",
+        "No implementation, reviewer or automatic formal-planning workflow is started"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 7,
+      "scenario": "required-system-workflow",
+      "prompt": "In planning-sample, create a brief dated repair plan for replacing the aggregation lookup with a Map while preserving public behavior. The production run() path must retain aggregate, format, and metrics as distinct stages, with formatting and metrics consuming the aggregated records. Do not fuse or bypass these stages or move their responsibilities into run(), even if output tests still pass. There is no project-memory wiki. I have already chosen this workflow constraint. Do not implement.",
+      "expected_output": "One final replacement outcome with the required system workflow captured as a constraint, credible production-path evidence, and freedom to organize development work.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent inspects the production entry point and carries the user-required stage boundaries and aggregated-input contracts into the saved plan",
+        "The required system workflow is a constraint on the final outcome rather than a separate task or user checkpoint for every stage",
+        "Evidence establishes the real production path and stage contracts; final output equality or existing smoke tests alone are not treated as proof of compliance",
+        "Development edits, debugging and internal work items may be reorganized, but required stages may not be bypassed, merged or have their responsibilities moved without specific authorization",
+        "The explicit user constraint is retained without asking for its approval again or requiring a new durable wiki or hard-rule entry",
+        "Only planning artifacts are created, with no implementation, benchmarks, workers or reviewers"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 8,
+      "scenario": "incidental-order-is-not-a-hard-rule",
+      "prompt": "In planning-sample, create a brief dated repair plan to make the small run() function easier to read using named intermediate results. Preserve its existing public behavior. Formatting and metrics are pure, and I permit either evaluation order once the aggregated records are available; no particular order between those two is required. Keep this bounded, do not create project memory, and do not implement.",
+      "expected_output": "A bounded plan preserving real data dependencies and behavior without freezing an incidental source-code order or adding architectural gates.",
+      "files": [
+        "planning-sample/README.md",
+        "planning-sample/package.json",
+        "planning-sample/src/cli.js",
+        "planning-sample/src/engine.js",
+        "planning-sample/src/metrics.js",
+        "planning-sample/src/report.js",
+        "planning-sample/test/system.test.js"
+      ],
+      "expectations": [
+        "The agent grounds the plan in the current run() implementation and preserves formatting and metrics over the aggregated result",
+        "The observed format-before-metrics source order does not become a mandatory workflow constraint or permanent hard rule",
+        "The agent respects the explicit freedom to choose either evaluation order without asking for another approval or inventing a workflow conflict",
+        "Verification remains proportionate to the requested readability change and preserved behavior rather than introducing a full pipeline audit",
+        "The plan retains one final bounded outcome without expanding into architecture redesign, separate phase tasks, or project-memory writes"
       ],
       "trust_level": "provisional"
     }
