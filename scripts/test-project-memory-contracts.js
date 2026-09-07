@@ -25,7 +25,7 @@ function main() {
 
   // Standalone installation must carry the exact same policy and executable
   // helpers as the plugin; drift here changes actual downstream behavior.
-  for (const skill of ['project-memory-init', 'project-architecture-sync']) {
+  for (const skill of ['project-memory-init', 'project-architecture-sync', 'agent-init']) {
     for (const source of [
       'references/project-memory-schema.md',
       'references/project-memory-runtime.md',
@@ -38,6 +38,17 @@ function main() {
     const entry = read(`skills/market/${skill}/SKILL.md`);
     for (const link of entry.matchAll(/\]\(((?:references|scripts)\/[^)#]+)(?:#[^)]*)?\)/g)) {
       assert.ok(fs.existsSync(path.join(ROOT, 'skills/market', skill, link[1])), `${skill}: missing ${link[1]}`);
+    }
+  }
+
+  assert.strictEqual(read('skills/market/agent-init/memory-init.md'), init, 'agent-init: stale initialization workflow');
+  assert.strictEqual(read('skills/market/agent-init/references/legacy-discovery.md'),
+    read('skills/market/project-memory-init/references/legacy-discovery.md'), 'agent-init: stale legacy discovery');
+  // A single-skill install must resolve its resources without sibling skills.
+  const agentRoot = path.join(ROOT, 'skills/market/agent-init');
+  for (const source of ['SKILL.md', 'memory-init.md']) {
+    for (const link of read(`skills/market/agent-init/${source}`).matchAll(/\]\(([^)#]+)(?:#[^)]*)?\)/g)) {
+      assert.ok(fs.existsSync(path.join(agentRoot, link[1])), `agent-init: missing resource ${link[1]}`);
     }
   }
 

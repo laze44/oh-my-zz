@@ -16,7 +16,7 @@ The profile adds a reader protocol, durable shared-domain vocabulary, and govern
 project-memory-facts-and-hard-rules-v2
 ```
 
-An older v1 schema remains structurally valid. Its policy is not silently upgraded: only an explicitly reviewed `project-memory-init` policy upgrade may update the schema, reader, and selected managed discovery blocks. Ordinary agents can still read an old wiki as historical context and verify it against code. The new hard-rule workflow requires the policy marker and corresponding rules below. `SCHEMA.md` is the source of truth if it conflicts with the reader protocol. The protocol describes how a reader consumes this wiki; it never automatically alters a target project's `AGENTS.md`, `CLAUDE.md`, or other agent configuration. Only an explicitly confirmed `project-memory-init` discovery setup may append its exact managed marker to a user-selected root instruction file.
+An older v1 schema remains structurally valid. Its policy is not silently upgraded: only an explicitly reviewed `project-memory-init` policy upgrade may update the schema, reader, and selected managed discovery blocks. Ordinary agents can still read an old wiki as historical context and verify it against code. The new hard-rule workflow requires the policy marker and corresponding rules below. `SCHEMA.md` is the source of truth if it conflicts with the reader protocol. The protocol describes how a reader consumes this wiki; it never automatically alters a target project's `AGENTS.md`, `CLAUDE.md`, or other agent configuration. Install a managed marker through explicitly confirmed `project-memory-init` discovery or the explicitly requested `agent-init` root generation described under Optional agent discovery setup.
 
 ## Writing language
 
@@ -238,11 +238,13 @@ For new initializations and explicit policy upgrades, use the template above. Ea
 
 ### Optional agent discovery setup
 
-The root discovery block is a short entry point for unfamiliar concepts, hard-rule checks, manual fact sync, and approved rule updates. Install it only through an explicitly previewed initialization/configuration request. Its presence or absence does not affect v1 structural validity. A new session may be required for the host to load changed instructions.
+The root discovery block is a short entry point for unfamiliar concepts, hard-rule checks, manual fact sync, and approved rule updates. Install it through an explicitly previewed initialization/configuration request or the authorized root-generation path below. Its presence or absence does not affect v1 structural validity. A new session may be required for the host to load changed instructions.
 
 Ordinary lookup goes from index/search to relevant records, with code/tests as a freshness check. Read global and applicable topic hard rules before planning or changing code; a local or test-only edit is not permission to skip an applicable rule. Pure formatting or completion reporting can reuse relevant rules already read, without a full-wiki traversal. Reuse task context until the scope or memory changes. Finishing implementation never starts a sync.
 
 Only explicit policy-upgrade authorization permits updating old generic schema/reader policy and selected exact managed discovery blocks. Preserve substantive records and all unrelated user instructions. Historical `partial`/`not-started` models remain unverified context, not current facts or automatically binding hard rules. A later manual sync may propose verified corrections one at a time.
+
+An explicit `agent-init` request separately authorizes generating or reinitializing the complete root `AGENTS.md` and copying it byte-for-byte to `CLAUDE.md`, including the current discovery block when this policy and its valid wiki/reader are in place. It reuses `project-memory-init` in `docs-only` mode for fresh memory and does not need a second discovery approval for that authorized root generation unless the user requests a preview. This exception does not authorize memory facts, hard-rule updates, legacy repair, or policy upgrades; existing target schemas retain their own configuration approval requirements.
 
 ### Domain context
 

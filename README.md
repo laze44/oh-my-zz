@@ -1,11 +1,12 @@
 # oh-my-zz
 
-A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains eight focused workflows for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing work to a fresh agent session, preserving project memory, simplifying code and project-memory documentation, and writing evidence-grounded systems papers.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains nine focused workflows for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing work to a fresh agent session, initializing project agent instructions, preserving project memory, simplifying code and project-memory documentation, and writing evidence-grounded systems papers.
 
 ## Included skills
 
 | Skill | Purpose |
 | --- | --- |
+| [agent-init](skills/market/agent-init/SKILL.md) | Generate or reinitialize AGENTS.md, copy identical content to CLAUDE.md, and initialize missing project memory |
 | [idea-refine](skills/market/idea-refine/SKILL.md) | Grill and refine an idea one decision at a time, then save a concise shared-understanding draft before specification or planning |
 | [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Clarify completion decisions and plan one or two final outcomes from one entry point, with inline requirements and an optional spec |
 | [systems-paper-writing](skills/market/systems-paper-writing/SKILL.md) | Plan, draft, translate, and revise systems, networking, and computer architecture papers while preserving an evidence spine |
@@ -26,6 +27,8 @@ Ordinary agents use the wiki index to understand unfamiliar project concepts bef
 | User declares a hard rule in conversation | Prepare its draft immediately, show the exact scope/text and conflicts, and write the rule only after approval. Completed code is not required. |
 
 Overall plan approval does not approve a hard rule. A declaration triggers drafting, not unreviewed persistence. Rule-only writes cover the approved rule and necessary navigation/lifecycle links; they do not update ordinary facts or imply implementation compliance. Earlier verifiable approval for unchanged exact text need not be requested again. Code completion never automatically starts fact synchronization. No-impact reviews finish without approval; an optional spec alignment still needs its own draft and approval.
+
+`agent-init` generates a concise project introduction, verified command/documentation entry points, and agent working rules in root `AGENTS.md`, then copies its bytes directly to `CLAUDE.md`. It reinitializes existing instructions while preserving applicable project-specific constraints and bootstraps absent memory through the bundled docs-only initialization workflow. Existing memory is preserved; partial, legacy, or older-policy setups are reported without silent repair or upgrades. An explicit root-generation request authorizes these root writes unless the user requests preview or the existing target policy requires separate approval. Standalone installation includes the template, initialization workflow, schema, and state helpers.
 
 `project-memory-init` creates the self-contained `project-memory-llm-wiki-v1` layout under `docs/project-memory/` and its reader at `docs/agents/project-memory.md`. The new `project-memory-facts-and-hard-rules-v2` policy keeps that layout and adds the authority/timing rules above. Its optional root discovery block is four concise bullets. A normal repeat initialization remains a no-op. Existing v1 projects can explicitly request a policy/discovery upgrade: initialization previews the schema, reader, and selected exact managed root-block changes, then writes after approval while preserving substantive records and unrelated instructions. Historical `partial`/`not-started` designs remain unverified context. Legacy or malformed schemas are not silently migrated or repaired.
 
@@ -77,7 +80,7 @@ Claude Code exposes these convenience commands:
 - `/spec`
 - `/code-simplify`
 
-Invoke `idea-refine`, `systems-paper-writing`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` is intentionally user-invoked; the project-memory initialization and maintenance workflows intentionally have no dedicated Claude convenience commands.
+Invoke `agent-init`, `idea-refine`, `systems-paper-writing`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` is intentionally user-invoked; the project-memory initialization and maintenance workflows intentionally have no dedicated Claude convenience commands.
 
 Both planning skills propose the final result and clarify unresolved completion decisions one question at a time, with a recommendation. Clear requirements need no extra confirmation. Plans define one final outcome task by default, or two for independently assessable outcomes, with necessary evidence and constraints. Development work items can change during execution and do not become per-step user decisions. Required system stages, order, and stage contracts remain constraints on the final outcome; matching outputs alone does not prove compliance. Preserve requirements grounded in user intent, architecture contracts, or correctness dependencies without turning every observed code sequence into a permanent hard rule. Known permitted failures cannot also be mandatory pass gates; passing selected tests cannot replace the promised result or missing required proof.
 
@@ -133,7 +136,7 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ## Repository layout
 
 ```text
-skills/market/             Eight shared skills in the npx catalog layout
+skills/market/             Nine shared skills in the npx catalog layout
 hooks/                     Project-memory Stop gate configuration and entry point
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests

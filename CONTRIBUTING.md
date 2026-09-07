@@ -1,6 +1,6 @@
 # Contributing
 
-This branch intentionally maintains a focused eight-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
+This branch intentionally maintains a focused nine-skill pack for Claude Code, Codex, OpenCode, and Kimi Code. Changes should normally improve one of the retained skills rather than expand the catalog.
 
 ## Supported scope
 
@@ -10,10 +10,11 @@ This branch intentionally maintains a focused eight-skill pack for Claude Code, 
 - `handoff`
 - `project-memory-and-code-simplification`
 - `project-memory-init`
+- `agent-init`
 - `project-architecture-sync`
 - `systems-paper-writing`
 
-The project-memory workflows separate ordinary verified facts from user-approved hard rules. Initialization owns fresh setup and explicit policy/discovery upgrades with exact configuration previews. Synchronization reviews one draft at a time: ordinary factual sync requires a completed scope and manual user request; hard rules may be separately approved during conversation or planning and applied before implementation. Planning skills and later authorized execution must preserve that ordering and must not automatically synchronize ordinary facts. Maintain the canonical schema/runtime references and their standalone bundled copies together. The external Stop gate binds one approval to one exact draft; it never authenticates user consent or writes project facts itself. Further skill or platform additions remain product-scope decisions, not routine maintenance; propose them explicitly before implementation.
+`agent-init` owns root instruction generation and identical CLAUDE.md copying, reusing bundled docs-only memory initialization. Keep its bundled workflow and resources identical to their canonical sources. The project-memory workflows separate ordinary verified facts from user-approved hard rules. Initialization owns fresh setup and explicit policy/discovery upgrades with exact configuration previews. Synchronization reviews one draft at a time: ordinary factual sync requires a completed scope and manual user request; hard rules may be separately approved during conversation or planning and applied before implementation. Planning skills and later authorized execution must preserve that ordering and must not automatically synchronize ordinary facts. Maintain the canonical schema/runtime references and their standalone bundled copies together. The external Stop gate binds one approval to one exact draft; it never authenticates user consent or writes project facts itself. Further skill or platform additions remain product-scope decisions, not routine maintenance; propose them explicitly before implementation.
 
 ## Modifying a skill
 

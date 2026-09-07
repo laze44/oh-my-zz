@@ -1,0 +1,114 @@
+{
+  "skill_name": "agent-init",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Initialize AGENTS.md for this project and copy identical content into CLAUDE.md",
+        "top_k": 1
+      },
+      {
+        "prompt": "Reinitialize our existing project agent instructions with a concise introduction and working rules",
+        "top_k": 1
+      },
+      {
+        "prompt": "Generate AGENTS.md and CLAUDE.md together and bootstrap missing project memory",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Initialize only the Markdown project-memory wiki and reader protocol, without changing root instructions",
+        "owner": "project-memory-init"
+      },
+      {
+        "prompt": "Upgrade the project-memory schema maintenance policy and managed discovery block after an exact preview",
+        "owner": "project-memory-init"
+      },
+      {
+        "prompt": "Review completed implementation and propose verified architecture-memory updates",
+        "owner": "project-architecture-sync"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "scenario": "fresh-standalone",
+      "prompt": "Use agent-init to initialize this project. Generate root AGENTS.md, copy it directly to CLAUDE.md, and initialize project memory too. Only agent-init is installed. The README describes a Node.js FIFO queue with node --test as its test command; both memory paths and both root instruction files are absent.",
+      "expected_output": "A complete root-instruction pair and fresh canonical empty-baseline wiki using bundled resources.",
+      "expectations": [
+        "Uses bundled memory initialization resources without requiring a sibling skill installation",
+        "Creates the canonical wiki and reader with empty baseline records, not invented implementation facts or wiki hard rules",
+        "Generates a factual concise introduction and supported commands with Chinese working rules",
+        "Copies AGENTS.md bytes to CLAUDE.md and checks equality, valid memory targets, and a single current discovery block at the end of each",
+        "Completes explicitly authorized fresh initialization without inventing an extra approval gate"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 2,
+      "scenario": "reinitialize-preserve",
+      "prompt": "Reinitialize AGENTS.md and directly copy the result to CLAUDE.md. AGENTS.md says the Queue API must stay synchronous; CLAUDE.md uniquely says pop() returns undefined when empty. A complete current project-memory wiki with existing records and hard rules already exists, along with nested AGENTS.md files. Default user replies should now be Simplified Chinese.",
+      "expected_output": "Rebuilt identical root instructions that retain both applicable contracts and preserve existing memory.",
+      "expectations": [
+        "Rewrites root files rather than appending another template or treating existing AGENTS.md as a no-op",
+        "Retains applicable unique constraints from both old files while applying the current language preference",
+        "Leaves existing memory records and nested instructions byte-for-byte unchanged",
+        "Does not synchronize facts or reinitialize the existing wiki",
+        "Checks actual target schema requirements before installing or changing discovery"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 3,
+      "scenario": "partial-memory",
+      "prompt": "Run agent-init and include project-memory initialization. docs/project-memory/INDEX.md exists, but SCHEMA.md and docs/agents/project-memory.md are absent. Please rebuild the root instructions.",
+      "expected_output": "Independent root-file generation with the partial memory preserved and its incomplete state clearly reported.",
+      "expectations": [
+        "Does not fill in, repair, reset, or upgrade the partial wiki",
+        "Does not add current managed discovery pointing to missing required paths",
+        "Can complete authorized root generation and byte-identical copying independently",
+        "Reports that memory initialization remains incomplete and identifies the missing setup"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 4,
+      "scenario": "preview-only",
+      "prompt": "Show me the exact agent-init proposal for AGENTS.md, CLAUDE.md, and a fresh memory wiki. Do not write until I confirm.",
+      "expected_output": "A concrete complete preview with no project writes.",
+      "expectations": [
+        "Shows the complete generated root content and exact wiki creation paths",
+        "Does not create memory first under docs-only mode despite the explicit no-write request",
+        "Waits for approval of this concrete result without claiming initialization completed"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 5,
+      "scenario": "legacy-policy",
+      "prompt": "Use agent-init to rebuild root instructions. Our valid older v1 wiki uses the earlier reader and discovery policy, and requires an exact preview for discovery updates. Existing records must stay.",
+      "expected_output": "Root generation respects the installed policy and preserves legacy memory without automatic upgrade.",
+      "expectations": [
+        "Does not replace the old schema or reader with bundled current policy",
+        "Does not install a current v2 discovery block against the old policy",
+        "Retains compatible discovery or references usable existing documentation and reports the policy limitation",
+        "Any required discovery approval is based on a concrete exact preview and the cited actual target rule"
+      ],
+      "trust_level": "provisional"
+    },
+    {
+      "id": 6,
+      "scenario": "override-shadow",
+      "prompt": "Initialize AGENTS.md and copy it to CLAUDE.md. AGENTS.override.md exists and contains conflicting project rules; I have not asked you to edit it.",
+      "expected_output": "An explicit resolution of the effective-root conflict without silently overwriting the override.",
+      "expectations": [
+        "Inspects the actual override instead of assuming AGENTS.md will be effective",
+        "Does not modify or delete AGENTS.override.md implicitly",
+        "Prepares independent authorized work and identifies the unresolved effective-instruction conflict",
+        "Does not claim effective initialization while the conflict remains"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
     "url": "https://github.com/laze44"
   },
   "metadata": {
-    "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, implementation plans with inline requirements and optional specs, brief dated change plans, secure session handoffs, project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization and separately approved hard-rule maintenance, and root-cause simplification of code and project-memory documentation, plus evidence-grounded systems paper writing."
+    "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, implementation plans with inline requirements and optional specs, brief dated change plans, secure session handoffs, agent-init project instruction generation and project-memory initialization with opt-in agent discovery, proposal-first architecture synchronization and separately approved hard-rule maintenance, and root-cause simplification of code and project-memory documentation, plus evidence-grounded systems paper writing."
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
         "source": "github",
         "repo": "laze44/oh-my-zz"
       },
-      "description": "Eight focused engineering skills for grilling and shaping ideas into implementation plans with inline requirements and optional specs, making brief dated change plans, handing off work between agent sessions, initializing project memory with opt-in agent discovery, reviewing implementation scope before explicitly approved architecture synchronization and separately approved hard-rule maintenance, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers.",
+      "description": "Nine focused engineering skills for grilling and shaping ideas into implementation plans with inline requirements and optional specs, making brief dated change plans, handing off work between agent sessions, generating AGENTS.md and identical CLAUDE.md with agent-init, initializing project memory with opt-in agent discovery, reviewing implementation scope before explicitly approved architecture synchronization and separately approved hard-rule maintenance, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers.",
       "homepage": "https://github.com/laze44/oh-my-zz",
       "license": "MIT",
       "keywords": ["oh-my-zz", "skills", "engineering", "ideas", "spec", "brief-plan", "planning", "design", "interview", "handoff", "project-memory", "discovery", "architecture", "ADR", "simplification", "systems", "paper-writing"]

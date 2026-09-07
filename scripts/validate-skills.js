@@ -55,6 +55,7 @@ const REQUIRED_SECTIONS = [
 // cannot bypass the validator by editing their own skill file.
 // Every entry must have a documented reason.
 const SECTION_EXEMPT_SKILLS = {
+  'agent-init': 'Concise root-instruction workflow with an output template and bundled memory initialization.',
   // This skill intentionally uses concise principles instead of repeated workflow,
   // rationalization and checklist sections. Outcomes are covered by its behavioral
   // evals; frontmatter, non-empty instructions and reference checks still apply.

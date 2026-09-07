@@ -27,6 +27,10 @@
       {
         "prompt": "Challenge and clarify this rough product idea before saving it",
         "owner": "idea-refine"
+      },
+      {
+        "prompt": "Generate AGENTS.md and copy identical content to CLAUDE.md with a concise project introduction and agent working rules",
+        "owner": "agent-init"
       }
     ]
   },
