@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "oh-my-zz",
-      "description": "Nine focused engineering skills for grilling and shaping ideas into implementation plans with inline requirements and optional specs, making brief dated change plans, handing off work between agent sessions, generating AGENTS.md and identical CLAUDE.md with agent-init, initializing project memory with opt-in agent discovery, reviewing implementation scope before explicitly approved architecture synchronization and separately approved hard-rule maintenance, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers.",
+      "description": "Ten focused engineering skills for grilling and shaping ideas into implementation plans with inline requirements and optional specs, making brief dated change plans, handing off work between agent sessions, generating AGENTS.md and identical CLAUDE.md with agent-init, initializing project memory with opt-in agent discovery, reviewing implementation scope before explicitly approved architecture synchronization and separately approved hard-rule maintenance, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers and reviewing architecture papers with separate issue and expert reports.",
       "source": {
         "source": "local",
         "path": "./"

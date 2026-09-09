@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "2.2.0",
-  "description": "A focused engineering skill pack for grilling and refining ideas one decision at a time, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing off work between agent sessions, generating AGENTS.md and identical CLAUDE.md with agent-init, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization and separately approved hard-rule maintenance, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers.",
+  "version": "2.3.0",
+  "description": "A focused engineering skill pack for grilling and refining ideas one decision at a time, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing off work between agent sessions, generating AGENTS.md and identical CLAUDE.md with agent-init, initializing project memory with opt-in agent discovery, reviewing completed implementation scopes before explicitly approved architecture synchronization and separately approved hard-rule maintenance, simplifying code and project-memory documentation through root-cause changes, and writing evidence-grounded systems papers and reviewing architecture papers with separate issue and expert reports.",
   "author": {
     "name": "laze44"
   },

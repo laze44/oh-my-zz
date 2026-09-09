@@ -22,6 +22,10 @@
       {
         "prompt": "Turn this rough product idea into an implementation-ready specification and plan",
         "owner": "idea-to-spec-and-plan"
+      },
+      {
+        "prompt": "Review this computer architecture paper as an HPCA reviewer with novelty scores and an accept or reject recommendation",
+        "owner": "paper-review"
       }
     ]
   },

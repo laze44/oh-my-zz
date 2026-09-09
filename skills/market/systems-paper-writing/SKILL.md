@@ -70,7 +70,7 @@ Run the branch-specific validation before returning output. This is generation i
 - **Draft:** every factual or quantitative statement is grounded; terminology, numbers, citations, and claim strength match the sources.
 - **Revise:** the rewritten text passes a semantic checksum for facts, numbers, modality, causality, scope, and citations.
 
-Do not emit reviewer scores, weakness lists, novelty judgments, or accept/reject language. A future review skill owns that seam.
+Do not emit reviewer scores, weakness lists, novelty judgments, or accept/reject language. `paper-review` owns that seam.
 
 ## Common Rationalizations
 

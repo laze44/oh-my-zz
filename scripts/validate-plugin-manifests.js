@@ -11,6 +11,7 @@ const EXPECTED_SKILLS = [
   'handoff',
   'idea-refine',
   'idea-to-spec-and-plan',
+  'paper-review',
   'project-architecture-sync',
   'project-memory-and-code-simplification',
   'project-memory-init',
@@ -134,8 +135,8 @@ assert(kimiPlugin.interface?.websiteURL === REPOSITORY,
   'Kimi plugin website must point at the canonical GitHub repository');
 assert(Array.isArray(claudeMarketplace.plugins) && claudeMarketplace.plugins.length === 1,
   'Claude marketplace must contain exactly one plugin');
-assert(/Nine focused engineering skills/.test(claudeMarketplace.plugins[0].description),
-  'Claude marketplace must describe the nine-skill scope');
+assert(/Ten focused engineering skills/.test(claudeMarketplace.plugins[0].description),
+  'Claude marketplace must describe the ten-skill scope');
 assert(/brief.*plan/i.test(claudeMarketplace.plugins[0].description),
   'Claude marketplace must describe brief change plans');
 assert(/discovery/i.test(claudeMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(claudeMarketplace.plugins[0].description),
@@ -149,8 +150,8 @@ assert(claudeMarketplace.plugins[0].source?.repo === REPOSITORY_SLUG,
 assert(codexMarketplace.name === PLUGIN_NAME, `Codex marketplace name must be ${PLUGIN_NAME}`);
 assert(codexMarketplace.plugins[0].name === PLUGIN_NAME,
   `Codex marketplace plugin name must be ${PLUGIN_NAME}`);
-assert(/Nine focused engineering skills/.test(codexMarketplace.plugins[0].description),
-  'Codex marketplace must describe the nine-skill scope');
+assert(/Ten focused engineering skills/.test(codexMarketplace.plugins[0].description),
+  'Codex marketplace must describe the ten-skill scope');
 assert(/brief.*plan/i.test(codexMarketplace.plugins[0].description),
   'Codex marketplace must describe brief change plans');
 assert(/discovery/i.test(codexMarketplace.plugins[0].description) && /approved architecture synchronization/i.test(codexMarketplace.plugins[0].description),
@@ -178,4 +179,4 @@ assert(typeof stopHook?.command === 'string'
 'Bundled Stop hook must invoke the project-memory workflow gate through the plugin root');
 assert(stopHook?.timeout === 10, 'Bundled Stop hook must have the narrow 10-second timeout');
 
-console.log('Claude, Codex, and Kimi plugin manifests, nine-skill scope, Claude command configuration, and bundled Stop gate validated.');
+console.log('Claude, Codex, and Kimi plugin manifests, ten-skill scope, Claude command configuration, and bundled Stop gate validated.');

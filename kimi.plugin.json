@@ -1,7 +1,7 @@
 {
   "name": "oh-my-zz",
-  "version": "2.2.0",
-  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, implementation plans with inline requirements and optional specs, brief change plans, secure session handoffs, agent-init project instruction generation with memory setup, opt-in project-memory discovery, proposal-first architecture synchronization and separately approved hard-rule maintenance, and root-cause simplification of code and project-memory documentation, plus evidence-grounded systems paper writing.",
+  "version": "2.3.0",
+  "description": "A focused engineering skill pack for one-question-at-a-time idea grilling and refinement, implementation plans with inline requirements and optional specs, brief change plans, secure session handoffs, agent-init project instruction generation with memory setup, opt-in project-memory discovery, proposal-first architecture synchronization and separately approved hard-rule maintenance, and root-cause simplification of code and project-memory documentation, plus evidence-grounded systems paper writing and paper-only architecture review.",
   "keywords": [
     "skills",
     "engineering",
@@ -14,7 +14,8 @@
     "simplification",
     "root-cause-simplification",
     "systems",
-    "paper-writing"
+    "paper-writing",
+    "paper-review"
   ],
   "author": "laze44",
   "homepage": "https://github.com/laze44/oh-my-zz",
@@ -22,8 +23,8 @@
   "skills": "./skills/market/",
   "interface": {
     "displayName": "Oh My ZZ",
-    "shortDescription": "Nine focused workflows for agent initialization, plans, memory, root-cause simplification, and systems paper writing.",
-    "longDescription": "A nine-skill engineering workflow pack for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, planning brief changes, handing off sessions, initializing agent instructions, maintaining project memory, and simplifying code and project-memory documentation, plus writing evidence-grounded systems papers.",
+    "shortDescription": "Ten focused workflows for agent initialization, plans, memory, root-cause simplification, systems paper writing, and architecture paper review.",
+    "longDescription": "A ten-skill engineering workflow pack for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, planning brief changes, handing off sessions, initializing agent instructions, maintaining project memory, and simplifying code and project-memory documentation, plus writing evidence-grounded systems papers and reviewing architecture papers with separate issue and expert reports.",
     "developerName": "laze44",
     "websiteURL": "https://github.com/laze44/oh-my-zz"
   }

@@ -4,6 +4,14 @@ All notable releases follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-09-09
+
+### Added
+
+- Added `paper-review` for architecture manuscripts, with separate comprehensive issue audits and HPCA-style expert reviews. Paper-only evidence is the default; expanded sources require explicit authorization. Bundled the HPCA rubric adaptation and dated ASPLOS 2027 reference without example reviewer or paper identities.
+- Kept `paper-review` focused on evidence boundaries and two deliverables, leaving review strategy, technical checks, and report organization to the reviewer; condensed the HPCA reference to assessment dimensions and scales.
+- Added routing and behavioral scenario definitions for source isolation, quantitative reasoning, assessment limits, and reviewer declarations. Expanded the catalog to ten skills and synchronized plugin versions at 2.3.0.
+
 ## [2.1.0] - 2026-09-06
 
 ### Changed

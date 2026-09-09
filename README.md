@@ -1,6 +1,6 @@
 # oh-my-zz
 
-A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains nine focused workflows for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing work to a fresh agent session, initializing project agent instructions, preserving project memory, simplifying code and project-memory documentation, and writing evidence-grounded systems papers.
+A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and other compatible agents. It contains ten focused workflows for grilling and refining ideas, creating implementation plans with inline requirements and optional specs, making brief dated change plans, handing work to a fresh agent session, initializing project agent instructions, preserving project memory, simplifying code and project-memory documentation, writing evidence-grounded systems papers, and reviewing architecture papers.
 
 ## Included skills
 
@@ -10,6 +10,7 @@ A focused plugin and Agent Skills pack for Claude Code, Codex, Kimi Code, and ot
 | [idea-refine](skills/market/idea-refine/SKILL.md) | Grill and refine an idea one decision at a time, then save a concise shared-understanding draft before specification or planning |
 | [idea-to-spec-and-plan](skills/market/idea-to-spec-and-plan/SKILL.md) | Clarify completion decisions and plan one or two final outcomes from one entry point, with inline requirements and an optional spec |
 | [systems-paper-writing](skills/market/systems-paper-writing/SKILL.md) | Plan, draft, translate, and revise systems, networking, and computer architecture papers while preserving an evidence spine |
+| [paper-review](skills/market/paper-review/SKILL.md) | Review architecture papers with separate manuscript-issue and HPCA-style expert reports, using only the paper by default |
 | [brief-change-plan](skills/market/brief-change-plan/SKILL.md) | Clarify final outcomes and save a concise dated plan with scope, constraints, and completion evidence, without code or independent review |
 | [handoff](skills/market/handoff/SKILL.md) | Compact the current conversation into a redacted temporary handoff document for another agent to continue |
 | [project-memory-and-code-simplification](skills/market/project-memory-and-code-simplification/SKILL.md) | Simplify code and project-memory documentation through evidence-backed root-cause changes |
@@ -80,13 +81,19 @@ Claude Code exposes these convenience commands:
 - `/spec`
 - `/code-simplify`
 
-Invoke `agent-init`, `idea-refine`, `systems-paper-writing`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` is intentionally user-invoked; the project-memory initialization and maintenance workflows intentionally have no dedicated Claude convenience commands.
+Invoke `agent-init`, `idea-refine`, `systems-paper-writing`, `paper-review`, `brief-change-plan`, `handoff`, `project-memory-and-code-simplification`, `project-memory-init`, or `project-architecture-sync` directly by naming the skill in your request. Use `idea-refine` when an idea needs a one-question-at-a-time grilling conversation before it becomes a spec or plan. Use `systems-paper-writing` for evidence-grounded paper planning, drafting, translation, or revision; it does not perform peer review. Use `paper-review` for separate manuscript-issue and expert-review reports. Use `brief-change-plan` for a dated short plan with no code or independent review. `handoff` is intentionally user-invoked; the project-memory initialization and maintenance workflows intentionally have no dedicated Claude convenience commands.
 
 Both planning skills propose the final result and clarify unresolved completion decisions one question at a time, with a recommendation. Clear requirements need no extra confirmation. Plans define one final outcome task by default, or two for independently assessable outcomes, with necessary evidence and constraints. Development work items can change during execution and do not become per-step user decisions. Required system stages, order, and stage contracts remain constraints on the final outcome; matching outputs alone does not prove compliance. Preserve requirements grounded in user intent, architecture contracts, or correctness dependencies without turning every observed code sequence into a permanent hard rule. Known permitted failures cannot also be mandatory pass gates; passing selected tests cannot replace the promised result or missing required proof.
 
 `/spec` creates one candidate main plan from an idea or supplied spec. Requirements live in the main plan by default; a separate spec is optional and existing valid specs are reused. Supporting fragments share the same outcome and approval boundaries. Include design, dependencies, and write boundaries only where useful; the executor chooses internal decomposition, delegation, and scheduling. The saved execution policy covers autonomous repair, representative experiments before necessary larger validation, and cost estimates versus actual limits. Estimates are progress checkpoints; necessary unusually costly runs outside existing authorization get advance feedback. Planning writes documents only.
 
 `brief-change-plan` keeps the same outcome, evidence, and autonomy principles in one short dated file. It requires no fixed headings, task table, or phase breakdown, and creates no fragments or formal approval statuses. Relevant scope exclusions and risks remain explicit; implementation and independent review stay outside the workflow.
+
+## Architecture paper review
+
+Invoke `paper-review` with the manuscript as its only required input, for example: “Use paper-review to review paper.pdf and write both reports in reviews/.” It writes `<paper-stem>-issues.md` for concise, located grammar, logic, consistency, and quantitative concerns, plus `<paper-stem>-review.md` for HPCA-style assessments and prioritized revisions. Reports use the user’s language by default.
+
+Project files, logs, prior drafts, and web sources are excluded unless explicitly authorized; authorized additions stay distinguishable from manuscript evidence. Conditional plausibility concerns are not treated as proven defects. ASPLOS 2027 guidance is a dated venue-specific reference. Personal reviewer declarations remain for the actual reviewer, and the skill neither edits the paper nor submits a review.
 
 ## Codex
 
@@ -136,7 +143,7 @@ After installation, start a new session or run `/reload`. Invoke a workflow expl
 ## Repository layout
 
 ```text
-skills/market/             Nine shared skills in the npx catalog layout
+skills/market/             Ten shared skills in the npx catalog layout
 hooks/                     Project-memory Stop gate configuration and entry point
 .claude/commands/          Claude Code convenience commands
 .claude-plugin/            Claude Code plugin and marketplace manifests

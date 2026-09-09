@@ -1,0 +1,4 @@
+interface:
+  display_name: "Paper Review"
+  short_description: "Audit and review architecture research papers"
+  default_prompt: "Use $paper-review to review this architecture paper and produce separate manuscript-issue and expert-review reports."
